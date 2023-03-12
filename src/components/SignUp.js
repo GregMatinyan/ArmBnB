@@ -1,12 +1,11 @@
-import React from "react";
 import InputForm from "./InputForm";
 
-function SignUp(props) {
+export default function SignUp() {
   return (
-    <div>
-      <InputForm />
-    </div>
+    <>
+      <div>
+        <InputForm />
+      </div>
+    </>
   );
 }
-
-export default SignUp;

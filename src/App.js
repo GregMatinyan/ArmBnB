@@ -1,12 +1,10 @@
-import React from "react";
-
 import "./App.css";
-import Main from "./components/Main";
+import SignUp from "./components/SignUp";
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <SignUp />
     </div>
   );
 }
