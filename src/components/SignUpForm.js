@@ -61,6 +61,7 @@ export default function SignUpForm() {
         py: 2,
         display: "flex",
         flexDirection: "column",
+        paddingTop: "20px",
         gap: 2,
         alignItems: "center",
         flexWrap: "wrap",
@@ -102,7 +103,7 @@ export default function SignUpForm() {
           required
           sx={{ mb: 1, bgcolor: "#b9c0e0" }}
         />
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl className={styles.select} sx={{ m: 1, minWidth: 120 }}>
           <Select
             value={proffession}
             onChange={chooseProffession}

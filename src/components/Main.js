@@ -7,7 +7,7 @@ export default function Main() {
     <>
       <Routes>
         <Route path={"/"} element={<Home />} />
-        <Route path={"signing"} element={<SignUp />} />
+        <Route path={"sign-up"} element={<SignUp />} />
       </Routes>
     </>
   );
