@@ -1,0 +1,19 @@
+.container {
+  padding: 20px;
+  color: #b9c0e0;
+  font-size: 22px;
+}
+
+.child {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.child button {
+  padding: 5px 80px;
+  color: inherit;
+  border-radius: 10px;
+  border: 2px solid #b9c0e0;
+}
