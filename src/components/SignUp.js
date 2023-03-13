@@ -1,10 +1,10 @@
-import InputForm from "./InputForm";
+import SignUpForm from "./SignUpForm";
 
 export default function SignUp() {
   return (
     <>
       <div>
-        <InputForm />
+        <SignUpForm />
       </div>
     </>
   );
