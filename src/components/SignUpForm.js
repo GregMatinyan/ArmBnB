@@ -28,6 +28,7 @@ export default function SignUpForm() {
         surname,
         email,
         proffession,
+        userID: auth?.currentUser?.uid,
       });
       setName("");
       setSurname("");
