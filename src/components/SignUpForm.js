@@ -28,6 +28,7 @@ export default function SignUpForm() {
         surname,
         email,
         proffession,
+        userID: auth?.currentUser?.uid,
       });
       setName("");
       setSurname("");
@@ -47,20 +48,13 @@ export default function SignUpForm() {
     }
   };
 
-  // const logOut = async () => {
-  //   try {
-  //     await signInWithPopup(auth);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   return (
     <Box
       sx={{
         py: 2,
         display: "flex",
         flexDirection: "column",
+        paddingTop: "20px",
         gap: 2,
         alignItems: "center",
         flexWrap: "wrap",
@@ -102,7 +96,7 @@ export default function SignUpForm() {
           required
           sx={{ mb: 1, bgcolor: "#b9c0e0" }}
         />
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl className={styles.select} sx={{ m: 1, minWidth: 120 }}>
           <Select
             value={proffession}
             onChange={chooseProffession}
@@ -122,7 +116,6 @@ export default function SignUpForm() {
           Sign Up
         </Button>
         <Button onClick={signUpWithGoogleAcc}>Sign Up With Google</Button>
-        {/* <Button onClick={logOut}>Log out</Button> */}
       </form>
     </Box>
   );
