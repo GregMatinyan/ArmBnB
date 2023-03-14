@@ -5,6 +5,7 @@ import { auth, usersListRef } from "../configs/firebase";
 import { getDocs } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { HOME_PATH } from "../constants/auth";
 
 function Profile() {
   const [usersInfo, setUsersInfo] = useState([]);
@@ -26,7 +27,7 @@ function Profile() {
   const logOut = async () => {
     try {
       await signOut(auth);
-      navigation("/");
+      navigation(HOME_PATH);
     } catch (error) {
       console.error(error);
     }
