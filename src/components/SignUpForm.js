@@ -48,14 +48,6 @@ export default function SignUpForm() {
     }
   };
 
-  // const logOut = async () => {
-  //   try {
-  //     await signInWithPopup(auth);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   return (
     <Box
       sx={{
@@ -124,7 +116,6 @@ export default function SignUpForm() {
           Sign Up
         </Button>
         <Button onClick={signUpWithGoogleAcc}>Sign Up With Google</Button>
-        {/* <Button onClick={logOut}>Log out</Button> */}
       </form>
     </Box>
   );

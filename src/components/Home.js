@@ -5,6 +5,7 @@ import styles from "./Home.module.css";
 
 export default function Home() {
   const navigation = useNavigate();
+
   return (
     <>
       <div className={styles.container}>
