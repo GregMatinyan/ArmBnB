@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import LogInForm from "./LogInForm";
-import styles from "./Home.module.css";
+import styles from "../Home.module.css";
 
 export default function Home() {
   const navigation = useNavigate();

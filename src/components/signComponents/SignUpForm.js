@@ -6,10 +6,11 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import styles from "./InputForm.module.css";
-import { auth, googleProvider, usersListRef } from "../configs/firebase";
+import { auth, googleProvider, usersListRef } from "../../configs/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { HOME_PATH } from "../../constants/auth";
 
 export default function SignUpForm() {
   const [name, setName] = useState("");
@@ -37,7 +38,7 @@ export default function SignUpForm() {
       setEmail("");
       setPassword("");
       setProfession("");
-      navigation("../profile");
+      navigation(HOME_PATH);
     } catch (error) {
       console.error(error);
     }
