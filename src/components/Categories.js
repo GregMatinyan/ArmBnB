@@ -1,6 +1,6 @@
 import React from "react";
 import icons from "../icons/icons";
-import styles from "./Filters.module.css";
+import styles from "./Categories.module.css";
 
 const {
   motel,
@@ -15,47 +15,47 @@ const {
   cottage,
 } = icons;
 
-function Filters(props) {
+function Filters() {
   return (
     <div className={styles.container}>
       <span>
-        <img src={motel} />
+        <img src={motel} alt="icon" />
         <p>Motel</p>
       </span>
       <span>
-        <img src={skiing} />
+        <img src={skiing} alt="icon" />
         <p>Skiing</p>
       </span>
       <span>
-        <img src={climbing} />
+        <img src={climbing} alt="icon" />
         <p>Hicking</p>
       </span>
       <span>
-        <img src={landscape} />
+        <img src={landscape} alt="icon" />
         <p>Nature</p>
       </span>
       <span>
-        <img src={tent} />
+        <img src={tent} alt="icon" />
         <p>Camping</p>
       </span>
       <span>
-        <img src={vip} />
+        <img src={vip} alt="icon" />
         <p>VIP</p>
       </span>
       <span>
-        <img src={window} />
+        <img src={window} alt="icon" />
         <p>Lovely view</p>
       </span>
       <span>
-        <img src={lake} />
+        <img src={lake} alt="icon" />
         <p>Around lake</p>
       </span>
       <span>
-        <img src={pool} />
+        <img src={pool} alt="icon" />
         <p>With pool</p>
       </span>
       <span>
-        <img src={cottage} />
+        <img src={cottage} alt="icon" />
         <p>Cottages</p>
       </span>
     </div>
