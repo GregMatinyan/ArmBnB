@@ -9,6 +9,7 @@ import styles from "./InputForm.module.css";
 import { auth, googleProvider, usersListRef } from "../configs/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm() {
   const [name, setName] = useState("");
@@ -16,6 +17,7 @@ export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [proffession, setProfession] = useState("");
+  const navigation = useNavigate();
 
   const chooseProffession = (event) => {
     setProfession(event.target.value);
@@ -35,6 +37,7 @@ export default function SignUpForm() {
       setEmail("");
       setPassword("");
       setProfession("");
+      navigation("../profile");
     } catch (error) {
       console.error(error);
     }
