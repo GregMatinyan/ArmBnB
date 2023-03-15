@@ -23,7 +23,7 @@ function Header() {
   };
 
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <div className={styles.logocontainer}>
         <img className={styles.logo} src={Logo} alt="logo"></img>
       </div>
@@ -43,15 +43,19 @@ function Header() {
         </div>
       )}
       {userState && (
-        <div className={styles.sign}>
-          <Button variant="outlined" onClick={logOut}>
+        <div className={styles.logout}>
+          <Button
+            sx={{ color: "#3f3b34", borderColor: "#3f3b34" }}
+            variant="outlined"
+            onClick={logOut}
+          >
             Log Out
           </Button>
 
           <img src={avatar} alt="avatar" />
         </div>
       )}
-    </div>
+    </header>
   );
 }
 

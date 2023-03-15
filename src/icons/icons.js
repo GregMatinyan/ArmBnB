@@ -1,25 +1,25 @@
-import motel from "./motel.png";
-import skiing from "./skiing.png";
-import climbing from "./climbing.png";
-import landscape from "./landscape.png";
-import tent from "./tent.png";
-import vip from "./vip.png";
+import Motel from "./motel.png";
+import Skiing from "./skiing.png";
+import Hiking from "./climbing.png";
+import Nature from "./landscape.png";
+import Camping from "./tent.png";
+import Vip from "./vip.png";
 import window from "./window.png";
 import lake from "./lake.png";
-import pool from "./swimming-pool.png";
-import cottage from "./wooden-house.png";
+import Pool from "./swimming-pool.png";
+import Cottage from "./wooden-house.png";
 
 const icons = {
-  motel,
-  skiing,
-  climbing,
-  landscape,
-  tent,
-  vip,
-  window,
-  lake,
-  pool,
-  cottage,
+  Motel,
+  Skiing,
+  Hiking,
+  Nature,
+  Camping,
+  Vip,
+  "Lovely View": window,
+  "Around Lake": lake,
+  "With Pool": Pool,
+  Cottage,
 };
 
 export default icons;
