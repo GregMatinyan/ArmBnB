@@ -8,9 +8,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../configs/firebase";
 
 function Header(props) {
-  const [userState, setUserState] = useState(true);
+  const [userState, setUserState] = useState(false);
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <div className={styles.logocontainer}>
         <img className={styles.logo} src={Logo} alt="logo"></img>
       </div>
@@ -26,13 +26,18 @@ function Header(props) {
         </div>
       )}
       {userState && (
-        <div className={styles.sign}>
-          <Button variant="outlined">Log Out</Button>
+        <div className={styles.logout}>
+          <Button
+            sx={{ color: "#3f3b34", borderColor: "#3f3b34" }}
+            variant="outlined"
+          >
+            Log Out
+          </Button>
 
           <img src={avatar} />
         </div>
       )}
-    </div>
+    </header>
   );
 }
 

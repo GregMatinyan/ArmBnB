@@ -1,27 +1,28 @@
 .container {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 50px;
+  margin-top: 80px;
+}
+
+.iconspan {
+  cursor: pointer;
+  opacity: 0.65;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  transition: all 0.2s;
 }
 
 .container img {
-  width: 100%;
+  width: 42px;
 }
 
-.container p {
+.textspan {
   font-size: 15px;
   color: black;
 }
 
-.container span:hover {
-  width: 65px;
-  color: whit;
+.iconspan:hover {
   opacity: 1;
-  transition: 0.2s;
-}
-
-.container span {
-  cursor: pointer;
-  width: 50px;
-  opacity: 0.8;
 }
