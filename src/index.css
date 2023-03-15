@@ -2,7 +2,8 @@ body {
   margin: 0;
   padding: 0;
   background-attachment: fixed;
-  background-image: url("../src/images/bg-img.jpg");
+  background-color: rgb(249, 234, 208);
+  /* background-image: url("../src/images/bg-img.jpg"); */
   background-position: center;
   background-size: cover;
   height: 100vh;

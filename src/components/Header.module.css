@@ -1,0 +1,32 @@
+.logo {
+  width: 120px;
+  border-radius: 50%;
+}
+
+/* @media (max-width: 100%) { */
+.header {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-evenly;
+}
+/* } */
+.search div {
+  border-radius: 15px;
+  border: none;
+  margin: auto;
+  width: 125%;
+}
+
+.search {
+  margin: auto;
+}
+
+.sign {
+  margin: auto;
+  margin-right: 50px;
+}
+
+.sign img {
+  width: 50px;
+  margin-left: 35px;
+}
