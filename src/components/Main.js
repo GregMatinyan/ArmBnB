@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import { HOME_PATH, SIGNUP_PATH, LOGIN_PATH } from "../constants/auth";
 import { auth } from "../configs/firebase";
 
-export default function Main() {
+export default function TESTER() {
   const [userState, setUserState] = useState(false);
   auth.onAuthStateChanged((user) => {
     if (user) {
