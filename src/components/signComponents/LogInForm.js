@@ -4,8 +4,9 @@ import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import styles from "./InputForm.module.css";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../configs/firebase";
+import { auth } from "../../configs/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { HOME_PATH } from "../../constants/auth";
 
 export default function LogInForm() {
   const navigation = useNavigate();
@@ -14,7 +15,7 @@ export default function LogInForm() {
   const logInWithEmail = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigation("profile");
+      navigation(HOME_PATH);
     } catch (error) {
       console.error(error);
     }
