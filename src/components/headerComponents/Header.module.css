@@ -1,0 +1,40 @@
+.logo {
+  width: 85px;
+  border-radius: 50%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.search div {
+  border-radius: 15px;
+  border: none;
+  width: 270px;
+}
+
+.search input {
+  padding: 12px 10px;
+}
+
+.search input:focus {
+  border-color: black;
+}
+.logout,
+.sign {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.sign img,
+.logout img {
+  width: 40px;
+  height: 40px;
+  opacity: 0.75;
+}
+
+.logoutbutton span {
+  color: #3f3b34;
+}
