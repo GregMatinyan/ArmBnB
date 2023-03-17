@@ -37,8 +37,8 @@ export default function SignUpForm() {
       setSurname("");
       setEmail("");
       setPassword("");
-      setProfession("");
-      navigation(HOME_PATH);
+      // setProfession("");
+      // navigation(HOME_PATH);
     } catch (error) {
       console.error(error);
     }
