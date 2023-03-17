@@ -11,6 +11,7 @@ import Cottage from "./wooden-house.png";
 
 const icons = {
   Motel,
+  Cottage,
   Skiing,
   Hiking,
   Nature,
@@ -19,7 +20,21 @@ const icons = {
   "Lovely View": window,
   "Around Lake": lake,
   "With Pool": Pool,
-  Cottage,
 };
 
 export default icons;
+
+export const hostTypeIcons = {
+  Motel,
+  Cottage,
+};
+export const hostFeatureIcons = {
+  Skiing,
+  Hiking,
+  Nature,
+  Camping,
+  Vip,
+  "Lovely View": window,
+  "Around Lake": lake,
+  "With Pool": Pool,
+};
