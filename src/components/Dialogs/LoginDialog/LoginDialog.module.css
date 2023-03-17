@@ -1,0 +1,11 @@
+.title {
+  color: #645e53;
+  align-self: center;
+}
+/* .dialogContent {
+  background-color: brown;
+} */
+
+.input > input {
+  border-radius: 50px;
+}
