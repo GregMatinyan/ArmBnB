@@ -38,3 +38,16 @@
 .logoutbutton span {
   color: #3f3b34;
 }
+
+.addOfferSpan {
+  display: inline-block;
+  border: 2px solid #3f3b34;
+  padding: 8px 10px;
+  border-radius: 15px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.addOfferSpan:hover {
+  background-color: #f4ddb5;
+}

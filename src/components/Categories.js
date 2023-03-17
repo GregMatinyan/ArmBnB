@@ -1,8 +1,8 @@
 import React from "react";
-import icons from "../icons/icons";
+import filterIcons from "../icons/icons";
 import styles from "./Categories.module.css";
 
-function renderFilterIcons() {
+export function renderIcons(icons, styles) {
   return Object.entries(icons).map((item) => {
     return (
       <span className={styles.iconspan} key={item[0]}>
@@ -13,7 +13,9 @@ function renderFilterIcons() {
   });
 }
 function Categories() {
-  return <div className={styles.container}>{renderFilterIcons()}</div>;
+  return (
+    <div className={styles.container}>{renderIcons(filterIcons, styles)}</div>
+  );
 }
 
 export default Categories;

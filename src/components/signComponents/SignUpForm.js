@@ -10,7 +10,7 @@ import { auth, googleProvider, usersListRef } from "../../configs/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { HOME_PATH } from "../../constants/auth";
+import { HOME_PATH } from "../../constants/path";
 
 export default function SignUpForm() {
   const [name, setName] = useState("");

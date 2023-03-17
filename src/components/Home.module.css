@@ -1,11 +1,10 @@
 .container {
   padding: 20px;
-  color: #b9c0e0;
-  font-size: 22px;
 }
 
 .child {
   display: flex;
+  font-size: 22px;
   flex-direction: column;
   gap: 15px;
   align-items: center;
