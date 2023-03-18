@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { UserStateContext } from "../../context/UserStateContext";
-import { OFFER_PATH } from "../../constants/path";
+// import { UserStateContext } from "../../context/UserStateContext";
+import { OFFER_PATH, HOME_PATH } from "../../constants/path";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import styles from "./Header.module.css";
@@ -11,9 +11,10 @@ import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
 import LogInDialog from "../Dialogs/LoginDialog/LogInDialog";
 import SignUpDialog from "../Dialogs/SignUpDialog/SignUpDIalog";
+import { User } from "../../context/UserStateContext";
 
 function Header() {
-  const userState = React.useContext(UserStateContext);
+  const user = React.useContext(User);
   const [loginDialog, setLoginDialog] = useState(false);
   const [signUpDialog, setSignUpDialog] = useState(false);
 
@@ -27,10 +28,7 @@ function Header() {
   };
 
   const renderSign = () => {
-    if (!userState) {
-      return null;
-    }
-    return !userState ? (
+    return !user ? (
       <div className={styles.sign}>
         <Button
           variant="text"
@@ -88,7 +86,12 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logocontainer}>
-        <img className={styles.logo} src={Logo} alt="logo"></img>
+        <img
+          onClick={() => navigation(HOME_PATH)}
+          className={styles.logo}
+          src={Logo}
+          alt="logo"
+        ></img>
       </div>
 
       <div className={styles.search}>

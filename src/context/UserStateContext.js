@@ -1,5 +1,5 @@
 import React from "react";
 
-export const UserStateContext = React.createContext({
-  userState: false,
-});
+export const User = React.createContext(null);
+
+export const Loading = React.createContext(false);
