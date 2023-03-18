@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { UserStateContext } from "../../context/UserStateContext";
-import { OFFER_PATH } from "../../constants/path";
+import { Sign, LogedInUser } from "../../context/UserStateContext";
+import { HOME_PATH, OFFER_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import styles from "./Header.module.css";
@@ -13,11 +13,12 @@ import LogInDialog from "../Dialogs/LoginDialog/LogInDialog";
 import SignUpDialog from "../Dialogs/SignUpDialog/SignUpDIalog";
 
 function Header() {
-  const userState = React.useContext(UserStateContext);
+  const sign = React.useContext(Sign);
+  const logedInUser = React.useContext(LogedInUser);
+  const navigation = useNavigate();
   const [loginDialog, setLoginDialog] = useState(false);
   const [signUpDialog, setSignUpDialog] = useState(false);
 
-  const navigation = useNavigate();
   const logOut = async () => {
     try {
       await signOut(auth);
@@ -27,10 +28,11 @@ function Header() {
   };
 
   const renderSign = () => {
-    if (!userState) {
+    console.log(sign);
+    if (sign) {
       return null;
     }
-    return !userState ? (
+    return !logedInUser ? (
       <div className={styles.sign}>
         <Button
           variant="text"
@@ -50,9 +52,7 @@ function Header() {
             borderColor: "#3f3b34",
           }}
           variant="outlined"
-          onClick={() => {
-            setSignUpDialog(true);
-          }}
+          // onClick={navigation(SIGNUP_PATH)}
         >
           Sign Up
         </Button>
@@ -87,7 +87,7 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logocontainer}>
+      <div onClick={() => navigation(HOME_PATH)}>
         <img className={styles.logo} src={Logo} alt="logo"></img>
       </div>
 
