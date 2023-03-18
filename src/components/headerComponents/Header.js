@@ -11,6 +11,7 @@ import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
 import LogInDialog from "../Dialogs/LoginDialog/LogInDialog";
 import SignUpDialog from "../Dialogs/SignUpDialog/SignUpDIalog";
+import { User } from "../../context/UserStateContext";
 
 function Header() {
   const sign = React.useContext(Sign);

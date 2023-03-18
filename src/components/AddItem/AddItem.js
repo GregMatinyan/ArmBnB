@@ -8,7 +8,7 @@ function AddItem() {
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const handleUploadImage = async () => {
-    if (uploadedImage == null) return;
+    if (uploadedImage === null) return;
     const imageRef = ref(storage, `offer/images/${uploadedImage.name}`);
 
     await uploadBytes(imageRef, uploadedImage);
@@ -22,6 +22,7 @@ function AddItem() {
           <label htmlFor="hname">Your host name</label>
           <input id="hname" type="text"></input>
         </div>
+
         <div>
           <select>
             <option> Choose your host type</option>
@@ -37,30 +38,37 @@ function AddItem() {
               <input type="checkbox" id="tv" />
               <label htmlFor="tv">TV</label>
             </div>
+
             <div>
               <input type="checkbox" id="wifi" />
               <label htmlFor="wifi">Wifi</label>
             </div>
+
             <div>
               <input type="checkbox" id="air" />
               <label htmlFor="air">Air conditioning</label>
             </div>
+
             <div>
               <input type="checkbox" id="crib" />
               <label htmlFor="crib">Crib</label>
             </div>
+
             <div>
               <input type="checkbox" id="kitchen" />
               <label htmlFor="kitchen">Kitchen</label>
             </div>
+
             <div>
               <input type="checkbox" id="washer" />
               <label htmlFor="washer">Washer</label>
             </div>
+
             <div>
               <input type="checkbox" id="patio" />
               <label htmlFor="patio">Patio or balcony</label>
             </div>
+
             <div>
               <input type="checkbox" id="skyline" />
               <label htmlFor="skyline">City skyline view</label>
