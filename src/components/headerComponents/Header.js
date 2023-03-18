@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { UserStateContext } from "../../context/UserStateContext";
-// import { SIGNUP_PATH } from "../../constants/auth";
-// import { useNavigate } from "react-router-dom";
+import { OFFER_PATH } from "../../constants/path";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import styles from "./Header.module.css";
 import avatar from "../../icons/user.png";
@@ -17,13 +17,72 @@ function Header() {
   const [loginDialog, setLoginDialog] = useState(false);
   const [signUpDialog, setSignUpDialog] = useState(false);
 
-  // const navigation = useNavigate();
+  const navigation = useNavigate();
   const logOut = async () => {
     try {
       await signOut(auth);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const renderSign = () => {
+    if (!userState) {
+      return null;
+    }
+    return !userState ? (
+      <div className={styles.sign}>
+        <Button
+          variant="text"
+          onClick={() => {
+            setLoginDialog(true);
+          }}
+          sx={{
+            color: "#3f3b34",
+            borderColor: "#3f3b34",
+          }}
+        >
+          Sign In
+        </Button>
+        <Button
+          sx={{
+            color: "#3f3b34",
+            borderColor: "#3f3b34",
+          }}
+          variant="outlined"
+          onClick={() => {
+            setSignUpDialog(true);
+          }}
+        >
+          Sign Up
+        </Button>
+        <LogInDialog
+          open={loginDialog}
+          handleClose={() => {
+            setLoginDialog(false);
+          }}
+        />
+        <SignUpDialog
+          open={signUpDialog}
+          handleClose={() => {
+            setSignUpDialog(false);
+          }}
+        />
+      </div>
+    ) : (
+      <div className={styles.logout}>
+        <Button
+          sx={{ color: "#3f3b34", borderColor: "#3f3b34" }}
+          variant="outlined"
+          onClick={logOut}
+        >
+          Log Out
+        </Button>
+        <span>
+          <img src={avatar} alt="avatar" />
+        </span>
+      </div>
+    );
   };
 
   return (
@@ -36,60 +95,13 @@ function Header() {
         <TextField id="outlined-basic" label="Search" variant="outlined" />
       </div>
 
-      {!userState && (
-        <div className={styles.sign}>
-          <Button
-            variant="text"
-            onClick={() => {
-              setLoginDialog(true);
-            }}
-            sx={{
-              color: "#3f3b34",
-              borderColor: "#3f3b34",
-            }}
-          >
-            Sign In
-          </Button>
-          <Button
-            sx={{
-              color: "#3f3b34",
-              borderColor: "#3f3b34",
-            }}
-            variant="outlined"
-            onClick={() => {
-              setSignUpDialog(true);
-            }}
-          >
-            Sign Up
-          </Button>
-          <LogInDialog
-            open={loginDialog}
-            handleClose={() => {
-              setLoginDialog(false);
-            }}
-          />
-          <SignUpDialog
-            open={signUpDialog}
-            handleClose={() => {
-              setSignUpDialog(false);
-            }}
-          />
-        </div>
-      )}
-      {userState && (
-        <div className={styles.logout}>
-          <Button
-            sx={{ color: "#3f3b34", borderColor: "#3f3b34" }}
-            variant="outlined"
-            onClick={logOut}
-          >
-            Log Out
-          </Button>
-          <span>
-            <img src={avatar} alt="avatar" />
-          </span>
-        </div>
-      )}
+      <span
+        onClick={() => navigation(OFFER_PATH)}
+        className={styles.addOfferSpan}
+      >
+        Add your host
+      </span>
+      {renderSign()}
     </header>
   );
 }
