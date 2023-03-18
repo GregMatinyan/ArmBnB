@@ -106,7 +106,7 @@ function AddItem() {
             id="files"
             onChange={(e) => setUploadedImage(e.target.files[0])}
           />
-          <button onClick={handleUploadImage}>Add image</button>
+          <button onClick={handleUploadImage}>Submit</button>
         </div>
       </form>
     </div>
