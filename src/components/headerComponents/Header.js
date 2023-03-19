@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { UserStateContext } from "../../context/UserStateContext";
-import { OFFER_PATH, HOME_PATH } from "../../constants/path";
+import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import styles from "./Header.module.css";
@@ -49,7 +49,7 @@ function Header() {
           }}
           variant="outlined"
           onClick={() => {
-            setSignUpDialog(true);
+            navigation(SIGNUP_PATH);
           }}
         >
           Sign Up

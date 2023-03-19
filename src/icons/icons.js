@@ -24,10 +24,10 @@ const icons = {
 
 export default icons;
 
-export const hostTypeIcons = {
-  Motel,
-  Cottage,
-};
+// export const hostTypeIcons = {
+//   Motel,
+//   Cottage,
+// };
 export const hostFeatureIcons = {
   Skiing,
   Hiking,

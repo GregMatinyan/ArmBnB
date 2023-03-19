@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import Header from "../headerComponents/Header";
 import styles from "./AddItem.module.css";
-import { storage } from "../../configs/firebase";
-import { ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+import { offersListRef, storage } from "../../configs/firebase";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { setDoc, doc } from "@firebase/firestore";
 
 function AddItem(props) {
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [imageUrls, setImageUrls] = useState([]);
 
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
@@ -21,11 +29,69 @@ function AddItem(props) {
   const [guests, setGuests] = useState(0);
   const [price, setPrice] = useState(0);
 
-  const handleUploadImage = async () => {
-    if (uploadedImage === null) return;
-    const imageRef = ref(storage, `offer/images/${uploadedImage.name}`);
+  const hostInfo = {
+    hostName,
+    hostType,
+    tv,
+    wifi,
+    conditioner,
+    kitchen,
+    washer,
+    patio,
+    breakfast,
+    lovelyView,
+    rooms,
+    guests,
+    price,
+  };
 
-    await uploadBytes(imageRef, uploadedImage);
+  const renderImages = (urls) => {
+    return urls.map((element) => {
+      return <img src={element} />;
+    });
+  }; //for images render
+
+  const handleUploadData = async (offerId) => {
+    await setDoc(doc(offersListRef, offerId), hostInfo);
+  };
+
+  const handleUploadImage = (offerId) => {
+    if (uploadedImage == null) return;
+
+    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, uploadedImage);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageUrls((prev) => [...prev, downloadURL]);
+        });
+      }
+    );
+  };
+
+  const handleUploadImageAndData = () => {
+    const offerId = hostName.replace(" ", "_") + v4();
+
+    handleUploadData(offerId);
+    handleUploadImage(offerId);
   };
 
   return (
@@ -51,10 +117,6 @@ function AddItem(props) {
             <option>Motel</option>
             <option>Cottage</option>
           </select>
-
-          {/* <div className={styles.hostTypeContainer}>
-            {renderIcons(hostTypeIcons, styles)}
-          </div> */}
         </div>
         <div>
           <fieldset>
@@ -140,10 +202,6 @@ function AddItem(props) {
               <label htmlFor="breakfast">Breakfast</label>
             </div>
           </fieldset>
-
-          {/* <div className={styles.hostTypeContainer}>
-            {renderIcons(hostFeatureIcons, styles)}
-          </div> */}
         </div>
         <div>
           <label htmlFor="ng">Number of guests</label>
@@ -182,17 +240,15 @@ function AddItem(props) {
           <input id="cont" type="text"></input>
         </div>
         <div>
-          {/* <label htmlFor="files" className={styles.btn}>
-            Select Image
-          </label> */}
           <input
             type="file"
             id="files"
             onChange={(e) => setUploadedImage(e.target.files[0])}
           />
-          <button onClick={handleUploadImage}>Add image</button>
         </div>
       </form>
+      <button onClick={handleUploadImageAndData}>Submit</button>
+      {renderImages(imageUrls)}
     </div>
   );
 }

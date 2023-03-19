@@ -26,8 +26,8 @@ export default function Main() {
       <User.Provider value={logedInUser}>
         <Routes>
           <Route path={HOME_PATH} element={<Home />} />
-          {/* {/* <Route path={LOGIN_PATH} element={<LogIn />} /> */}
           <Route path={OFFER_PATH} element={<AddItem />} />
+          <Route path={SIGNUP_PATH} element={<SignUp />} />
         </Routes>
       </User.Provider>
     </>
