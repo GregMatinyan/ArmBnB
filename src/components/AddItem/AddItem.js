@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import Header from "../headerComponents/Header";
 import styles from "./AddItem.module.css";
 import { v4 } from "uuid";
-import { offersListRef, storage } from "../../configs/firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { offersCollection, storage } from "../../configs/firebase";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { setDoc, doc } from "@firebase/firestore";
 
-function AddItem(props) {
+function AddItem() {
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [imageUrls, setImageUrls] = useState([]);
-
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
   const [tv, setTv] = useState(false);
@@ -23,6 +21,8 @@ function AddItem(props) {
   const [rooms, setRooms] = useState(0);
   const [guests, setGuests] = useState(0);
   const [price, setPrice] = useState(0);
+  const [contacts, setContacts] = useState("");
+  const [location, setLocation] = useState("");
 
   const hostInfo = {
     hostName,
@@ -38,55 +38,23 @@ function AddItem(props) {
     rooms,
     guests,
     price,
+    location,
+    contacts,
   };
 
-  const renderImages = (urls) => {
-    return urls.map((element) => {
-      return <img src={element} />;
-    });
-  }; //for images render
+  // const renderImages = (urls) => {
+  //   return urls.map((element) => {
+  //     return <img src={element} alt="host-img" />;
+  //   });
+  // };
 
-  const handleUploadData = async (offerId) => {
-    await setDoc(doc(offersListRef, offerId), hostInfo);
-  };
-
-  const handleUploadImage = (offerId) => {
+  const handleUploadData = async () => {
     if (uploadedImage == null) return;
-
-    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, uploadedImage);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageUrls((prev) => [...prev, downloadURL]);
-        });
-      }
-    );
-  };
-
-  const handleUploadImageAndData = () => {
     const offerId = hostName.replace(" ", "_") + v4();
-
-    handleUploadData(offerId);
-    handleUploadImage(offerId);
+    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
+    await uploadBytes(storageRef, uploadedImage);
+    const url = await getDownloadURL(storageRef);
+    await setDoc(doc(offersCollection, offerId), { ...hostInfo, url });
   };
 
   return (
@@ -227,12 +195,22 @@ function AddItem(props) {
         </div>
         <div>
           <label htmlFor="loc">Location</label>
-          <input id="loc" type="text"></input>
+          <input
+            id="loc"
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          ></input>
         </div>
 
         <div>
           <label htmlFor="cont">Contacts</label>
-          <input id="cont" type="text"></input>
+          <input
+            id="cont"
+            type="text"
+            value={contacts}
+            onChange={(e) => setContacts(e.target.value)}
+          ></input>
         </div>
         <div>
           <input
@@ -242,8 +220,8 @@ function AddItem(props) {
           />
         </div>
       </form>
-      <button onClick={handleUploadImageAndData}>Submit</button>
-      {renderImages(imageUrls)}
+      <button onClick={handleUploadData}>Submit</button>
+      {/* {renderImages(imageUrls)} */}
     </div>
   );
 }
