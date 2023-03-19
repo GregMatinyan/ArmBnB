@@ -1,9 +1,11 @@
 body {
   margin: 0;
-  background-image: url("../src/images/bg-img.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  padding: 0;
+  color: #3f3b34;
+  background-color: #f9ead0;
+  height: 100vh;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 code {

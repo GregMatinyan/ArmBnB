@@ -1,22 +1,13 @@
-import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
-import LogInForm from "./LogInForm";
+import styles from "./Home.module.css";
+import Header from "./headerComponents/Header";
+import Categories from "./Categories";
 
 export default function Home() {
-  const navigation = useNavigate();
   return (
     <>
-      <div>
-        <span>Log In if you already have an account</span>
-        <br />
-        <LogInForm />
-      </div>
-      <div>
-        <span>Or</span>
-        <br />
-        <Button variant="contained" onClick={() => navigation("signing")}>
-          Sign Up
-        </Button>
+      <div className={styles.container}>
+        <Header />
+        <Categories />
       </div>
     </>
   );
