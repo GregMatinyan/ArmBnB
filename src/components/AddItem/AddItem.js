@@ -1,24 +1,92 @@
 import React, { useState } from "react";
 import Header from "../headerComponents/Header";
 import styles from "./AddItem.module.css";
-import { renderIcons } from "../Categories";
-import { hostTypeIcons, hostFeatureIcons } from "../../icons/icons";
-import { storage } from "../../configs/firebase";
-import { ref, uploadBytes } from "firebase/storage";
-import { json } from "react-router-dom";
+import { v4 } from "uuid";
+import { offersListRef, storage } from "../../configs/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { setDoc, doc } from "@firebase/firestore";
 
 function AddItem(props) {
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState({ description: "Lav tun " });
+  const [imageUrls, setImageUrls] = useState([]);
 
-  const handleUploadImage = async () => {
+  const [hostName, setHotelName] = useState("");
+  const [hostType, setHostType] = useState("");
+  const [tv, setTv] = useState(false);
+  const [wifi, setwifi] = useState(false);
+  const [conditioner, setConditioner] = useState(false);
+  const [kitchen, setKitchen] = useState(false);
+  const [washer, setwasher] = useState(false);
+  const [patio, setPatio] = useState(false);
+  const [breakfast, setBreakfast] = useState(false);
+  const [lovelyView, setLovelyView] = useState(false);
+  const [rooms, setRooms] = useState(0);
+  const [guests, setGuests] = useState(0);
+  const [price, setPrice] = useState(0);
+
+  const hostInfo = {
+    hostName,
+    hostType,
+    tv,
+    wifi,
+    conditioner,
+    kitchen,
+    washer,
+    patio,
+    breakfast,
+    lovelyView,
+    rooms,
+    guests,
+    price,
+  };
+
+  const renderImages = (urls) => {
+    return urls.map((element) => {
+      return <img src={element} />;
+    });
+  }; //for images render
+
+  const handleUploadData = async (offerId) => {
+    await setDoc(doc(offersListRef, offerId), hostInfo);
+  };
+
+  const handleUploadImage = (offerId) => {
     if (uploadedImage == null) return;
-    const imageRef = ref(storage, `offer/images/${uploadedImage.name}`);
-    const imageNameRef = ref(storage, `offer/images/${uploadedFile}`);
-    await setUploadedFile(JSON.stringify(uploadedFile, null, 2));
-    console.log(uploadBytes);
-    await uploadBytes(imageRef, uploadedImage);
-    await uploadBytes(imageNameRef, uploadedFile);
+
+    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, uploadedImage);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageUrls((prev) => [...prev, downloadURL]);
+        });
+      }
+    );
+  };
+
+  const handleUploadImageAndData = () => {
+    const offerId = hostName.replace(" ", "_") + v4();
+
+    handleUploadData(offerId);
+    handleUploadImage(offerId);
   };
 
   return (
@@ -26,103 +94,156 @@ function AddItem(props) {
       <Header />
       <form className={styles.form}>
         <div>
-          <label for="hname">Your host name</label>
-          <input id="hname" type="text"></input>
+          <label htmlFor="hname">Your host name</label>
+          <input
+            value={hostName}
+            onChange={(e) => setHotelName(e.target.value)}
+            id="hname"
+            type="text"
+          ></input>
         </div>
+
         <div>
-          <select>
-            <option selected> Choose your host type</option>
+          <select
+            value={hostType}
+            onChange={(e) => setHostType(e.target.value)}
+          >
+            <option> Choose your host type</option>
             <option>Motel</option>
             <option>Cottage</option>
           </select>
-          {/* <div className={styles.hostTypeContainer}>
-            {renderIcons(hostTypeIcons, styles)}
-          </div> */}
         </div>
         <div>
           <fieldset>
             <legend>Choose your host features:</legend>
 
             <div>
-              <input type="checkbox" id="tv" />
-              <label for="tv">TV</label>
+              <input
+                checked={tv}
+                onChange={() => setTv(!tv)}
+                type="checkbox"
+                id="tv"
+              />
+              <label htmlFor="tv">TV</label>
             </div>
+
             <div>
-              <input type="checkbox" id="wifi" />
-              <label for="wifi">Wifi</label>
+              <input
+                checked={wifi}
+                onChange={() => setwifi(!wifi)}
+                type="checkbox"
+                id="wifi"
+              />
+              <label htmlFor="wifi">Wifi</label>
             </div>
+
             <div>
-              <input type="checkbox" id="air" />
-              <label for="air">Air conditioning</label>
+              <input
+                checked={conditioner}
+                onChange={() => setConditioner(!conditioner)}
+                type="checkbox"
+                id="air"
+              />
+              <label htmlFor="air">Air conditioning</label>
             </div>
+
             <div>
-              <input type="checkbox" id="crib" />
-              <label for="crib">Crib</label>
+              <input
+                checked={kitchen}
+                onChange={() => setKitchen(!kitchen)}
+                type="checkbox"
+                id="kitchen"
+              />
+              <label htmlFor="kitchen">Kitchen</label>
             </div>
+
             <div>
-              <input type="checkbox" id="kitchen" />
-              <label for="kitchen">Kitchen</label>
+              <input
+                checked={washer}
+                onChange={() => setwasher(!washer)}
+                type="checkbox"
+                id="washer"
+              />
+              <label htmlFor="washer">Washer</label>
             </div>
+
             <div>
-              <input type="checkbox" id="washer" />
-              <label for="washer">Washer</label>
+              <input
+                checked={patio}
+                onChange={() => setPatio(!patio)}
+                type="checkbox"
+                id="patio"
+              />
+              <label htmlFor="patio">Patio or balcony</label>
             </div>
+
             <div>
-              <input type="checkbox" id="patio" />
-              <label for="patio">Patio or balcony</label>
+              <input
+                value={lovelyView}
+                onChange={() => setLovelyView(!lovelyView)}
+                type="checkbox"
+                id="view"
+              />
+              <label htmlFor="view">Lovely view</label>
             </div>
+
             <div>
-              <input type="checkbox" id="skyline" />
-              <label for="skyline">City skyline view</label>
-            </div>
-            <div>
-              <input type="checkbox" id="breakfast" />
-              <label for="breakfast">Breakfast</label>
+              <input
+                value={breakfast}
+                onChange={() => setBreakfast(!breakfast)}
+                type="checkbox"
+                id="breakfast"
+              />
+              <label htmlFor="breakfast">Breakfast</label>
             </div>
           </fieldset>
-          <select>
-            <option selected> Choose your host features</option>
-            <option>Motel</option>
-            <option>Cottage</option>
-          </select>
-          {/* <div className={styles.hostTypeContainer}>
-            {renderIcons(hostFeatureIcons, styles)}
-          </div> */}
         </div>
         <div>
-          <label for="ng">Number of guests</label>
-          <input id="ng" type="text"></input>
+          <label htmlFor="ng">Number of guests</label>
+          <input
+            value={guests}
+            onChange={(e) => setGuests(e.target.value)}
+            id="ng"
+            type="text"
+          ></input>
         </div>
         <div>
-          <label for="nr">Number of rooms</label>
-          <input id="nr" type="text"></input>
+          <label htmlFor="nr">Number of rooms</label>
+          <input
+            value={rooms}
+            onChange={(e) => setRooms(e.target.value)}
+            id="nr"
+            type="text"
+          ></input>
         </div>
         <div>
-          <label for="costpn">Cost per night</label>
-          <input id="costpn" type="text"></input>
+          <label htmlFor="costpn">Cost per night</label>
+          <input
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            id="costpn"
+            type="text"
+          ></input>
         </div>
         <div>
-          <label for="loc">Location</label>
+          <label htmlFor="loc">Location</label>
           <input id="loc" type="text"></input>
         </div>
 
         <div>
-          <label for="cont">Contacts</label>
+          <label htmlFor="cont">Contacts</label>
           <input id="cont" type="text"></input>
         </div>
         <div>
-          <label for="files" className={styles.btn} onClick={handleUploadImage}>
-            Select Image
-          </label>
           <input
             type="file"
-            style={{ visibility: "hidden" }}
             id="files"
             onChange={(e) => setUploadedImage(e.target.files[0])}
           />
-          {/* <button onClick={handleUploadImage}>Add image</button> */}
         </div>
       </form>
+      <button onClick={handleUploadImageAndData}>Submit</button>
+      {renderImages(imageUrls)}
     </div>
   );
 }

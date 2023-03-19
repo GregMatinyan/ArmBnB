@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { UserStateContext } from "../../context/UserStateContext";
-import { OFFER_PATH } from "../../constants/path";
+import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
+import { User } from "../../context/UserStateContext";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import styles from "./Header.module.css";
@@ -10,14 +10,12 @@ import TextField from "@mui/material/TextField";
 import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
 import LogInDialog from "../Dialogs/LoginDialog/LogInDialog";
-import SignUpDialog from "../Dialogs/SignUpDialog/SignUpDIalog";
 
 function Header() {
-  const userState = React.useContext(UserStateContext);
-  const [loginDialog, setLoginDialog] = useState(false);
-  const [signUpDialog, setSignUpDialog] = useState(false);
-
+  const user = React.useContext(User);
   const navigation = useNavigate();
+  const [loginDialog, setLoginDialog] = useState(false);
+
   const logOut = async () => {
     try {
       await signOut(auth);
@@ -27,10 +25,7 @@ function Header() {
   };
 
   const renderSign = () => {
-    if (!userState) {
-      return null;
-    }
-    return !userState ? (
+    return !user ? (
       <div className={styles.sign}>
         <Button
           variant="text"
@@ -51,7 +46,7 @@ function Header() {
           }}
           variant="outlined"
           onClick={() => {
-            setSignUpDialog(true);
+            navigation(SIGNUP_PATH);
           }}
         >
           Sign Up
@@ -60,12 +55,6 @@ function Header() {
           open={loginDialog}
           handleClose={() => {
             setLoginDialog(false);
-          }}
-        />
-        <SignUpDialog
-          open={signUpDialog}
-          handleClose={() => {
-            setSignUpDialog(false);
           }}
         />
       </div>
@@ -88,7 +77,12 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logocontainer}>
-        <img className={styles.logo} src={Logo} alt="logo"></img>
+        <img
+          onClick={() => navigation(HOME_PATH)}
+          className={styles.logo}
+          src={Logo}
+          alt="logo"
+        ></img>
       </div>
 
       <div className={styles.search}>
