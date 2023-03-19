@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogedInUser } from "../context/UserStateContext";
+import { User } from "../context/UserStateContext";
 import SignUp from "./signComponents/SignUp";
 import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
@@ -22,13 +22,13 @@ export default function Main() {
 
   return (
     <>
-      <LogedInUser.Provider value={logedInUser}>
+      <User.Provider value={logedInUser}>
         <Routes>
           <Route path={HOME_PATH} element={<Home />} />
-          <Route path={SIGNUP_PATH} element={<SignUp />} />
           <Route path={OFFER_PATH} element={<AddItem />} />
+          <Route path={SIGNUP_PATH} element={<SignUp />} />
         </Routes>
-      </LogedInUser.Provider>
+      </User.Provider>
     </>
   );
 }

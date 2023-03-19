@@ -1,3 +1,3 @@
 import React from "react";
 
-export const LogedInUser = React.createContext(null);
+export const User = React.createContext(null);
