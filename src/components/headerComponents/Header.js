@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
-import LogInDialog from "../Dialogs/LoginDialog/LogInDialog";
+import LogInDialog from "../dialogs/LogInDialog";
 
 function Header() {
   const user = React.useContext(User);

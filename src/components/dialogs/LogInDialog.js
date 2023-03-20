@@ -5,31 +5,18 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { addDoc } from "firebase/firestore";
-import { auth, googleProvider, usersListRef } from "../../../configs/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth } from "../../configs/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import styles from "./LoginDialog.module.css";
 
-import styles from "./SignUpDialog.module.css";
-
-export default function SignUpDialog({ open, handleClose }) {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
+export default function LogInDialog({ open, handleClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signUpWithEmail = async () => {
+  const logInWithEmail = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      await addDoc(usersListRef, {
-        name,
-        surname,
-        email,
-        userID: auth?.currentUser?.uid,
-      });
-      setName("");
-      setSurname("");
-      setEmail("");
-      setPassword("");
+      await signInWithEmailAndPassword(auth, email, password);
+      handleClose();
     } catch (error) {
       console.error(error);
     }
@@ -43,38 +30,12 @@ export default function SignUpDialog({ open, handleClose }) {
           handleClose();
           setEmail("");
           setPassword("");
-          setName("");
-          setSurname("");
         }}
       >
         <DialogTitle className={styles.title}>
-          Create your ArmBnB account
+          LogIn to your ArmBnB account
         </DialogTitle>
         <DialogContent className={styles.dialogContent}>
-          <TextField
-            className={styles.input}
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Name"
-            type="text"
-            fullWidth
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            variant="outlined"
-          />
-          <TextField
-            className={styles.input}
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Surname"
-            type="text"
-            fullWidth
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-            variant="outlined"
-          />
           <TextField
             className={styles.input}
             autoFocus
@@ -111,13 +72,13 @@ export default function SignUpDialog({ open, handleClose }) {
             Cancel
           </Button> */}
           <Button
-            onClick={signUpWithEmail}
             sx={{
               color: "#3f3b34",
               borderColor: "#3f3b34",
             }}
+            onClick={logInWithEmail}
           >
-            Create account
+            Log In
           </Button>
         </DialogActions>
       </Dialog>
