@@ -17,5 +17,5 @@ export const googleProvider = new GoogleAuthProvider();
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 export const db = getFirestore(app);
-export const usersListRef = collection(db, "users");
-export const offersListRef = collection(db, "offers");
+export const usersCollection = collection(db, "users");
+export const offersCollection = collection(db, "offers");

@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import Header from "../headerComponents/Header";
 import styles from "./AddItem.module.css";
 import { v4 } from "uuid";
-import { offersListRef, storage } from "../../configs/firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { offersCollection, storage } from "../../configs/firebase";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { setDoc, doc } from "@firebase/firestore";
 
-function AddItem(props) {
+function AddHost() {
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [imageUrls, setImageUrls] = useState([]);
-
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
   const [tv, setTv] = useState(false);
@@ -23,6 +21,8 @@ function AddItem(props) {
   const [rooms, setRooms] = useState(0);
   const [guests, setGuests] = useState(0);
   const [price, setPrice] = useState(0);
+  const [contacts, setContacts] = useState("");
+  const [location, setLocation] = useState("");
 
   const hostInfo = {
     hostName,
@@ -38,55 +38,17 @@ function AddItem(props) {
     rooms,
     guests,
     price,
+    location,
+    contacts,
   };
 
-  const renderImages = (urls) => {
-    return urls.map((element) => {
-      return <img src={element} />;
-    });
-  }; //for images render
-
-  const handleUploadData = async (offerId) => {
-    await setDoc(doc(offersListRef, offerId), hostInfo);
-  };
-
-  const handleUploadImage = (offerId) => {
+  const handleUploadData = async () => {
     if (uploadedImage == null) return;
-
-    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, uploadedImage);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageUrls((prev) => [...prev, downloadURL]);
-        });
-      }
-    );
-  };
-
-  const handleUploadImageAndData = () => {
     const offerId = hostName.replace(" ", "_") + v4();
-
-    handleUploadData(offerId);
-    handleUploadImage(offerId);
+    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
+    await uploadBytes(storageRef, uploadedImage);
+    const url = await getDownloadURL(storageRef);
+    await setDoc(doc(offersCollection, offerId), { ...hostInfo, url });
   };
 
   return (
@@ -126,7 +88,6 @@ function AddItem(props) {
               />
               <label htmlFor="tv">TV</label>
             </div>
-
             <div>
               <input
                 checked={wifi}
@@ -136,7 +97,6 @@ function AddItem(props) {
               />
               <label htmlFor="wifi">Wifi</label>
             </div>
-
             <div>
               <input
                 checked={conditioner}
@@ -146,7 +106,6 @@ function AddItem(props) {
               />
               <label htmlFor="air">Air conditioning</label>
             </div>
-
             <div>
               <input
                 checked={kitchen}
@@ -156,7 +115,6 @@ function AddItem(props) {
               />
               <label htmlFor="kitchen">Kitchen</label>
             </div>
-
             <div>
               <input
                 checked={washer}
@@ -166,7 +124,6 @@ function AddItem(props) {
               />
               <label htmlFor="washer">Washer</label>
             </div>
-
             <div>
               <input
                 checked={patio}
@@ -176,7 +133,6 @@ function AddItem(props) {
               />
               <label htmlFor="patio">Patio or balcony</label>
             </div>
-
             <div>
               <input
                 value={lovelyView}
@@ -186,7 +142,6 @@ function AddItem(props) {
               />
               <label htmlFor="view">Lovely view</label>
             </div>
-
             <div>
               <input
                 value={breakfast}
@@ -198,41 +153,82 @@ function AddItem(props) {
             </div>
           </fieldset>
         </div>
+
         <div>
-          <label htmlFor="ng">Number of guests</label>
-          <input
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
-            id="ng"
-            type="text"
-          ></input>
+          <label>Number of guests</label>
+          <div className={styles.numberInput}>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                if (guests > 0) {
+                  setGuests(guests - 1);
+                }
+              }}
+            >
+              -
+            </button>
+            <span>{guests}</span>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                setGuests(guests + 1);
+              }}
+            >
+              +
+            </button>
+          </div>
         </div>
         <div>
-          <label htmlFor="nr">Number of rooms</label>
-          <input
-            value={rooms}
-            onChange={(e) => setRooms(e.target.value)}
-            id="nr"
-            type="text"
-          ></input>
+          <label>Number of rooms</label>
+          <div className={styles.numberInput}>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                if (rooms > 0) {
+                  setRooms(rooms - 1);
+                }
+              }}
+            >
+              -
+            </button>
+            <span>{rooms}</span>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                setRooms(rooms + 1);
+              }}
+            >
+              +
+            </button>
+          </div>
         </div>
         <div>
-          <label htmlFor="costpn">Cost per night</label>
+          <label>Cost per night</label>
           <input
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            id="costpn"
             type="text"
           ></input>
         </div>
         <div>
-          <label htmlFor="loc">Location</label>
-          <input id="loc" type="text"></input>
+          <label>Location</label>
+          <input
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          ></input>
         </div>
-
         <div>
-          <label htmlFor="cont">Contacts</label>
-          <input id="cont" type="text"></input>
+          <label>Contacts</label>
+          <input
+            type="text"
+            value={contacts}
+            onChange={(e) => setContacts(e.target.value)}
+          ></input>
         </div>
         <div>
           <input
@@ -242,10 +238,10 @@ function AddItem(props) {
           />
         </div>
       </form>
-      <button onClick={handleUploadImageAndData}>Submit</button>
-      {renderImages(imageUrls)}
+
+      <button onClick={handleUploadData}>Submit</button>
     </div>
   );
 }
 
-export default AddItem;
+export default AddHost;
