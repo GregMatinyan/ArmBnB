@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getDocs } from "firebase/firestore";
-import { offersCollection } from "../configs/firebase";
+import { offersCollection } from "../../configs/firebase";
 import styles from "./Home.module.css";
+import RenderHost from "../hostPage/RenderHosts";
 
 function HostDescriptions() {
   const [hostsDescriptions, setHostsDescriptions] = useState([]);
@@ -12,6 +13,7 @@ function HostDescriptions() {
         const data = await getDocs(offersCollection);
         const hostsDescriptionsData = data.docs.map((doc) => ({
           ...doc.data(),
+          id: doc.id,
         }));
         setHostsDescriptions(hostsDescriptionsData);
       } catch (error) {
@@ -24,11 +26,7 @@ function HostDescriptions() {
   return (
     <div className={styles.hostDescription}>
       {hostsDescriptions.map((el) => (
-        <div key={el}>
-          <img src={el.url} alt="hostImg" />
-          <p> {el.hostName}</p>
-          <p> {el.location}</p>
-        </div>
+        <RenderHost key={el.id} info={el} />
       ))}
     </div>
   );
