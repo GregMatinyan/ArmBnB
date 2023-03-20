@@ -1,5 +1,5 @@
 import styles from "./Home.module.css";
-import Header from "./headerComponents/Header";
+import Header from "../headerComponents/Header";
 import Categories from "./Categories";
 import HostDescriptions from "./HostDescriptions";
 

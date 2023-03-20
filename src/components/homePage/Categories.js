@@ -1,5 +1,5 @@
 import React from "react";
-import filterIcons from "../icons/icons";
+import filterIcons from "../../icons/icons";
 import styles from "./Home.module.css";
 
 export function renderIcons(icons, styles) {

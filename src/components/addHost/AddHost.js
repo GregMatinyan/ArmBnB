@@ -6,7 +6,7 @@ import { offersCollection, storage } from "../../configs/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { setDoc, doc } from "@firebase/firestore";
 
-function AddItem() {
+function AddHost() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
@@ -41,12 +41,6 @@ function AddItem() {
     location,
     contacts,
   };
-
-  // const renderImages = (urls) => {
-  //   return urls.map((element) => {
-  //     return <img src={element} alt="host-img" />;
-  //   });
-  // };
 
   const handleUploadData = async () => {
     if (uploadedImage == null) return;
@@ -246,9 +240,8 @@ function AddItem() {
       </form>
 
       <button onClick={handleUploadData}>Submit</button>
-      {/* {renderImages(imageUrls)} */}
     </div>
   );
 }
 
-export default AddItem;
+export default AddHost;
