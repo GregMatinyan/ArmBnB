@@ -94,7 +94,6 @@ function AddItem() {
               />
               <label htmlFor="tv">TV</label>
             </div>
-
             <div>
               <input
                 checked={wifi}
@@ -104,7 +103,6 @@ function AddItem() {
               />
               <label htmlFor="wifi">Wifi</label>
             </div>
-
             <div>
               <input
                 checked={conditioner}
@@ -114,7 +112,6 @@ function AddItem() {
               />
               <label htmlFor="air">Air conditioning</label>
             </div>
-
             <div>
               <input
                 checked={kitchen}
@@ -124,7 +121,6 @@ function AddItem() {
               />
               <label htmlFor="kitchen">Kitchen</label>
             </div>
-
             <div>
               <input
                 checked={washer}
@@ -134,7 +130,6 @@ function AddItem() {
               />
               <label htmlFor="washer">Washer</label>
             </div>
-
             <div>
               <input
                 checked={patio}
@@ -144,7 +139,6 @@ function AddItem() {
               />
               <label htmlFor="patio">Patio or balcony</label>
             </div>
-
             <div>
               <input
                 value={lovelyView}
@@ -154,7 +148,6 @@ function AddItem() {
               />
               <label htmlFor="view">Lovely view</label>
             </div>
-
             <div>
               <input
                 value={breakfast}
@@ -166,47 +159,78 @@ function AddItem() {
             </div>
           </fieldset>
         </div>
+
         <div>
-          <label htmlFor="ng">Number of guests</label>
-          <input
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
-            id="ng"
-            type="text"
-          ></input>
+          <label>Number of guests</label>
+          <div className={styles.numberInput}>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                if (guests > 0) {
+                  setGuests(guests - 1);
+                }
+              }}
+            >
+              -
+            </button>
+            <span>{guests}</span>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                setGuests(guests + 1);
+              }}
+            >
+              +
+            </button>
+          </div>
         </div>
         <div>
-          <label htmlFor="nr">Number of rooms</label>
-          <input
-            value={rooms}
-            onChange={(e) => setRooms(e.target.value)}
-            id="nr"
-            type="text"
-          ></input>
+          <label>Number of rooms</label>
+          <div className={styles.numberInput}>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                if (rooms > 0) {
+                  setRooms(rooms - 1);
+                }
+              }}
+            >
+              -
+            </button>
+            <span>{rooms}</span>
+            <button
+              className={styles.btnSpan}
+              onClick={(e) => {
+                e.preventDefault();
+                setRooms(rooms + 1);
+              }}
+            >
+              +
+            </button>
+          </div>
         </div>
         <div>
-          <label htmlFor="costpn">Cost per night</label>
+          <label>Cost per night</label>
           <input
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            id="costpn"
             type="text"
           ></input>
         </div>
         <div>
-          <label htmlFor="loc">Location</label>
+          <label>Location</label>
           <input
-            id="loc"
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           ></input>
         </div>
-
         <div>
-          <label htmlFor="cont">Contacts</label>
+          <label>Contacts</label>
           <input
-            id="cont"
             type="text"
             value={contacts}
             onChange={(e) => setContacts(e.target.value)}
@@ -220,6 +244,7 @@ function AddItem() {
           />
         </div>
       </form>
+
       <button onClick={handleUploadData}>Submit</button>
       {/* {renderImages(imageUrls)} */}
     </div>
