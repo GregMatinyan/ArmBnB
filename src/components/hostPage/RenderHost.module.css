@@ -1,0 +1,48 @@
+.hosts {
+  width: 280px;
+  margin-bottom: 20px;
+  padding: 0 15 0 15;
+  text-decoration: none;
+  color: black;
+}
+
+.hosts img {
+  border-radius: 20px;
+  width: 280px;
+  height: 240px;
+}
+
+.hostContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.hostContainer p {
+  margin: 10px;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.like {
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 10rem;
+  background-color: transparent;
+  border: transparent;
+}
+.like :hover {
+  color: red;
+}
+
+/* .faHeart {
+  position: absolute;
+  z-index: 2;
+  color: red;
+  position: absolute;
+} */

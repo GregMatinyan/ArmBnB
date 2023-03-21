@@ -28,13 +28,13 @@ export default icons;
 //   Motel,
 //   Cottage,
 // };
-export const hostFeatureIcons = {
-  Skiing,
-  Hiking,
-  Nature,
-  Camping,
-  Vip,
-  "Lovely View": window,
-  "Around Lake": lake,
-  "With Pool": Pool,
-};
+// export const hostFeatureIcons = {
+//   Skiing,
+//   Hiking,
+//   Nature,
+//   Camping,
+//   Vip,
+//   "Lovely View": window,
+//   "Around Lake": lake,
+//   "With Pool": Pool,
+// };

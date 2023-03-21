@@ -1,6 +1,7 @@
 .logo {
   width: 140px;
   cursor: pointer;
+  background-color: #3f3b34;
 }
 
 .header {
@@ -40,14 +41,18 @@
 }
 
 .addOfferSpan {
-  display: inline-block;
-  border: 2px solid #3f3b34;
-  padding: 8px 10px;
-  border-radius: 15px;
   transition: all 0.2s;
   cursor: pointer;
+  padding: 1rem 1rem;
+  border-radius: 11px;
+  color: #fff;
+  background-color: #e67e22;
+  font-size: 15px;
 }
 
 .addOfferSpan:hover {
-  background-color: #f4ddb5;
+  border-radius: 9px;
+  color: #fff;
+  background-color: #cf711f;
+  transition: all 0.3s;
 }
