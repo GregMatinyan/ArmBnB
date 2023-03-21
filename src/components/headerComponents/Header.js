@@ -89,12 +89,12 @@ function Header() {
         <TextField id="outlined-basic" label="Search" variant="outlined" />
       </div>
 
-      <span
+      <button
         onClick={() => navigation(OFFER_PATH)}
         className={styles.addOfferSpan}
       >
         Add your host
-      </span>
+      </button>
       {renderSign()}
     </header>
   );
