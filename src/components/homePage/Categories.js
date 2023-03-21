@@ -1,6 +1,6 @@
 import React from "react";
-import filterIcons from "../icons/icons";
-import styles from "./Categories.module.css";
+import filterIcons from "../../icons/icons";
+import styles from "./Home.module.css";
 
 export function renderIcons(icons, styles) {
   return Object.entries(icons).map((item) => {

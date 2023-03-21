@@ -24,17 +24,17 @@ const icons = {
 
 export default icons;
 
-export const hostTypeIcons = {
-  Motel,
-  Cottage,
-};
-export const hostFeatureIcons = {
-  Skiing,
-  Hiking,
-  Nature,
-  Camping,
-  Vip,
-  "Lovely View": window,
-  "Around Lake": lake,
-  "With Pool": Pool,
-};
+// export const hostTypeIcons = {
+//   Motel,
+//   Cottage,
+// };
+// export const hostFeatureIcons = {
+//   Skiing,
+//   Hiking,
+//   Nature,
+//   Camping,
+//   Vip,
+//   "Lovely View": window,
+//   "Around Lake": lake,
+//   "With Pool": Pool,
+// };

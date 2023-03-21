@@ -1,3 +1,6 @@
+.homeContainer {
+  padding: 20px;
+}
 .container {
   display: flex;
   justify-content: space-evenly;
@@ -25,4 +28,12 @@
 
 .iconspan:hover {
   opacity: 1;
+}
+
+.hostDescription {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 80px;
 }
