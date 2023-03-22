@@ -247,7 +247,6 @@ function AddHost() {
         <div>
           <input
             type="file"
-            id="files"
             onChange={(e) => setUploadedImage(e.target.files[0])}
           />
         </div>

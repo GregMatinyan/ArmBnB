@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { User } from "../context/UserStateContext";
-import SignUp from "./signComponents/SignUp";
+import SignUp from "./auth/SignUp";
 import Home from "./homePage/Home";
 import { Route, Routes } from "react-router-dom";
 import { HOME_PATH, OFFER_PATH, SIGNUP_PATH } from "../constants/path";

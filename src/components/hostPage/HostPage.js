@@ -22,6 +22,7 @@ function HostPage() {
       <Header />
       <div>
         <img src={data.url} alt="img" />
+        <p>{data.hostName}</p>
       </div>
     </>
   );
