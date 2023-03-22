@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Header from "../headerComponents/Header";
-import styles from "./AddItem.module.css";
+import styles from "./AddHost.module.css";
 import { v4 } from "uuid";
 import { offersCollection, storage } from "../../configs/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { setDoc, doc } from "@firebase/firestore";
+import Checkbox from "@mui/material/Checkbox";
 
 function AddHost() {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -18,9 +19,10 @@ function AddHost() {
   const [patio, setPatio] = useState(false);
   const [breakfast, setBreakfast] = useState(false);
   const [lovelyView, setLovelyView] = useState(false);
+  const [pool, setPool] = useState(false);
   const [rooms, setRooms] = useState(0);
   const [guests, setGuests] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [contacts, setContacts] = useState("");
   const [location, setLocation] = useState("");
 
@@ -42,7 +44,8 @@ function AddHost() {
     contacts,
   };
 
-  const handleUploadData = async () => {
+  const handleUploadData = async (e) => {
+    e.preventDefault();
     if (uploadedImage == null) return;
     const offerId = hostName.replace(" ", "_") + v4();
     const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
@@ -52,11 +55,12 @@ function AddHost() {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <Header />
       <form className={styles.form}>
         <div>
           <label htmlFor="hname">Your host name</label>
+
           <input
             value={hostName}
             onChange={(e) => setHotelName(e.target.value)}
@@ -70,86 +74,113 @@ function AddHost() {
             value={hostType}
             onChange={(e) => setHostType(e.target.value)}
           >
-            <option> Choose your host type</option>
+            <option>Which of these best describes your place?</option>
+            <option>Hotel</option>
+            <option>House</option>
             <option>Motel</option>
+            <option>Apartment</option>
             <option>Cottage</option>
+            <option>Creative</option>
+            <option>VIP</option>
+            <option>Skiing</option>
+            <option>Hiking</option>
+            <option>Nature</option>
+            <option>Camping</option>
+            <option>Around Lake</option>
           </select>
         </div>
         <div>
-          <fieldset>
+          <fieldset className={styles.fieldset}>
             <legend>Choose your host features:</legend>
 
             <div>
-              <input
-                checked={tv}
-                onChange={() => setTv(!tv)}
-                type="checkbox"
+              <Checkbox
                 id="tv"
+                onChange={() => setTv(!tv)}
+                checked={tv}
+                color="success"
               />
               <label htmlFor="tv">TV</label>
             </div>
+
             <div>
-              <input
-                checked={wifi}
-                onChange={() => setwifi(!wifi)}
-                type="checkbox"
+              <Checkbox
                 id="wifi"
+                onChange={() => setwifi(!wifi)}
+                checked={wifi}
+                color="success"
               />
               <label htmlFor="wifi">Wifi</label>
             </div>
+
             <div>
-              <input
-                checked={conditioner}
-                onChange={() => setConditioner(!conditioner)}
-                type="checkbox"
+              <Checkbox
                 id="air"
+                onChange={() => setConditioner(!conditioner)}
+                checked={conditioner}
+                color="success"
               />
               <label htmlFor="air">Air conditioning</label>
             </div>
+
             <div>
-              <input
-                checked={kitchen}
-                onChange={() => setKitchen(!kitchen)}
-                type="checkbox"
+              <Checkbox
                 id="kitchen"
+                onChange={() => setKitchen(!kitchen)}
+                checked={kitchen}
+                color="success"
               />
               <label htmlFor="kitchen">Kitchen</label>
             </div>
+
             <div>
-              <input
-                checked={washer}
-                onChange={() => setwasher(!washer)}
-                type="checkbox"
+              <Checkbox
                 id="washer"
+                onChange={() => setwasher(!washer)}
+                checked={washer}
+                color="success"
               />
               <label htmlFor="washer">Washer</label>
             </div>
+
             <div>
-              <input
-                checked={patio}
-                onChange={() => setPatio(!patio)}
-                type="checkbox"
+              <Checkbox
                 id="patio"
+                onChange={() => setPatio(!patio)}
+                checked={patio}
+                color="success"
               />
               <label htmlFor="patio">Patio or balcony</label>
             </div>
+
             <div>
-              <input
-                value={lovelyView}
-                onChange={() => setLovelyView(!lovelyView)}
-                type="checkbox"
+              <Checkbox
                 id="view"
+                onChange={() => setLovelyView(!lovelyView)}
+                checked={lovelyView}
+                color="success"
               />
               <label htmlFor="view">Lovely view</label>
             </div>
+
             <div>
-              <input
-                value={breakfast}
-                onChange={() => setBreakfast(!breakfast)}
-                type="checkbox"
+              <Checkbox
                 id="breakfast"
+                onChange={() => setBreakfast(!breakfast)}
+                checked={breakfast}
+                color="success"
               />
               <label htmlFor="breakfast">Breakfast</label>
+            </div>
+
+            <div>
+              <Checkbox
+                id="pool"
+                onChange={() => setPool(!pool)}
+                checked={pool}
+                color="success"
+              />
+              <label htmlFor="pool">Pool</label>
             </div>
           </fieldset>
         </div>
@@ -237,9 +268,10 @@ function AddHost() {
             onChange={(e) => setUploadedImage(e.target.files[0])}
           />
         </div>
+        <button className={styles.subBtn} onClick={handleUploadData}>
+          Submit
+        </button>
       </form>
-
-      <button onClick={handleUploadData}>Submit</button>
     </div>
   );
 }

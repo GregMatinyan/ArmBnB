@@ -1,0 +1,58 @@
+.hostContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  position: relative;
+  border-radius: 20px;
+  box-shadow: 0 0 8px #ccc;
+  transition: all 0.5s;
+}
+.hostContainer:hover {
+  transform: translateY(-10px);
+}
+
+.hosts {
+  width: 280px;
+  margin-bottom: 20px;
+  padding: 0 15 0 15;
+  text-decoration: none;
+  color: black;
+}
+
+.hosts img {
+  border-radius: 20px;
+  width: 280px;
+  height: 240px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.hostInfo p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #645e53;
+}
+
+.hostInfo p:first-child {
+  color: rgb(86, 81, 72);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.imgContainer {
+  width: 100%;
+  max-width: 400px;
+}
+
+.faheart {
+  width: 40px;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  fill: #4c4848;
+  color: #e0d8d8;
+}
+
+.hostInfo {
+  padding: 10px;
+}
