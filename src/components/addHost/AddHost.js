@@ -19,6 +19,7 @@ function AddHost() {
   const [patio, setPatio] = useState(false);
   const [breakfast, setBreakfast] = useState(false);
   const [lovelyView, setLovelyView] = useState(false);
+  const [pool, setPool] = useState(false);
   const [rooms, setRooms] = useState(0);
   const [guests, setGuests] = useState(0);
   const [price, setPrice] = useState();
@@ -73,13 +74,19 @@ function AddHost() {
             value={hostType}
             onChange={(e) => setHostType(e.target.value)}
           >
-            <option> Choose your host type</option>
+            <option>Which of these best describes your place?</option>
             <option>Hotel</option>
-            <option>Motel</option>
             <option>House</option>
+            <option>Motel</option>
             <option>Apartment</option>
             <option>Cottage</option>
+            <option>Creative</option>
             <option>VIP</option>
+            <option>Skiing</option>
+            <option>Hiking</option>
+            <option>Nature</option>
+            <option>Camping</option>
+            <option>Around Lake</option>
           </select>
         </div>
         <div>
@@ -164,6 +171,16 @@ function AddHost() {
                 color="success"
               />
               <label htmlFor="breakfast">Breakfast</label>
+            </div>
+
+            <div>
+              <Checkbox
+                id="pool"
+                onChange={() => setPool(!pool)}
+                checked={pool}
+                color="success"
+              />
+              <label htmlFor="pool">Pool</label>
             </div>
           </fieldset>
         </div>

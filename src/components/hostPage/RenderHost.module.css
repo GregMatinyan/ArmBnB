@@ -1,3 +1,16 @@
+.hostContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  position: relative;
+  border-radius: 20px;
+  box-shadow: 0 0 8px #ccc;
+  transition: all 0.5s;
+}
+.hostContainer:hover {
+  transform: translateY(-10px);
+}
+
 .hosts {
   width: 280px;
   margin-bottom: 20px;
@@ -10,39 +23,36 @@
   border-radius: 20px;
   width: 280px;
   height: 240px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-.hostContainer {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+.hostInfo p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #645e53;
 }
 
-.hostContainer p {
-  margin: 10px;
+.hostInfo p:first-child {
+  color: rgb(86, 81, 72);
+  font-weight: 700;
+  font-size: 20px;
 }
 
 .imgContainer {
-  position: relative;
   width: 100%;
   max-width: 400px;
 }
 
-.like {
-  color: red;
-  font-size: 20px;
-  cursor: pointer;
-  border-radius: 10rem;
-  background-color: transparent;
-  border: transparent;
-}
-.like :hover {
-  color: red;
+.faheart {
+  width: 40px;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  fill: #4c4848;
+  color: #e0d8d8;
 }
 
-/* .faHeart {
-  position: absolute;
-  z-index: 2;
-  color: red;
-  position: absolute;
-} */
+.hostInfo {
+  padding: 10px;
+}

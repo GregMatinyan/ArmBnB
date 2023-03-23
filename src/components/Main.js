@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { User } from "../context/UserStateContext";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 import SignUp from "./auth/SignUp";
 import Home from "./homePage/Home";
 import { Route, Routes } from "react-router-dom";
@@ -23,14 +24,14 @@ export default function Main() {
 
   return (
     <>
-      <User.Provider value={logedInUser}>
+      <Provider store={store}>
         <Routes>
           <Route path={HOME_PATH} element={<Home />} />
           <Route path={OFFER_PATH} element={<AddHost />} />
           <Route path={SIGNUP_PATH} element={<SignUp />} />
           <Route path={`/item/:id`} element={<HostPage />} />
         </Routes>
-      </User.Provider>
+      </Provider>
     </>
   );
 }
