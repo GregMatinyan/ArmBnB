@@ -1,11 +1,28 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./RenderHost.module.css";
-import { User } from "../../redux/store";
+import { Fade } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
+import { useSelector } from "react-redux";
 
 function RenderHost(props) {
-  const { id, url, hostName, location, price } = props.data;
-  const user = useContext(User);
+  const { id, urls, hostName, price, location } = props.data;
+  const user = useSelector(function (state) {
+    return state.currentUser.logedIn;
+  });
+  const Slideshow = () => {
+    return (
+      <div className="slide-container">
+        <Fade>
+          {urls.map((fadeImage, index) => (
+            <div key={index}>
+              <img style={{ width: "100%" }} src={fadeImage} alt="host img" />
+            </div>
+          ))}
+        </Fade>
+      </div>
+    );
+  };
 
   const handleLike = () => {
     if (!user) {
@@ -33,7 +50,7 @@ function RenderHost(props) {
                 />
               </svg>
             </div>
-            <img src={url} alt="hostImg" />
+            {Slideshow()}
           </div>
           <div className={styles.hostInfo}>
             <p> {hostName}</p>

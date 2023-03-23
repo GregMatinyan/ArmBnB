@@ -8,7 +8,8 @@ import { setDoc, doc } from "@firebase/firestore";
 import Checkbox from "@mui/material/Checkbox";
 
 function AddHost() {
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState(null);
+
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
   const [tv, setTv] = useState(false);
@@ -44,15 +45,27 @@ function AddHost() {
     contacts,
   };
 
-  const handleUploadData = async (e) => {
+  async function uploadData(e) {
     e.preventDefault();
-    if (uploadedImage == null) return;
+    const promises = [];
     const offerId = hostName.replace(" ", "_") + v4();
-    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
-    await uploadBytes(storageRef, uploadedImage);
-    const url = await getDownloadURL(storageRef);
-    await setDoc(doc(offersCollection, offerId), { ...hostInfo, url });
-  };
+    const images = Object.values(uploadedImages);
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+      const storageRef = ref(storage, `images/${offerId}/${image.name}`);
+
+      promises.push(
+        uploadBytes(storageRef, image, metadata).then((uploadResult) => {
+          return getDownloadURL(uploadResult.ref);
+        })
+      );
+      const urls = await Promise.all(promises);
+      await setDoc(doc(offersCollection, offerId), { ...hostInfo, urls });
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -264,10 +277,12 @@ function AddHost() {
         <div>
           <input
             type="file"
-            onChange={(e) => setUploadedImage(e.target.files[0])}
+            id="files"
+            multiple
+            onChange={(e) => setUploadedImages(e.target.files)}
           />
         </div>
-        <button className={styles.subBtn} onClick={handleUploadData}>
+        <button className={styles.subBtn} onClick={(e) => uploadData(e)}>
           Submit
         </button>
       </form>
