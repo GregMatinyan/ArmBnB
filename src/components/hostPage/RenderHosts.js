@@ -1,10 +1,48 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./RenderHost.module.css";
-// import { User } from "../../context/UserStateContext";
+import { Fade } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 
 function RenderHost({ info }) {
-  // const user = useContext(User);
+  // const divStyle = {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   backgroundSize: "cover",
+  //   width: "280px",
+  //   height: "240px",
+  // };
+
+  const Slideshow = () => {
+    return (
+      <div className="slide-container">
+        <Fade>
+          {info.urls.map((fadeImage, index) => (
+            <div key={index}>
+              <img style={{ width: "100%" }} src={fadeImage} />
+            </div>
+          ))}
+        </Fade>
+      </div>
+    );
+  };
+
+  // const Slideshow = () => {
+  //   return (
+  //     <div className="slide-container">
+  //       <Slide>
+  //         {info.urls.map((slideImage, index) => (
+  //           <div key={index}>
+  //             <div
+  //               style={{ ...divStyle, backgroundImage: `url(${slideImage})` }}
+  //             ></div>
+  //           </div>
+  //         ))}
+  //       </Slide>
+  //     </div>
+  //   );
+  // };
 
   return (
     <>
@@ -27,7 +65,7 @@ function RenderHost({ info }) {
                 />
               </svg>
             </div>
-            <img src={info.url} alt="hostImg" />
+            {Slideshow()}
           </div>
           <div className={styles.hostInfo}>
             <p> {info.hostName}</p>
