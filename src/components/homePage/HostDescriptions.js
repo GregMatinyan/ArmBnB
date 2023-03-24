@@ -26,7 +26,7 @@ function HostDescriptions() {
   return (
     <div className={styles.hostDescription}>
       {hostsDescriptions.map((el) => (
-        <RenderHost key={el.id} info={el} />
+        <RenderHost key={el.id} data={el} />
       ))}
     </div>
   );

@@ -33,13 +33,10 @@ button,
   background-color: rgb(211 205 205 / 26%);
 }
 
-.fieldset input[type="checkbox"] {
-  background-color: blue;
-}
-
 .btn {
   width: 120px;
 }
+
 .hostTypeContainer {
   display: flex;
   justify-content: space-evenly;
@@ -74,41 +71,30 @@ button,
   align-items: center;
   justify-content: space-evenly;
   width: 70px;
-  height: 40px;
-  background-color: white;
   border-radius: 20%;
   font-size: 20px;
+  background-color: #f8ebde;
+}
+
+.numberInput button {
+  width: 22px;
+  height: 22px;
 }
 .btnSpan {
   cursor: pointer;
 }
 
-/* .subBtn {
-  width: 130px;
-  margin: auto;
-  margin-top: 20px;
-  cursor: pointer;
-  font-size: 18px;
-  background-color: #e0d4bf;
-  box-shadow: 0 0 4px #ae9f9f;
-  transition: all 0.2s;
-}
-.subBtn:hover {
-  background-color: #dad2c9;
-  box-shadow: 0 0 7px #ae9f9f;
-} */
-
 .subBtn {
   margin: auto;
   margin-top: 20px;
-  width: 200px;
   transition: all 0.2s;
   cursor: pointer;
-  padding: 1rem 1rem;
   border-radius: 11px;
   color: #fff;
   background-color: #e67e22;
-  font-size: 15px;
+  font-size: 20px;
+  padding: 10px 5px;
+  width: 170px;
 }
 
 .subBtn:hover {

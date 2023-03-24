@@ -8,7 +8,8 @@ import { setDoc, doc } from "@firebase/firestore";
 import Checkbox from "@mui/material/Checkbox";
 
 function AddHost() {
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState(null);
+
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
   const [tv, setTv] = useState(false);
@@ -19,6 +20,7 @@ function AddHost() {
   const [patio, setPatio] = useState(false);
   const [breakfast, setBreakfast] = useState(false);
   const [lovelyView, setLovelyView] = useState(false);
+  const [pool, setPool] = useState(false);
   const [rooms, setRooms] = useState(0);
   const [guests, setGuests] = useState(0);
   const [price, setPrice] = useState();
@@ -43,15 +45,27 @@ function AddHost() {
     contacts,
   };
 
-  const handleUploadData = async (e) => {
+  async function uploadData(e) {
     e.preventDefault();
-    if (uploadedImage == null) return;
+    const promises = [];
     const offerId = hostName.replace(" ", "_") + v4();
-    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
-    await uploadBytes(storageRef, uploadedImage);
-    const url = await getDownloadURL(storageRef);
-    await setDoc(doc(offersCollection, offerId), { ...hostInfo, url });
-  };
+    const images = Object.values(uploadedImages);
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+      const storageRef = ref(storage, `images/${offerId}/${image.name}`);
+
+      promises.push(
+        uploadBytes(storageRef, image, metadata).then((uploadResult) => {
+          return getDownloadURL(uploadResult.ref);
+        })
+      );
+      const urls = await Promise.all(promises);
+      await setDoc(doc(offersCollection, offerId), { ...hostInfo, urls });
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -73,13 +87,19 @@ function AddHost() {
             value={hostType}
             onChange={(e) => setHostType(e.target.value)}
           >
-            <option> Choose your host type</option>
+            <option>Which of these best describes your place?</option>
             <option>Hotel</option>
-            <option>Motel</option>
             <option>House</option>
+            <option>Motel</option>
             <option>Apartment</option>
             <option>Cottage</option>
+            <option>Creative</option>
             <option>VIP</option>
+            <option>Skiing</option>
+            <option>Hiking</option>
+            <option>Nature</option>
+            <option>Camping</option>
+            <option>Around Lake</option>
           </select>
         </div>
         <div>
@@ -165,6 +185,16 @@ function AddHost() {
               />
               <label htmlFor="breakfast">Breakfast</label>
             </div>
+
+            <div>
+              <Checkbox
+                id="pool"
+                onChange={() => setPool(!pool)}
+                checked={pool}
+                color="success"
+              />
+              <label htmlFor="pool">Pool</label>
+            </div>
           </fieldset>
         </div>
 
@@ -248,10 +278,11 @@ function AddHost() {
           <input
             type="file"
             id="files"
-            onChange={(e) => setUploadedImage(e.target.files[0])}
+            multiple
+            onChange={(e) => setUploadedImages(e.target.files)}
           />
         </div>
-        <button className={styles.subBtn} onClick={handleUploadData}>
+        <button className={styles.subBtn} onClick={(e) => uploadData(e)}>
           Submit
         </button>
       </form>
