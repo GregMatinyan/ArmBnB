@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { User } from "../../context/UserStateContext";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 // import Logo from "../../images/Logo.png";
 import Logo from "../../images/Logo001.png";
+=======
+import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../images/Logo.png";
+>>>>>>> e3e3a10f60e34526e5edfb2fb8c24fc87af63912
 import styles from "./Header.module.css";
 import avatar from "../../icons/user.png";
 import Button from "@mui/material/Button";
@@ -36,6 +41,7 @@ function Header() {
           sx={{
             color: "#3f3b34",
             borderColor: "#3f3b34",
+            fontFamily: "inherit",
           }}
         >
           Sign In
@@ -44,6 +50,7 @@ function Header() {
           sx={{
             color: "#3f3b34",
             borderColor: "#3f3b34",
+            fontFamily: "inherit",
           }}
           variant="outlined"
           onClick={() => {
@@ -62,7 +69,11 @@ function Header() {
     ) : (
       <div className={styles.logout}>
         <Button
-          sx={{ color: "#3f3b34", borderColor: "#3f3b34" }}
+          sx={{
+            color: "#3f3b34",
+            borderColor: "#3f3b34",
+            fontFamily: "inherit",
+          }}
           variant="outlined"
           onClick={logOut}
         >
@@ -78,12 +89,9 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.logocontainer}>
-        <img
-          onClick={() => navigation(HOME_PATH)}
-          className={styles.logo}
-          src={Logo}
-          alt="logo"
-        ></img>
+        <Link to={HOME_PATH}>
+          <img className={styles.logo} src={Logo} alt="logo"></img>
+        </Link>
       </div>
 
       <div className={styles.search}>
@@ -91,7 +99,13 @@ function Header() {
       </div>
 
       <button
-        onClick={() => navigation(OFFER_PATH)}
+        onClick={() => {
+          if (user) {
+            navigation(OFFER_PATH);
+          } else {
+            setLoginDialog(true);
+          }
+        }}
         className={styles.addOfferSpan}
       >
         Add your host

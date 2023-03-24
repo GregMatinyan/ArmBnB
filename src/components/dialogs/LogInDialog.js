@@ -8,11 +8,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { auth } from "../../configs/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import styles from "./LoginDialog.module.css";
+import { useNavigate } from "react-router-dom";
+import { SIGNUP_PATH } from "../../constants/path";
 
 export default function LogInDialog({ open, handleClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigation = useNavigate();
   const logInWithEmail = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -61,16 +63,6 @@ export default function LogInDialog({ open, handleClose }) {
           />
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center", alignItems: "center" }}>
-          {/* <Button
-            sx={{ color: "#3f3b34", borderColor: "#3f3b34" }}
-            onClick={() => {
-              handleClose();
-              setEmail("");
-              setPassword("");
-            }}
-          >
-            Cancel
-          </Button> */}
           <Button
             sx={{
               color: "#3f3b34",
@@ -81,6 +73,18 @@ export default function LogInDialog({ open, handleClose }) {
             Log In
           </Button>
         </DialogActions>
+        <p style={{ textAlign: "center" }}>
+          - Don't have ArmBnB account yet? -
+        </p>
+        <Button
+          sx={{
+            color: "#3f3b34",
+            borderColor: "#3f3b34",
+          }}
+          onClick={() => navigation(SIGNUP_PATH)}
+        >
+          Sign Up
+        </Button>
       </Dialog>
     </div>
   );

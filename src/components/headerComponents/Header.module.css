@@ -43,11 +43,12 @@
 .addOfferSpan {
   transition: all 0.2s;
   cursor: pointer;
-  padding: 1rem 1rem;
   border-radius: 11px;
   color: #fff;
   background-color: #e67e22;
-  font-size: 15px;
+  font-size: 20px;
+  padding: 10px 15px;
+  font-family: inherit;
 }
 
 .addOfferSpan:hover {
