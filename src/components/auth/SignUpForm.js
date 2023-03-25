@@ -5,7 +5,7 @@ import Input from "@mui/material/Input";
 import styles from "./InputForm.module.css";
 import { auth, googleProvider, usersCollection } from "../../configs/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { addDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { HOME_PATH } from "../../constants/path";
 
@@ -19,11 +19,10 @@ export default function SignUpForm() {
   const signUpWithEmail = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      await addDoc(usersCollection, {
+      await setDoc(doc(usersCollection, auth?.currentUser?.uid), {
         name,
         surname,
         email,
-        userID: auth?.currentUser?.uid,
       });
       setName("");
       setSurname("");

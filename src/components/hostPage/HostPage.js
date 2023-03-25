@@ -19,7 +19,7 @@ function HostPage() {
     };
     render();
   }, [params.id]);
-  console.log(data);
+
   return (
     data && (
       <>

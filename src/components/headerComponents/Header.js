@@ -17,6 +17,7 @@ function Header() {
   const user = useSelector(function (state) {
     return state.currentUser.logedIn;
   });
+
   auth.onAuthStateChanged((user) => {
     if (user) {
       dispatch({
@@ -106,9 +107,11 @@ function Header() {
         >
           Log Out
         </Button>
-        <span>
-          <img src={avatar} alt="avatar" />
-        </span>
+        <Link to={`profile/${auth?.currentUser?.uid}`}>
+          <span>
+            <img src={avatar} alt="avatar" />
+          </span>
+        </Link>
       </div>
     );
   };

@@ -32,7 +32,7 @@ function RenderHost(props) {
   };
   return (
     <>
-      <Link className={styles.hosts} to={`item/${id}`}>
+      <Link className={styles.hosts} to={`host/${id}`}>
         <div className={styles.hostContainer} key={id}>
           <div className={styles.imgContainer}>
             <div onClick={handleLike} href="#">

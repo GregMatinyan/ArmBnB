@@ -68,19 +68,16 @@ button,
 
 .numberInput {
   display: flex;
-  align-items: center;
   justify-content: space-evenly;
-  width: 70px;
+  width: 80px;
   border-radius: 20%;
   font-size: 20px;
   background-color: #f8ebde;
 }
 
 .numberInput button {
-  width: 22px;
-  height: 22px;
-}
-.btnSpan {
+  width: 24px;
+  height: 24px;
   cursor: pointer;
 }
 
