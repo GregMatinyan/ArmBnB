@@ -14,10 +14,13 @@ import LogInDialog from "../dialogs/LogInDialog";
 function Header() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
+
   const user = useSelector(function (state) {
     return state.currentUser.logedIn;
   });
+
   auth.onAuthStateChanged((user) => {
+    console.log(user);
     if (user) {
       dispatch({
         type: "user-loged-in",
