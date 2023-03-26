@@ -1,48 +1,72 @@
-.hosts {
-  width: 280px;
-  margin-bottom: 20px;
-  padding: 0 15 0 15;
-  text-decoration: none;
-  color: black;
-}
-
-.hosts img {
-  border-radius: 20px;
-  width: 280px;
-  height: 240px;
-}
-
 .hostContainer {
   display: flex;
   flex-direction: column;
   text-align: left;
-}
-
-.hostContainer p {
-  margin: 10px;
-}
-
-.imgContainer {
   position: relative;
-  width: 100%;
-  max-width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 0 8px #ccc;
+  transition: all 0.5s;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 80%;
 }
 
-.like {
-  color: red;
+.hostInfo p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #645e53;
+}
+
+.hostInfo p:first-child {
+  color: rgb(86, 81, 72);
+  font-weight: 700;
   font-size: 20px;
-  cursor: pointer;
-  border-radius: 10rem;
-  background-color: transparent;
-  border: transparent;
-}
-.like :hover {
-  color: red;
 }
 
-/* .faHeart {
+.faheart {
+  width: 40px;
   position: absolute;
+  top: 20px;
+  right: 15px;
+  fill: #4c4848;
+  color: #e0d8d8;
+}
+
+.hostInfo {
+  padding: 10px;
+}
+
+.awssld__wrapper {
+  height: 210px;
+}
+
+.awssld__bullets {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
-  color: red;
-  position: absolute;
-} */
+}
+
+.awssld__bullets button {
+  padding: 0;
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 5px 3px;
+  border-radius: 50%;
+  background: #aaa;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.225s cubic-bezier(0.8, 1.35, 0.75, 1.45),
+    background-color 0.175s ease-out;
+}
+
+.awssld__bullets--active {
+  transform: scale(1.1);
+  background: #fff;
+}
