@@ -48,7 +48,6 @@ function RenderHost(props) {
 
   return (
     <>
-      {/* <Link className={styles.hosts} to={`item/${id}`}> */}
       <div className={styles.hostContainer}>
         <div>{slide}</div>
         <div className={styles.hostInfo}>
@@ -59,7 +58,6 @@ function RenderHost(props) {
           </p>
         </div>
       </div>
-      {/* </Link> */}
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import HostDescriptions from "../components/homePage/HostDescriptions";
 
 export const store = createStore(
   function (state, action) {
@@ -18,6 +19,15 @@ export const store = createStore(
         },
       };
     }
+
+    if (action.type === "filter-by-icon") {
+      return {
+        ...state,
+        iconFilter: {
+          name: action.payload,
+        },
+      };
+    }
     return state;
   },
   {
@@ -27,5 +37,6 @@ export const store = createStore(
     loginDialog: {
       open: false,
     },
+    iconFilter: { name: "" },
   }
 );

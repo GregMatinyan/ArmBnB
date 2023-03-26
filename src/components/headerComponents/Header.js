@@ -20,7 +20,6 @@ function Header() {
   });
 
   auth.onAuthStateChanged((user) => {
-    console.log(user);
     if (user) {
       dispatch({
         type: "user-loged-in",
@@ -109,9 +108,11 @@ function Header() {
         >
           Log Out
         </Button>
-        <span>
-          <img src={avatar} alt="avatar" />
-        </span>
+        <Link to={`profile/${auth?.currentUser?.uid}`}>
+          <span>
+            <img src={avatar} alt="avatar" />
+          </span>
+        </Link>
       </div>
     );
   };
@@ -120,7 +121,17 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.logocontainer}>
         <Link to={HOME_PATH}>
-          <img className={styles.logo} src={Logo} alt="logo"></img>
+          <img
+            onClick={() => {
+              dispatch({
+                type: "filter-by-icon",
+                payload: "",
+              });
+            }}
+            className={styles.logo}
+            src={Logo}
+            alt="logo"
+          ></img>
         </Link>
       </div>
 
