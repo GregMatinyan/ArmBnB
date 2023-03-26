@@ -1,11 +1,18 @@
-import Header from "../headerComponents/Header";
 import SignUpForm from "./SignUpForm";
+import Logo from "../../images/Logo.png";
+import styles from "./InputForm.module.css";
+import { Link } from "react-router-dom";
+import { HOME_PATH } from "../../constants/path";
 
 export default function SignUp() {
   return (
     <>
-      <div style={{ paddingTop: "50px" }}>
-        <Header />
+      <div className={styles.container}>
+        <div className={styles.logocontainer}>
+          <Link to={HOME_PATH}>
+            <img src={Logo} alt="logo"></img>
+          </Link>
+        </div>
         <SignUpForm />
       </div>
     </>
