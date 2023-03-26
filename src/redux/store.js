@@ -1,5 +1,4 @@
 import { createStore } from "redux";
-import HostDescriptions from "../components/homePage/HostDescriptions";
 
 export const store = createStore(
   function (state, action) {
