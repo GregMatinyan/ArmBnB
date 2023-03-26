@@ -1,0 +1,64 @@
+.container {
+  padding-bottom: 50px;
+}
+
+.container h2 {
+  font-weight: 800;
+  font-size: 35px;
+}
+.pictures {
+  width: 800px;
+  display: flex;
+  margin-left: 50px;
+}
+
+.pictures img {
+  border-radius: 25px;
+  width: 90%;
+}
+
+.hostName {
+  display: flex;
+  margin: 5px 0px 2px 50px;
+}
+
+.hostName h2 {
+  margin-bottom: auto;
+}
+
+.location {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0px 15px 50px;
+  width: 50%;
+}
+.location img {
+  width: 30px;
+  height: 30px;
+  align-self: center;
+  margin-right: 15px;
+}
+
+.favorites {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0px 15px 50px;
+}
+.favorites img {
+  width: 30px;
+  height: 30px;
+  align-self: center;
+  margin-right: 15px;
+}
+
+.favorites span {
+  align-self: center;
+  margin-right: 5px;
+  font-weight: 200px;
+  font-size: 20px;
+}
+
+.favorites img:hover {
+  color: red;
+}

@@ -1,0 +1,10 @@
+.profileContainer {
+  display: flex;
+}
+.avatar {
+  width: 400px;
+}
+.profileDataContainer {
+  text-align: left;
+  font-size: 26px;
+}
