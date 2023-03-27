@@ -108,7 +108,7 @@ function Header() {
         >
           Log Out
         </Button>
-        <Link to={`profile/${auth?.currentUser?.uid}`}>
+        <Link to={`/profile/${auth?.currentUser?.uid}`}>
           <span>
             <img src={avatar} alt="avatar" />
           </span>

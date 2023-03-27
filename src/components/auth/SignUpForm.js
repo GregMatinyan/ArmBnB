@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { HOME_PATH } from "../../constants/path";
+import DefaultAvatar from "../../icons/user.png";
 
 export default function SignUpForm() {
   const [name, setName] = useState("");
@@ -26,6 +27,7 @@ export default function SignUpForm() {
           name,
           surname,
           email,
+          url: DefaultAvatar,
         });
         setName("");
         setSurname("");

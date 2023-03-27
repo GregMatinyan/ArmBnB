@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Header from "../headerComponents/Header";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { usersCollection } from "../../configs/firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { usersCollection, storage } from "../../configs/firebase";
 import styles from "./ProfilePage.module.css";
-import Logo from "../../icons/user.png";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import ModeIcon from "@mui/icons-material/Mode";
+import EditProfile from "./EditProfile";
 
 function ProfilePage() {
   const [userData, setUserData] = useState(null);
+  const [dialog, setDialog] = useState(false);
+
   const params = useParams();
 
   useEffect(() => {
@@ -19,6 +23,24 @@ function ProfilePage() {
     render();
   }, [params.userId]);
 
+  async function updateProfileData(name, surname, avatar) {
+    const storageRef = ref(storage, `avatars/${userData.email}`);
+    await uploadBytes(storageRef, avatar);
+    const url = await getDownloadURL(storageRef);
+    await updateDoc(doc(usersCollection, params.userId), {
+      name,
+      surname,
+      url,
+    });
+  }
+
+  const openDialog = () => {
+    setDialog(true);
+  };
+  const closeDialog = () => {
+    setDialog(false);
+  };
+
   return (
     <div>
       {userData && (
@@ -26,7 +48,12 @@ function ProfilePage() {
           <Header />
           <div className={styles.profileContainer}>
             <div className={styles.avatar}>
-              <img src={Logo} width="200px" height="200px" alt="avatar" />
+              <img
+                src={userData.url}
+                width="200px"
+                height="200px"
+                alt="avatar"
+              />
             </div>
             <div className={styles.profileDataContainer}>
               <p>
@@ -40,6 +67,16 @@ function ProfilePage() {
               </p>
             </div>
           </div>
+          <span onClick={openDialog}>
+            Edit profile: <ModeIcon />
+          </span>
+
+          <EditProfile
+            open={dialog}
+            handleClose={closeDialog}
+            updateData={updateProfileData}
+            avatar={userData.url}
+          />
         </>
       )}
     </div>
