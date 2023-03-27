@@ -33,10 +33,10 @@
 .hostDescription {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   align-items: self-start;
   justify-items: center;
   row-gap: 30px;
-  column-gap: 20px;
+  column-gap: 10px;
   margin-top: 100px;
 }

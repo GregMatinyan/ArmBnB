@@ -1,36 +1,34 @@
-import { useEffect, useState } from "react";
-import { User } from "../context/UserStateContext";
-import SignUp from "./signComponents/SignUp";
+import { useSelector } from "react-redux";
+import SignUp from "./auth/SignUp";
 import Home from "./homePage/Home";
 import { Route, Routes } from "react-router-dom";
 import { HOME_PATH, OFFER_PATH, SIGNUP_PATH } from "../constants/path";
-import { auth } from "../configs/firebase";
 import AddHost from "./addHost/AddHost";
 import HostPage from "./hostPage/HostPage";
+import ProfilePage from "./profile/ProfilePage";
+import NotFound from "./NotFound/NotFound";
 
 export default function Main() {
-  const [logedInUser, setLogedInUser] = useState(null);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setLogedInUser(user);
-      } else {
-        setLogedInUser(null);
-      }
-    });
-  }, []);
-
+  const user = useSelector(function (state) {
+    return state.currentUser.logedIn;
+  });
   return (
     <>
-      <User.Provider value={logedInUser}>
-        <Routes>
-          <Route path={HOME_PATH} element={<Home />} />
-          <Route path={OFFER_PATH} element={<AddHost />} />
+      <Routes>
+        <Route path={HOME_PATH} element={<Home />} />
+        <Route path={OFFER_PATH} element={<AddHost />} />
+        {!user ? (
           <Route path={SIGNUP_PATH} element={<SignUp />} />
-          <Route path={`/item/:id`} element={<HostPage />} />
-        </Routes>
-      </User.Provider>
+        ) : (
+          <Route
+            path={SIGNUP_PATH}
+            element={<NotFound value={"You are already signed up"} />}
+          />
+        )}
+        <Route path={`/item/:id`} element={<HostPage />} />
+        <Route path={`/profile/:userId`} element={<ProfilePage />} />
+        <Route path="/*" element={<NotFound value={"Page not found"} />} />
+      </Routes>
     </>
   );
 }

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
-import { User } from "../../context/UserStateContext";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import styles from "./Header.module.css";
@@ -12,9 +12,51 @@ import { signOut } from "firebase/auth";
 import LogInDialog from "../dialogs/LogInDialog";
 
 function Header() {
-  const user = React.useContext(User);
   const navigation = useNavigate();
-  const [loginDialog, setLoginDialog] = useState(false);
+  const dispatch = useDispatch();
+
+  const user = useSelector(function (state) {
+    return state.currentUser.logedIn;
+  });
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      dispatch({
+        type: "user-loged-in",
+        payload: {
+          logedIn: true,
+        },
+      });
+    } else {
+      dispatch({
+        type: "user-loged-in",
+        payload: {
+          logedIn: false,
+        },
+      });
+    }
+  });
+
+  const loginDialog = useSelector(function (state) {
+    return state.loginDialog.open;
+  });
+
+  const openDialog = () => {
+    dispatch({
+      type: "login-dialog-handler",
+      payload: {
+        open: true,
+      },
+    });
+  };
+  const closeDialog = () => {
+    dispatch({
+      type: "login-dialog-handler",
+      payload: {
+        open: false,
+      },
+    });
+  };
 
   const logOut = async () => {
     try {
@@ -29,9 +71,7 @@ function Header() {
       <div className={styles.sign}>
         <Button
           variant="text"
-          onClick={() => {
-            setLoginDialog(true);
-          }}
+          onClick={openDialog}
           sx={{
             color: "#3f3b34",
             borderColor: "#3f3b34",
@@ -53,12 +93,7 @@ function Header() {
         >
           Sign Up
         </Button>
-        <LogInDialog
-          open={loginDialog}
-          handleClose={() => {
-            setLoginDialog(false);
-          }}
-        />
+        <LogInDialog open={loginDialog} handleClose={closeDialog} />
       </div>
     ) : (
       <div className={styles.logout}>
@@ -73,9 +108,11 @@ function Header() {
         >
           Log Out
         </Button>
-        <span>
-          <img src={avatar} alt="avatar" />
-        </span>
+        <Link to={`/profile/${auth?.currentUser?.uid}`}>
+          <span>
+            <img src={avatar} alt="avatar" />
+          </span>
+        </Link>
       </div>
     );
   };
@@ -84,7 +121,17 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.logocontainer}>
         <Link to={HOME_PATH}>
-          <img className={styles.logo} src={Logo} alt="logo"></img>
+          <img
+            onClick={() => {
+              dispatch({
+                type: "filter-by-icon",
+                payload: "",
+              });
+            }}
+            className={styles.logo}
+            src={Logo}
+            alt="logo"
+          ></img>
         </Link>
       </div>
 
@@ -97,7 +144,7 @@ function Header() {
           if (user) {
             navigation(OFFER_PATH);
           } else {
-            setLoginDialog(true);
+            openDialog();
           }
         }}
         className={styles.addOfferSpan}
