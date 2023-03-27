@@ -7,15 +7,19 @@ import { setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { HOME_PATH } from "../../constants/path";
 import DefaultAvatar from "../../icons/user.png";
+import { YearPicker, MonthPicker, DayPicker } from "react-dropdown-date";
 
 export default function SignUpForm() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [day, setDay] = useState(null);
+  const [month, setMonth] = useState(null);
+  const [year, setYear] = useState(null);
   const [country, setCountry] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const navigation = useNavigate();
 
@@ -38,10 +42,9 @@ export default function SignUpForm() {
         console.error(error);
       }
     } else {
-      alert("Wrong");
+      setMessage("Please enter correct password!");
     }
   };
-
   const signUpWithGoogleAcc = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -88,14 +91,59 @@ export default function SignUpForm() {
           onChange={(e) => setCountry(e.target.value)}
           required
         />
-        <input
-          className={styles.input}
-          placeholder="Birthdate(MM/DD/YYYY)"
-          value={birthDate}
-          onChange={(e) => setBirthDate(e.target.value)}
-          required
-          sx={{ mb: 1, bgcolor: "#b9c0e0" }}
-        />
+        <div className={styles.dateContainer}>
+          <DayPicker
+            className={styles.dateField}
+            defaultValue={"Day"}
+            year={year}
+            month={month}
+            endYearGiven
+            required={true}
+            disabled={false}
+            value={day}
+            onChange={(day) => {
+              setDay(day);
+            }}
+            id={"day"}
+            name={"day"}
+            classes={"classes"}
+            optionalClasses={"option classes"}
+          />
+          <MonthPicker
+            className={styles.dateField}
+            defaultValue={"Month"}
+            numeric
+            short
+            caps
+            endYearGiven
+            year={year}
+            required={true}
+            disabled={false}
+            value={month}
+            onChange={(month) => {
+              setMonth(month);
+            }}
+            id={"month"}
+            name={"month"}
+            classes={"classes"}
+            optionalClasses={"option classes"}
+          />
+          <YearPicker
+            className={styles.dateField}
+            defaultValue={"Year"}
+            start={1900}
+            end={2023}
+            reverse
+            value={year}
+            onChange={(year) => {
+              setYear(year);
+            }}
+            id={"year"}
+            name={"year"}
+            classes={"classes"}
+            optionClasses={"option classes"}
+          />
+        </div>
         <input
           className={styles.input}
           placeholder="Password"
@@ -111,9 +159,12 @@ export default function SignUpForm() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           type="password"
           required
-          zx
         />
-
+        {message && (
+          <div style={{ padding: "5px 0px 5px 0px", color: "red" }}>
+            {message}
+          </div>
+        )}
         <Button type="submit" onClick={signUpWithEmail}>
           Sign Up
         </Button>

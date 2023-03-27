@@ -12,9 +12,12 @@
 .logocontainer {
   width: 120px;
   margin-left: 30px;
+  border-radius: 10px;
 }
 .logocontainer img {
   width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
 }
 
 .h2 {
@@ -34,7 +37,7 @@
   align-self: flex-start;
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
   margin-left: 180px;
-  margin-bottom: 10%;
+  margin-bottom: 40%;
   margin-top: 0%;
 }
 
@@ -43,9 +46,25 @@
   width: 45%;
   box-shadow: rgba(241, 196, 15, 1) 20%;
   margin-top: 5px;
+  margin-bottom: 5px;
   padding: 10px;
   background-color: antiquewhite;
 }
+
+.dateContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 0px 5px 0px;
+  width: 52%;
+  justify-content: space-evenly;
+}
+
+.dateContainer select {
+  background-color: antiquewhite;
+  border: 1px solid black;
+  width: 28%;
+}
+
 .inputContainer button {
   background: rgba(241, 196, 15, 1) 20%;
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
