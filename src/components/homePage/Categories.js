@@ -8,7 +8,7 @@ function Categories() {
   function renderIcons(icons, styles) {
     const filter = (icon) => {
       dispatch({
-        type: "filter-by-icon",
+        type: "search-by-icon",
         payload: icon,
       });
     };

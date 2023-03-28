@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,12 +12,9 @@ import { signOut } from "firebase/auth";
 import LogInDialog from "../dialogs/LogInDialog";
 
 function Header() {
+  const [search, setSearch] = useState("");
   const navigation = useNavigate();
   const dispatch = useDispatch();
-
-  const user = useSelector(function (state) {
-    return state.currentUser.logedIn;
-  });
 
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -35,6 +32,9 @@ function Header() {
         },
       });
     }
+  });
+  const user = useSelector(function (state) {
+    return state.currentUser.logedIn;
   });
 
   const loginDialog = useSelector(function (state) {
@@ -67,7 +67,26 @@ function Header() {
   };
 
   const renderSign = () => {
-    return !user ? (
+    return user ? (
+      <div className={styles.logout}>
+        <Button
+          sx={{
+            color: "#3f3b34",
+            borderColor: "#3f3b34",
+            fontFamily: "inherit",
+          }}
+          variant="outlined"
+          onClick={logOut}
+        >
+          Log Out
+        </Button>
+        <Link to={`/profile/${auth?.currentUser?.uid}`}>
+          <span>
+            <img src={avatar} alt="avatar" />
+          </span>
+        </Link>
+      </div>
+    ) : (
       <div className={styles.sign}>
         <Button
           variant="text"
@@ -95,25 +114,6 @@ function Header() {
         </Button>
         <LogInDialog open={loginDialog} handleClose={closeDialog} />
       </div>
-    ) : (
-      <div className={styles.logout}>
-        <Button
-          sx={{
-            color: "#3f3b34",
-            borderColor: "#3f3b34",
-            fontFamily: "inherit",
-          }}
-          variant="outlined"
-          onClick={logOut}
-        >
-          Log Out
-        </Button>
-        <Link to={`/profile/${auth?.currentUser?.uid}`}>
-          <span>
-            <img src={avatar} alt="avatar" />
-          </span>
-        </Link>
-      </div>
     );
   };
 
@@ -136,7 +136,26 @@ function Header() {
       </div>
 
       <div className={styles.search}>
-        <TextField id="outlined-basic" label="Search" variant="outlined" />
+        <TextField
+          id="outlined-basic"
+          label="Enter name or location of host"
+          variant="outlined"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button
+          onClick={() => {
+            dispatch({
+              type: "search-by-input",
+              payload: {
+                inputValue: search,
+              },
+            });
+          }}
+          className={styles.addOffer}
+        >
+          Search
+        </button>
       </div>
 
       <button
@@ -147,7 +166,7 @@ function Header() {
             openDialog();
           }
         }}
-        className={styles.addOfferSpan}
+        className={styles.addOffer}
       >
         Add your host
       </button>

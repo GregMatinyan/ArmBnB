@@ -18,12 +18,19 @@ export const store = createStore(
         },
       };
     }
-
-    if (action.type === "filter-by-icon") {
+    if (action.type === "search-by-icon") {
       return {
         ...state,
-        iconFilter: {
-          name: action.payload,
+        searchByIcon: {
+          type: action.payload,
+        },
+      };
+    }
+    if (action.type === "search-by-input") {
+      return {
+        ...state,
+        searchByInput: {
+          inputValue: action.payload.inputValue,
         },
       };
     }
@@ -36,6 +43,7 @@ export const store = createStore(
     loginDialog: {
       open: false,
     },
-    iconFilter: { name: "" },
+    searchByIcon: { type: "" },
+    searchByInput: { inputValue: "" },
   }
 );

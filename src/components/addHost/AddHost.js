@@ -6,10 +6,11 @@ import { offersCollection, storage } from "../../configs/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { setDoc, doc } from "@firebase/firestore";
 import Checkbox from "@mui/material/Checkbox";
+import { HOME_PATH } from "../../constants/path";
+import { useNavigate } from "react-router-dom";
 
 function AddHost() {
   const [uploadedImages, setUploadedImages] = useState(null);
-
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
   const [tv, setTv] = useState(false);
@@ -26,6 +27,7 @@ function AddHost() {
   const [price, setPrice] = useState();
   const [contacts, setContacts] = useState("");
   const [location, setLocation] = useState("");
+  const navigation = useNavigate();
 
   const hostInfo = {
     hostName,
@@ -282,7 +284,13 @@ function AddHost() {
             onChange={(e) => setUploadedImages(e.target.files)}
           />
         </div>
-        <button className={styles.subBtn} onClick={(e) => uploadData(e)}>
+        <button
+          className={styles.subBtn}
+          onClick={(e) => {
+            navigation(HOME_PATH);
+            uploadData(e);
+          }}
+        >
           Submit
         </button>
       </form>

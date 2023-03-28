@@ -40,7 +40,7 @@
   color: #3f3b34;
 }
 
-.addOfferSpan {
+.addOffer {
   transition: all 0.2s;
   cursor: pointer;
   border-radius: 11px;
@@ -51,7 +51,7 @@
   font-family: inherit;
 }
 
-.addOfferSpan:hover {
+.addOffer:hover {
   border-radius: 9px;
   color: #fff;
   background-color: #cf711f;
