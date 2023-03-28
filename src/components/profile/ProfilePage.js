@@ -54,6 +54,11 @@ function ProfilePage() {
                 height="200px"
                 alt="avatar"
               />
+              <div>
+                <span onClick={openDialog} style={{ cursor: "pointer" }}>
+                  Edit profile: <ModeIcon />
+                </span>
+              </div>
             </div>
             <div className={styles.profileDataContainer}>
               <p>
@@ -67,9 +72,6 @@ function ProfilePage() {
               </p>
             </div>
           </div>
-          <span onClick={openDialog}>
-            Edit profile: <ModeIcon />
-          </span>
 
           <EditProfile
             open={dialog}

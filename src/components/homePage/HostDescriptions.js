@@ -9,11 +9,21 @@ function HostDescriptions() {
   const [hostsDescriptions, setHostsDescriptions] = useState([]);
 
   const iconName = useSelector(function (state) {
-    return state.iconFilter.name;
+    return state.searchByIcon.type;
+  });
+
+  const searchValue = useSelector(function (state) {
+    return state.searchByInput.inputValue;
   });
 
   const filterByIcon = hostsDescriptions.filter(
     (el) => el.hostType === iconName
+  );
+
+  const filterBySearch = hostsDescriptions.filter(
+    (el) =>
+      el.hostName.toLowerCase().includes(searchValue.toLowerCase()) ||
+      el.location.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   useEffect(() => {
@@ -34,9 +44,11 @@ function HostDescriptions() {
 
   return (
     <div className={styles.hostDescription}>
-      {!iconName
-        ? hostsDescriptions.map((el) => <RenderHost key={el.id} data={el} />)
-        : filterByIcon.map((el) => <RenderHost key={el.id} data={el} />)}
+      {iconName
+        ? filterByIcon.map((el) => <RenderHost key={el.id} data={el} />)
+        : searchValue
+        ? filterBySearch.map((el) => <RenderHost key={el.id} data={el} />)
+        : hostsDescriptions.map((el) => <RenderHost key={el.id} data={el} />)}
     </div>
   );
 }
