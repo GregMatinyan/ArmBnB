@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,34 +14,39 @@ import LogInDialog from "../dialogs/LogInDialog";
 function Header() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const [log, setLog] = useState(true);
 
   const user = useSelector(function (state) {
     return state.currentUser.logedIn;
   });
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      dispatch({
-        type: "user-loged-in",
-        payload: {
-          logedIn: true,
-        },
-      });
-    } else {
-      dispatch({
-        type: "user-loged-in",
-        payload: {
-          logedIn: false,
-        },
-      });
-    }
-  });
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({
+          type: "user-loged-in",
+          payload: {
+            logedIn: true,
+          },
+        });
+      } else {
+        dispatch({
+          type: "user-loged-in",
+          payload: {
+            logedIn: false,
+          },
+        });
+      }
+      setLog(false);
+    });
+  }, [dispatch]);
 
   const loginDialog = useSelector(function (state) {
     return state.loginDialog.open;
   });
 
   const openDialog = () => {
+    // console.log("tyurimacutyun");
     dispatch({
       type: "login-dialog-handler",
       payload: {
@@ -67,6 +72,9 @@ function Header() {
   };
 
   const renderSign = () => {
+    if (log) {
+      return null;
+    }
     return !user ? (
       <div className={styles.sign}>
         <Button

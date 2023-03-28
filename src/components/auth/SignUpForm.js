@@ -26,6 +26,7 @@ export default function SignUpForm() {
           name,
           surname,
           email,
+          favorites: {},
         });
         setName("");
         setSurname("");
@@ -109,7 +110,6 @@ export default function SignUpForm() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           type="password"
           required
-          zx
         />
 
         <Button type="submit" onClick={signUpWithEmail}>

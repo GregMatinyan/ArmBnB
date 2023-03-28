@@ -30,8 +30,11 @@
   right: 15px;
   fill: #4c4848;
   color: #e0d8d8;
+  cursor: pointer;
 }
-
+.fillred {
+  fill: red;
+}
 .hostInfo {
   padding: 10px;
 }
