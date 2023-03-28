@@ -1,20 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./RenderHost.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { auth } from "../../configs/firebase";
+import { usersCollection } from "../../configs/firebase";
 import AwesomeSlider from "react-awesome-slider-fw";
 import "react-awesome-slider-fw/dist/styles.css";
+import clsx from "clsx";
 
 function RenderHost(props) {
-  const { id, urls, hostName, price, location } = props.data;
+  const dispatch = useDispatch();
+  const [favorites, setFavorites] = useState({});
+
   const user = useSelector(function (state) {
     return state.currentUser.logedIn;
   });
 
-  const handleLike = () => {
+  useEffect(() => {
+    if (user) {
+      async function getFavorites() {
+        const current = await getDoc(
+          doc(usersCollection, auth?.currentUser?.uid)
+        );
+
+        setFavorites({ ...current.data().favorites });
+      }
+      getFavorites();
+    }
+  }, [user]);
+
+  const { id, urls, hostName, price, location } = props.data;
+
+  const handleLike = async () => {
     if (!user) {
-      alert("Log in");
+      dispatch({
+        type: "login-dialog-handler",
+        payload: {
+          open: true,
+        },
+      });
+    } else if (favorites.hasOwnProperty(id)) {
+      await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
+        favorites: {
+          ...favorites,
+          [id]: !favorites[id],
+        },
+      });
+      setFavorites({ ...favorites, [id]: !favorites[id] });
     } else {
+      await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
+        favorites: {
+          ...favorites,
+          [id]: true,
+        },
+      });
+      setFavorites({ ...favorites, [id]: true });
     }
   };
 
@@ -28,7 +69,9 @@ function RenderHost(props) {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className={styles.faheart}
+              className={clsx(styles.faheart, {
+                [styles.fillred]: favorites.hasOwnProperty(id) && favorites[id],
+              })}
             >
               <path
                 strokeLinecap="round"
