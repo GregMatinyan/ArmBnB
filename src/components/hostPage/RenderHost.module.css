@@ -30,8 +30,11 @@
   right: 15px;
   fill: #4c4848;
   color: #e0d8d8;
+  cursor: pointer;
 }
-
+.fillred {
+  fill: red;
+}
 .hostInfo {
   padding: 10px;
 }
@@ -62,11 +65,10 @@
   overflow: hidden;
   cursor: pointer;
   border: none;
-  transition: transform 0.225s cubic-bezier(0.8, 1.35, 0.75, 1.45),
-    background-color 0.175s ease-out;
+  transition: transform 0.225s cubic-bezier(0.8, 1.35, 0.75, 1.45);
+  background-color: white;
 }
 
 .awssld__bullets--active {
-  transform: scale(1.1);
-  background: #fff;
+  transform: scale(1.8);
 }

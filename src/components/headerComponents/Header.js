@@ -1,41 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../images/Logo.png";
 import styles from "./Header.module.css";
-import avatar from "../../icons/user.png";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
 import LogInDialog from "../dialogs/LogInDialog";
+import avatar from "../../icons/user.png";
 
 function Header() {
   const [search, setSearch] = useState("");
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const [log, setLog] = useState(true);
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      dispatch({
-        type: "user-loged-in",
-        payload: {
-          logedIn: true,
-        },
-      });
-    } else {
-      dispatch({
-        type: "user-loged-in",
-        payload: {
-          logedIn: false,
-        },
-      });
-    }
-  });
   const user = useSelector(function (state) {
     return state.currentUser.logedIn;
   });
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({
+          type: "user-loged-in",
+          payload: {
+            logedIn: true,
+          },
+        });
+      } else {
+        dispatch({
+          type: "user-loged-in",
+          payload: {
+            logedIn: false,
+          },
+        });
+      }
+      setLog(false);
+    });
+  }, [dispatch]);
 
   const loginDialog = useSelector(function (state) {
     return state.loginDialog.open;
@@ -67,6 +72,9 @@ function Header() {
   };
 
   const renderSign = () => {
+    if (log) {
+      return null;
+    }
     return user ? (
       <div className={styles.logout}>
         <Button
@@ -124,8 +132,14 @@ function Header() {
           <img
             onClick={() => {
               dispatch({
-                type: "filter-by-icon",
+                type: "search-by-icon",
                 payload: "",
+              });
+              dispatch({
+                type: "search-by-input",
+                payload: {
+                  inputValue: "",
+                },
               });
             }}
             className={styles.logo}
@@ -151,6 +165,7 @@ function Header() {
                 inputValue: search,
               },
             });
+            setSearch("");
           }}
           className={styles.addOffer}
         >
