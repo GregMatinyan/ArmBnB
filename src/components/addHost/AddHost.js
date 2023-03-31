@@ -27,6 +27,7 @@ function AddHost() {
   const [price, setPrice] = useState();
   const [contacts, setContacts] = useState("");
   const [location, setLocation] = useState("");
+  const [id, setId] = useState("");
   const navigation = useNavigate();
 
   const hostInfo = {
@@ -51,6 +52,7 @@ function AddHost() {
     e.preventDefault();
     const promises = [];
     const offerId = hostName.replace(" ", "_") + v4();
+    setId(offerId);
     const images = Object.values(uploadedImages);
     for (let i = 0; i < images.length; i++) {
       const image = images[i];
@@ -287,8 +289,9 @@ function AddHost() {
         <button
           className={styles.subBtn}
           onClick={(e) => {
-            navigation(HOME_PATH);
             uploadData(e);
+            alert("Your host was added");
+            navigation(HOME_PATH);
           }}
         >
           Submit

@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { setIconName } from "../../features/searchByIcon/searchByIconSlice";
 import filterIcons from "../../icons/icons";
 import styles from "./Home.module.css";
 
@@ -7,10 +8,7 @@ function Categories() {
   const dispatch = useDispatch();
   function renderIcons(icons, styles) {
     const filter = (icon) => {
-      dispatch({
-        type: "search-by-icon",
-        payload: icon,
-      });
+      dispatch(setIconName(icon));
     };
     return Object.entries(icons).map((item) => {
       return (
