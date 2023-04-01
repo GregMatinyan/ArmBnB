@@ -5,13 +5,16 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-// import { addDoc } from "firebase/firestore";
-// import { auth, googleProvider, usersListRef } from "../../configs/firebase";
 import styles from "./EditProfile.module.css";
 
-export default function EditProfile({ open, handleClose, updateData, avatar }) {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
+export default function EditProfile({
+  open,
+  handleClose,
+  updateData,
+  userData,
+}) {
+  const [name, setName] = useState(userData.name);
+  const [surname, setSurname] = useState(userData.surname);
   const [uploaded, setUploaded] = useState(null);
 
   return (
@@ -20,19 +23,17 @@ export default function EditProfile({ open, handleClose, updateData, avatar }) {
         open={open}
         onClose={() => {
           handleClose();
-          setName("");
-          setSurname("");
         }}
       >
         <DialogTitle className={styles.title}>
-          Create your ArmBnB account
+          Edit your profile data
         </DialogTitle>
         <DialogContent className={styles.dialogContent}>
           <label htmlFor="upload-img">
             <img
               style={{ borderRadius: "10px" }}
               width="120px"
-              src={avatar}
+              src={userData.url}
               alt="avatar"
             />
           </label>

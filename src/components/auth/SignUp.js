@@ -1,5 +1,5 @@
 import SignUpForm from "./SignUpForm";
-import Logo from "../../images/Logo.png";
+import Logo from "../../assets/images/Logo.png";
 import styles from "./InputForm.module.css";
 import { Link } from "react-router-dom";
 import { HOME_PATH } from "../../constants/path";

@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url("../../images/bgImage.jpg");
+  background-image: url("../../assets/images/bgImage.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -4,10 +4,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { offersCollection } from "../../configs/firebase";
 import Header from "../headerComponents/Header";
 import styles from "./HostPage.module.css";
-import Location from "../../icons/location.png";
-import Like from "../../icons/heart.png";
-//import ImageList from "@mui/material/ImageList";
-//import ImageListItem from "@mui/material/ImageListItem";
+import Location from "../../assets/icons/location.png";
+import Like from "../../assets/icons/heart.png";
 import WifiIcon from "@mui/icons-material/Wifi";
 import TvIcon from "@mui/icons-material/Tv";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
@@ -55,24 +53,6 @@ function HostPage() {
             </div>
           </div>
         </div>
-        {/*<div className={styles.pictures}>
-            <ImageList
-              sx={{ width: 800, height: 450 }}
-              cols={3}
-              rowHeight={150}
-            >
-              {data.urls.map((url) => (
-                <ImageListItem key={url.img}>
-                  <img
-                    src={url}
-                    srcSet={`${url.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                    alt={url.title}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </div>*/}
 
         <div className={styles.imgGrid}>
           {data.urls.map((url) => (
