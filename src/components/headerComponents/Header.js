@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../images/Logo.png";
+import Logo from "../../assets/images/Logo.png";
 import styles from "./Header.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
 import LogInDialog from "../dialogs/LogInDialog";
-import avatar from "../../icons/user.png";
+import avatar from "../../assets/icons/user.png";
 import {
   getUserStatus,
   setUserStatus,

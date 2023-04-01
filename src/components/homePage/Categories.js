@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setIconName } from "../../features/searchByIcon/searchByIconSlice";
-import filterIcons from "../../icons/icons";
+import filterIcons from "../../assets/icons/icons";
 import styles from "./Home.module.css";
 
 function Categories() {

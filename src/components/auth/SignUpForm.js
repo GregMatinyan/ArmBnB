@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { HOME_PATH } from "../../constants/path";
-import DefaultAvatar from "../../icons/user.png";
+import DefaultAvatar from "../../assets/icons/user.png";
 import { YearPicker, MonthPicker, DayPicker } from "react-dropdown-date";
 
 export default function SignUpForm() {
@@ -33,6 +33,7 @@ export default function SignUpForm() {
           email,
           url: DefaultAvatar,
           favorites: {},
+          userHosts: {},
         });
         setName("");
         setSurname("");

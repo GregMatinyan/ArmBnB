@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../headerComponents/Header";
 import styles from "./AddHost.module.css";
 import { v4 } from "uuid";
-import { offersCollection, storage } from "../../configs/firebase";
+import {
+  usersCollection,
+  offersCollection,
+  storage,
+  auth,
+} from "../../configs/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { setDoc, doc } from "@firebase/firestore";
+import { setDoc, doc, updateDoc, getDoc } from "@firebase/firestore";
 import Checkbox from "@mui/material/Checkbox";
 import { HOME_PATH } from "../../constants/path";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +32,6 @@ function AddHost() {
   const [price, setPrice] = useState();
   const [contacts, setContacts] = useState("");
   const [location, setLocation] = useState("");
-  const [id, setId] = useState("");
   const navigation = useNavigate();
 
   const hostInfo = {
@@ -48,11 +52,22 @@ function AddHost() {
     contacts,
   };
 
+  const [userHosts, setUserHosts] = useState([]);
+
+  useEffect(() => {
+    async function getUserHosts() {
+      const current = await getDoc(
+        doc(usersCollection, auth?.currentUser?.uid)
+      );
+      setUserHosts([...current.data().userHosts]);
+    }
+    getUserHosts();
+  }, []);
+
   async function uploadData(e) {
     e.preventDefault();
     const promises = [];
     const offerId = hostName.replace(" ", "_") + v4();
-    setId(offerId);
     const images = Object.values(uploadedImages);
     for (let i = 0; i < images.length; i++) {
       const image = images[i];
@@ -66,9 +81,13 @@ function AddHost() {
           return getDownloadURL(uploadResult.ref);
         })
       );
-      const urls = await Promise.all(promises);
-      await setDoc(doc(offersCollection, offerId), { ...hostInfo, urls });
     }
+    const urls = await Promise.all(promises);
+    await setDoc(doc(offersCollection, offerId), { ...hostInfo, urls });
+    await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
+      userHosts: userHosts.concat([offerId]),
+    });
+    setUserHosts(userHosts.concat([offerId]));
   }
 
   return (

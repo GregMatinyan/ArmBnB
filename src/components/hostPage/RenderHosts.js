@@ -12,6 +12,7 @@ import { getUserStatus } from "../../features/currentUser/currentUserSlice";
 import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
 
 function RenderHost(props) {
+  const { id, urls, hostName, price, location } = props.data;
   const dispatch = useDispatch();
   const [favorites, setFavorites] = useState({});
 
@@ -29,8 +30,6 @@ function RenderHost(props) {
       getFavorites();
     }
   }, [user, favorites]);
-
-  const { id, urls, hostName, price, location } = props.data;
 
   const handleLike = async () => {
     if (!user) {
@@ -63,7 +62,7 @@ function RenderHost(props) {
               strokeWidth="1.5"
               stroke="currentColor"
               className={clsx(styles.faheart, {
-                [styles.fillred]: favorites.hasOwnProperty(id) && favorites[id],
+                [styles.fillred]: favorites.hasOwnProperty(id),
               })}
             >
               <path
@@ -74,7 +73,7 @@ function RenderHost(props) {
             </svg>
           </div>
 
-          <Link to={`item/${id}`}>
+          <Link to={`/item/${id}`}>
             <img style={{ width: "100%" }} src={image} alt="host img" />
           </Link>
         </div>
