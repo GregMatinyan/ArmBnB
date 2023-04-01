@@ -1,0 +1,37 @@
+.filterButton {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  justify-content: center;
+  width: 120px;
+  margin: 50px auto 0 auto;
+  cursor: pointer;
+  gap: 5px;
+  /* padding: 4px; */
+}
+
+.filterButton:hover {
+  box-shadow: 1px 0px 4px #ddd;
+  border-radius: 15px;
+}
+
+.filterButton img {
+  width: 50px;
+}
+
+.Xclose {
+  padding: 5px;
+  background-color: transparent;
+  border-color: transparent;
+  align-self: start;
+}
+
+.Xclose:hover {
+  box-shadow: 1px 0px 4px #ddd;
+}
+
+.fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

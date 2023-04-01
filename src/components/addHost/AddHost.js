@@ -299,8 +299,9 @@ function AddHost() {
         <button
           className={styles.subBtn}
           onClick={(e) => {
-            navigation(HOME_PATH);
             uploadData(e);
+            alert("Your host was added");
+            navigation(HOME_PATH);
           }}
         >
           Submit

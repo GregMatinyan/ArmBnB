@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./RenderHost.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc, deleteField } from "firebase/firestore";
 import { auth } from "../../configs/firebase";
 import { usersCollection } from "../../configs/firebase";
 import AwesomeSlider from "react-awesome-slider-fw";
 import "react-awesome-slider-fw/dist/styles.css";
 import clsx from "clsx";
+import { getUserStatus } from "../../features/currentUser/currentUserSlice";
+import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
 
 function RenderHost(props) {
   const dispatch = useDispatch();
   const [favorites, setFavorites] = useState({});
 
-  const user = useSelector(function (state) {
-    return state.currentUser.logedIn;
-  });
+  const user = useSelector(getUserStatus);
 
   useEffect(() => {
     if (user) {
@@ -28,26 +28,19 @@ function RenderHost(props) {
       }
       getFavorites();
     }
-  }, [user]);
+  }, [user, favorites]);
 
   const { id, urls, hostName, price, location } = props.data;
 
   const handleLike = async () => {
     if (!user) {
-      dispatch({
-        type: "login-dialog-handler",
-        payload: {
-          open: true,
-        },
-      });
+      dispatch(setLoginDialogStatus(true));
     } else if (favorites.hasOwnProperty(id)) {
       await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
-        favorites: {
-          ...favorites,
-          [id]: !favorites[id],
-        },
+        ["favorites." + id]: deleteField(),
       });
-      setFavorites({ ...favorites, [id]: !favorites[id] });
+      delete favorites[id];
+      setFavorites({ ...favorites });
     } else {
       await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
         favorites: {

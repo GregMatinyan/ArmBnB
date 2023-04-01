@@ -7,11 +7,10 @@ import AddHost from "./addHost/AddHost";
 import HostPage from "./hostPage/HostPage";
 import ProfilePage from "./profile/ProfilePage";
 import NotFound from "./NotFound/NotFound";
+import { getUserStatus } from "../features/currentUser/currentUserSlice";
 
 export default function Main() {
-  const user = useSelector(function (state) {
-    return state.currentUser.logedIn;
-  });
+  const user = useSelector(getUserStatus);
   return (
     <>
       <Routes>

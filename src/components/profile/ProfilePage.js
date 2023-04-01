@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import Header from "../headerComponents/Header";
 import { useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { usersCollection, storage } from "../../configs/firebase";
+import {
+  usersCollection,
+  storage,
+  offersCollection,
+} from "../../configs/firebase";
 import styles from "./ProfilePage.module.css";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import ModeIcon from "@mui/icons-material/Mode";
@@ -11,6 +15,7 @@ import EditProfile from "./EditProfile";
 function ProfilePage() {
   const [userData, setUserData] = useState(null);
   const [dialog, setDialog] = useState(false);
+  const [favs, setFavs] = useState([]);
 
   const params = useParams();
 
@@ -22,6 +27,26 @@ function ProfilePage() {
     };
     render();
   }, [params.userId]);
+
+  useEffect(() => {
+    if (!userData) return;
+    Object.keys(userData.favorites).map(async (id) => {
+      const offerPureData = await getDoc(doc(offersCollection, id));
+
+      setFavs((prev) => [...prev, offerPureData.data()]);
+    });
+  }, [userData]);
+
+  function renderFavorites() {
+    return favs.map((item, index) => {
+      return (
+        <>
+          <img width="200px" src={item.urls[0]} alt="host img" />
+          <span key={index}>{item.hostName}</span>;
+        </>
+      );
+    });
+  }
 
   async function updateProfileData(name, surname, avatar) {
     const storageRef = ref(storage, `avatars/${userData.email}`);
@@ -71,6 +96,7 @@ function ProfilePage() {
                 Contacts: <strong>{userData.email}</strong>
               </p>
             </div>
+            <div>{renderFavorites()}</div>
           </div>
 
           <EditProfile
