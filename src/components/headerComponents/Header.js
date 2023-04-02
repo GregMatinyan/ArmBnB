@@ -2,14 +2,25 @@ import React, { useEffect, useState } from "react";
 import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../images/Logo.png";
+import Logo from "../../assets/images/Logo.png";
 import styles from "./Header.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
 import LogInDialog from "../dialogs/LogInDialog";
-import avatar from "../../icons/user.png";
+import avatar from "../../assets/icons/user.png";
+import {
+  getUserStatus,
+  setUserStatus,
+} from "../../features/currentUser/currentUserSlice";
+import {
+  getLoginDialogStatus,
+  setLoginDialogStatus,
+} from "../../features/loginDialog/loginDialogSlice";
+import { setIconName } from "../../features/searchByIcon/searchByIconSlice";
+import { setInputvalue } from "../../features/searchByInput/searchByInputSlice";
+import { setFilters } from "../../features/searchByFilters/serchByFiltersSlice";
 
 function Header() {
   const [search, setSearch] = useState("");
@@ -17,50 +28,26 @@ function Header() {
   const dispatch = useDispatch();
   const [log, setLog] = useState(true);
 
-  const user = useSelector(function (state) {
-    return state.currentUser.logedIn;
-  });
-
+  const user = useSelector(getUserStatus);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        dispatch({
-          type: "user-loged-in",
-          payload: {
-            logedIn: true,
-          },
-        });
+        dispatch(setUserStatus(true));
       } else {
-        dispatch({
-          type: "user-loged-in",
-          payload: {
-            logedIn: false,
-          },
-        });
+        dispatch(setUserStatus(false));
       }
       setLog(false);
     });
   }, [dispatch]);
 
-  const loginDialog = useSelector(function (state) {
-    return state.loginDialog.open;
-  });
+  const loginDialog = useSelector(getLoginDialogStatus);
 
   const openDialog = () => {
-    dispatch({
-      type: "login-dialog-handler",
-      payload: {
-        open: true,
-      },
-    });
+    dispatch(setLoginDialogStatus(true));
   };
+
   const closeDialog = () => {
-    dispatch({
-      type: "login-dialog-handler",
-      payload: {
-        open: false,
-      },
-    });
+    dispatch(setLoginDialogStatus(false));
   };
 
   const logOut = async () => {
@@ -131,16 +118,9 @@ function Header() {
         <Link to={HOME_PATH}>
           <img
             onClick={() => {
-              dispatch({
-                type: "search-by-icon",
-                payload: "",
-              });
-              dispatch({
-                type: "search-by-input",
-                payload: {
-                  inputValue: "",
-                },
-              });
+              dispatch(setIconName(""));
+              dispatch(setInputvalue(""));
+              dispatch(setFilters(null));
             }}
             className={styles.logo}
             src={Logo}
@@ -159,12 +139,7 @@ function Header() {
         />
         <button
           onClick={() => {
-            dispatch({
-              type: "search-by-input",
-              payload: {
-                inputValue: search,
-              },
-            });
+            dispatch(setInputvalue(search));
             setSearch("");
           }}
           className={styles.addOffer}

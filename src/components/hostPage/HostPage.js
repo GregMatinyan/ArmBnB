@@ -4,8 +4,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { offersCollection } from "../../configs/firebase";
 import Header from "../headerComponents/Header";
 import styles from "./HostPage.module.css";
-import Location from "../../icons/location.png";
-import Like from "../../icons/heart.png";
+import Location from "../../assets/icons/location.png";
+import Like from "../../assets/icons/heart.png";
 
 function HostPage() {
   const [data, setData] = useState(null);
