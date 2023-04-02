@@ -38,7 +38,7 @@ function ProfilePage() {
     });
     userData.userHosts.map(async (id) => {
       const userHostsData = await getDoc(doc(offersCollection, id));
-      setHosts((prev) => [...prev, userHostsData.data()]);
+      setHosts((prev) => [...prev, { ...userHostsData.data(), id }]);
     });
   }, [userData]);
 
