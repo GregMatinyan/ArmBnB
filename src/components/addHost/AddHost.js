@@ -32,6 +32,7 @@ function AddHost() {
   const [price, setPrice] = useState();
   const [contacts, setContacts] = useState("");
   const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
   const navigation = useNavigate();
 
   const hostInfo = {
@@ -49,7 +50,9 @@ function AddHost() {
     guests,
     price,
     location,
+    description,
     contacts,
+    pool,
   };
 
   const [userHosts, setUserHosts] = useState([]);
@@ -288,6 +291,15 @@ function AddHost() {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           ></input>
+        </div>
+        <div>
+          <label>Description</label>
+          <textarea
+            className={styles.description}
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
         </div>
         <div>
           <label>Contacts</label>

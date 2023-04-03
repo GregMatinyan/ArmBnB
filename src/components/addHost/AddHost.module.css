@@ -85,6 +85,14 @@ button,
   justify-content: center;
 }
 
+.description {
+  height: 150px;
+  font-display: initial;
+  row-gap: 5;
+  columns: 60;
+  background-color: rgb(211 205 205 / 26%);
+}
+
 .subBtn {
   margin: auto;
   margin-top: 20px;
