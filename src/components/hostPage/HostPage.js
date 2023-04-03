@@ -17,7 +17,8 @@ import PoolIcon from "@mui/icons-material/Pool";
 import FreeBreakfastTwoToneIcon from "@mui/icons-material/FreeBreakfastTwoTone";
 import WifiCalling3Icon from "@mui/icons-material/WifiCalling3";
 import LargeImg from "./LargeImg";
-import { motion } from "framer-motion";
+import AwesomeSlider from "react-awesome-slider-fw";
+import "react-awesome-slider-fw/dist/styles.css";
 
 function HostPage() {
   const [data, setData] = useState(null);
@@ -52,83 +53,91 @@ function HostPage() {
               <img src={Like} alt="like img" />
             </div>
           </div>
-        </div>
 
-        <div className={styles.imgGrid}>
-          {data.urls.map((url) => (
-            <motion.div
-              className={styles.imgWrap}
-              key={url.img}
-              whileHover={{ opacity: 1 }}
-              onClick={() => setSelectedImg(url)}
-            >
-              <img src={url} alt="url title" />
-            </motion.div>
-          ))}
-        </div>
-        {selectedImg && (
-          <LargeImg selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
-        )}
+          <div className={styles.imgGrid}>
+            <AwesomeSlider cssModule={[styles]}>
+              {data.urls.map((url) => (
+                <div
+                  key={url.img}
+                  whileHover={{ opacity: 1 }}
+                  onClick={() => setSelectedImg(url)}
+                >
+                  <img src={url} alt="url" />
+                </div>
+              ))}
+            </AwesomeSlider>
+          </div>
+          {selectedImg && (
+            <LargeImg
+              selectedImg={selectedImg}
+              setSelectedImg={setSelectedImg}
+            />
+          )}
 
-        <h3 className={styles.price}>Price for nigth {data.price}$</h3>
+          <h3 className={styles.price}>Price for nigth {data.price}$</h3>
 
-        <div className={styles.description}>
-          <h3>DESCRIPTION</h3>
-          {data.description}
-        </div>
-        <div className={styles.offers}>
-          <h3>What this place offers</h3>
-        </div>
-        <div className={styles.icons}>
-          <div className={styles.icons1}>
-            <div className={data.tv ? styles.icon : styles.absenceIcon}>
-              <TvIcon />
-              TV
-            </div>
+          <div className={styles.description}>
+            <h3>DESCRIPTION</h3>
+            {data.description}
+          </div>
+          <div className={styles.offers}>
+            <h3>What this place offers</h3>
+          </div>
+          <div className={styles.icons}>
+            <div className={styles.icons1}>
+              <div className={data.tv ? styles.icon : styles.absenceIcon}>
+                <TvIcon />
+                TV
+              </div>
 
-            <div className={data.wifi ? styles.icon : styles.absenceIcon}>
-              <WifiIcon />
-              Wifi
+              <div className={data.wifi ? styles.icon : styles.absenceIcon}>
+                <WifiIcon />
+                Wifi
+              </div>
+              <div
+                className={data.conditioner ? styles.icon : styles.absenceIcon}
+              >
+                <AcUnitIcon />
+                Airconditioner
+              </div>
+              <div className={data.kitchen ? styles.icon : styles.absenceIcon}>
+                <FlatwareIcon />
+                Kitchen
+              </div>
+              <div className={data.washer ? styles.icon : styles.absenceIcon}>
+                <LocalLaundryServiceIcon />
+                Washer
+              </div>
             </div>
-            <div
-              className={data.conditioner ? styles.icon : styles.absenceIcon}
-            >
-              <AcUnitIcon />
-              Airconditioner
-            </div>
-            <div className={data.kitchen ? styles.icon : styles.absenceIcon}>
-              <FlatwareIcon />
-              Kitchen
-            </div>
-            <div className={data.washer ? styles.icon : styles.absenceIcon}>
-              <LocalLaundryServiceIcon />
-              Washer
+            <div className={styles.icons2}>
+              <div className={data.patio ? styles.icon : styles.absenceIcon}>
+                <BalconyIcon />
+                Patio or balcony
+              </div>
+              <div
+                className={data.lovelyView ? styles.icon : styles.absenceIcon}
+              >
+                <YardTwoToneIcon />
+                Lovely view
+              </div>
+              <div
+                className={data.breakfast ? styles.icon : styles.absenceIcon}
+              >
+                <FreeBreakfastTwoToneIcon />
+                Breakfast
+              </div>
+              <div className={data.pool ? styles.icon : styles.absenceIcon}>
+                <PoolIcon />
+                Pool
+              </div>
             </div>
           </div>
-          <div className={styles.icons2}>
-            <div className={data.patio ? styles.icon : styles.absenceIcon}>
-              <BalconyIcon />
-              Patio or balcony
-            </div>
-            <div className={data.lovelyView ? styles.icon : styles.absenceIcon}>
-              <YardTwoToneIcon />
-              Lovely view
-            </div>
-            <div className={data.breakfast ? styles.icon : styles.absenceIcon}>
-              <FreeBreakfastTwoToneIcon />
-              Breakfast
-            </div>
-            <div className={data.pool ? styles.icon : styles.absenceIcon}>
-              <PoolIcon />
-              Pool
-            </div>
+          <div>
+            <WifiCalling3Icon />
+            CONTACT US {data.contacts}
           </div>
+          <p>© 2023 ARMBNB</p>
         </div>
-        <div>
-          <WifiCalling3Icon />
-          CONTACT US {data.contacts}
-        </div>
-        <p>© 2023 ARMBNB</p>
       </>
     )
   );

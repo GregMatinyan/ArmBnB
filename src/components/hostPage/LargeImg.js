@@ -18,7 +18,7 @@ function LargeImg({ selectedImg, setSelectedImg }) {
         src={selectedImg}
         alt="enlarged pic"
         initial={{ y: "-100vh" }}
-        animate={{ y: 0 }}
+        animate={{ y: "15vh" }}
       />
     </motion.div>
   );
