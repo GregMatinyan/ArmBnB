@@ -3,6 +3,7 @@ import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/Logo.png";
+import find from "../../assets/icons/search.png";
 import styles from "./Header.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -129,7 +130,7 @@ function Header() {
         </Link>
       </div>
 
-      <div className={styles.search}>
+      <div className={styles.searchContainer}>
         <TextField
           id="outlined-basic"
           label="Enter name or location of host"
@@ -137,15 +138,14 @@ function Header() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button
+        <img
           onClick={() => {
             dispatch(setInputvalue(search));
             setSearch("");
           }}
-          className={styles.addOffer}
-        >
-          Search
-        </button>
+          className={styles.findIcon}
+          src={find}
+        />
       </div>
 
       <button

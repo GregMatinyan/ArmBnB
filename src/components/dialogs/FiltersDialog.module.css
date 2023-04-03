@@ -18,20 +18,52 @@
 .filterButton img {
   width: 50px;
 }
-
 .Xclose {
-  padding: 5px;
   background-color: transparent;
   border-color: transparent;
-  align-self: start;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.Xclose img {
+  width: 14px;
 }
 
 .Xclose:hover {
   box-shadow: 1px 0px 4px #ddd;
 }
 
+.titleName {
+  text-align: center;
+}
+
 .fieldset {
+  display: grid;
+}
+
+.guests,
+.rooms {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnSpan {
+  padding: 4px 8px;
+}
+
+.priceContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.range {
+  padding: 5px 7px;
+  width: 150px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #878080;
 }

@@ -6,6 +6,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import filterIcon from "../../assets/icons/filter.png";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
+import close from "../../assets/icons/close.png";
 
 import styles from "./FiltersDialog.module.css";
 import { useDispatch } from "react-redux";
@@ -83,16 +84,22 @@ function FiltersDialog(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            marginBottom: "12px",
+          }}
           id="alert-dialog-title"
-          sx={{ display: "flex", justifyContent: "space-between" }}
         >
           <button className={styles.Xclose} onClick={onClose}>
-            X
+            <img src={close} />
           </button>
-          <span style={styles.titlename}>Filters</span>
+          <span className={styles.titleName}>Filters</span>
         </DialogTitle>
-        <DialogContent>
-          <div style={styles.rooms}>
+        <DialogContent
+          sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        >
+          <div className={styles.rooms}>
             <span>Number of rooms</span>
             <button
               className={styles.btnSpan}
@@ -116,7 +123,7 @@ function FiltersDialog(props) {
               +
             </button>
           </div>
-          <div style={styles.guests}>
+          <div className={styles.guests}>
             <span>Number of guests</span>
             <button
               className={styles.btnSpan}
@@ -141,17 +148,21 @@ function FiltersDialog(props) {
             </button>
           </div>
 
-          <div>
+          <div className={styles.priceContainer}>
             <span>Price for one night</span>
             <input
+              className={styles.range}
               onChange={(e) => setPrice({ ...price, minimum: e.target.value })}
               value={price.minimum}
               placeholder="minimum"
+              required
             />
             <input
+              className={styles.range}
               onChange={(e) => setPrice({ ...price, maximum: e.target.value })}
               value={price.maximum}
               placeholder="maximum"
+              required
             />
           </div>
 
@@ -252,14 +263,27 @@ function FiltersDialog(props) {
             </fieldset>
           </div>
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            paddingBottom: "20px",
+          }}
+        >
           <Button
+            sx={{
+              border: "1px solid #838383",
+              color: "#212121",
+              padding: "5px 16px",
+              borderRadius: "4px",
+              textTransform: "capitalize",
+            }}
             onClick={() => {
               dispatch(setFilters(filters));
               onClose();
             }}
           >
-            Filter
+            Apply Filters
           </Button>
         </DialogActions>
       </Dialog>

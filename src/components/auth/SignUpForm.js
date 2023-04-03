@@ -33,7 +33,7 @@ export default function SignUpForm() {
           email,
           url: DefaultAvatar,
           favorites: {},
-          userHosts: {},
+          userHosts: [],
         });
         setName("");
         setSurname("");
