@@ -118,9 +118,9 @@ function ProfilePage() {
                 {hosts.map((item) => {
                   return (
                     <>
-                      <li key={item.id}>
+                      <li key={item}>
                         <Link
-                          to={`/item/${item.id}`}
+                          to={`/item/${item}`}
                           style={{ textDecoration: "none", color: "black" }}
                         >
                           <div className={styles.favsInnerContainer}>
