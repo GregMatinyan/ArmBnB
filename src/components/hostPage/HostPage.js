@@ -93,32 +93,35 @@ function HostPage() {
             </div>
           </div>
 
-          <div className={styles.imgGrid}>
-            <AwesomeSlider cssModule={[styles]}>
-              {data.urls.map((url) => (
-                <div
-                  key={url.img}
-                  whilehover={{ opacity: 1 }}
-                  onClick={() => setSelectedImg(url)}
-                >
-                  <img src={url} alt="url" />
-                </div>
-              ))}
-            </AwesomeSlider>
+          <div className={styles.hostDescription}>
+            <div className={styles.imgGrid}>
+              <AwesomeSlider cssModule={[styles]}>
+                {data.urls.map((url) => (
+                  <div
+                    key={url.img}
+                    whilehover={{ opacity: 1 }}
+                    onClick={() => setSelectedImg(url)}
+                  >
+                    <img src={url} alt="url" />
+                  </div>
+                ))}
+              </AwesomeSlider>
+            </div>
+
+            {selectedImg && (
+              <LargeImg
+                selectedImg={selectedImg}
+                setSelectedImg={setSelectedImg}
+              />
+            )}
+            <div className={styles.description}>
+              <strong>DESCRIPTION</strong>
+              <p>{data.description}</p>
+            </div>
           </div>
-          {selectedImg && (
-            <LargeImg
-              selectedImg={selectedImg}
-              setSelectedImg={setSelectedImg}
-            />
-          )}
 
           <h3 className={styles.price}>Price for nigth {data.price}$</h3>
 
-          <div className={styles.description}>
-            <h3>DESCRIPTION</h3>
-            {data.description}
-          </div>
           <div className={styles.offers}>
             <h3>What this place offers</h3>
           </div>
