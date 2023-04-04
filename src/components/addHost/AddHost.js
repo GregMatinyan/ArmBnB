@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../headerComponents/Header";
+import Header from "../header/Header";
 import styles from "./AddHost.module.css";
 import { v4 } from "uuid";
 import {

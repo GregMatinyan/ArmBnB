@@ -10,8 +10,17 @@ import Creative from "./brain.png";
 import Hotel from "./cart.png";
 import Apartment from "./apartment.png";
 import House from "./home.png";
+import pool from "./swimming-pool.png";
+import patio from "./balcony.png";
+import conditioner from "./air-conditioner.png";
+import breakfast from "./breakfast.png";
+import washer from "./laundry.png";
+import tv from "./television.png";
+import wifi from "./wifi.png";
+import kitchen from "./kitchen.png";
+import lovelyView from "./view.png";
 
-const icons = {
+export const hostTypeIcons = {
   Hotel,
   House,
   Motel,
@@ -26,19 +35,14 @@ const icons = {
   "Around Lake": lake,
 };
 
-export default icons;
-
-// export const hostTypeIcons = {
-//   Motel,
-//   Cottage,
-// };
-// export const hostFeatureIcons = {
-//   Skiing,
-//   Hiking,
-//   Nature,
-//   Camping,
-//   Vip,
-//   "Lovely View": window,
-//   "Around Lake": lake,
-//   "With Pool": Pool,
-// };
+export const hostFeatureIcons = {
+  pool,
+  patio,
+  conditioner,
+  washer,
+  lovelyView,
+  breakfast,
+  tv,
+  wifi,
+  kitchen,
+};

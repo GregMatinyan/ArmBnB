@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../headerComponents/Header";
+import Header from "../header/Header";
 import { useParams, Link } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import {
