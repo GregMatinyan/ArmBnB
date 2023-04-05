@@ -1,55 +1,66 @@
 .profileContainer {
   display: flex;
+  margin-top: 50px;
 }
+
 .avatar {
-  width: 500px;
-  height: 400px;
-  padding: 0px 45px 0px 45px;
+  padding: 0px 35px;
 }
+
 .avatar img {
-  width: 100%;
-  height: 100%;
+  width: 160px;
   border-radius: 10px;
 }
 
 .profileDataContainer {
-  width: 35%;
   text-align: left;
-  font-size: 26px;
+  font-size: 17px;
+  width: 30%;
 }
 
-.favsContainer {
-  margin: auto;
+.sideButtons {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  border: 1px solid #3f3b34;
-  border-radius: 15px;
-  padding-right: 40px;
-  background-color: #e67e22;
+  align-items: center;
+  gap: 13px;
+  margin: auto;
+  width: 200px;
+  padding-top: 8px;
 }
 
-.favsContainer li {
-  list-style-type: none;
-  padding: 5px 0px 5px 0px;
+.sideButtons button {
+  cursor: pointer;
+  padding: 5px;
+  font-size: 17px;
+  transition: all 0.2s;
+  width: 150px;
 }
 
-.favsInnerContainer {
+.sideButtons button:hover {
+  background-color: #dad3ce;
+}
+
+.addedHostContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  border-radius: 20px;
+  box-shadow: 0 0 8px #ccc;
+  transition: all 0.5s;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+.addedHostInfo p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #645e53;
   text-align: left;
-  border: 1px solid #3f3b34;
-  border-radius: 15px;
-  width: 100%;
 }
-.favsImgContainer {
-  width: 100px;
-  height: 80px;
-  padding-right: 15px;
-  border-radius: 15px;
-}
-.favsImgContainer img {
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
+
+.addedHostInfo p:first-child {
+  color: rgb(86, 81, 72);
+  font-weight: 700;
+  font-size: 20px;
 }

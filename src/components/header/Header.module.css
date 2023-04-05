@@ -9,17 +9,23 @@
   justify-content: space-between;
   align-items: center;
 }
-.search div {
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.searchContainer div {
   border-radius: 15px;
   border: none;
   width: 270px;
 }
 
-.search input {
+.searchContainer input {
   padding: 12px 10px;
 }
 
-.search input:focus {
+.searchContainer input:focus {
   border-color: black;
 }
 .logout,
@@ -56,4 +62,15 @@
   color: #fff;
   background-color: #cf711f;
   transition: all 0.3s;
+}
+.findIcon {
+  width: 31px;
+  padding: 3px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.findIcon:hover {
+  box-shadow: 0px 0 4px #ded4d4e6;
+  border-radius: 8px;
 }

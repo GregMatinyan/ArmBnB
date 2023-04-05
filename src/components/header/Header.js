@@ -3,6 +3,7 @@ import { OFFER_PATH, HOME_PATH, SIGNUP_PATH } from "../../constants/path";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/Logo.png";
+import find from "../../assets/icons/search.png";
 import styles from "./Header.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -22,7 +23,7 @@ import { setIconName } from "../../features/searchByIcon/searchByIconSlice";
 import { setInputvalue } from "../../features/searchByInput/searchByInputSlice";
 import { setFilters } from "../../features/searchByFilters/serchByFiltersSlice";
 
-function Header() {
+function Header(props) {
   const [search, setSearch] = useState("");
   const navigation = useNavigate();
   const dispatch = useDispatch();
@@ -129,24 +130,26 @@ function Header() {
         </Link>
       </div>
 
-      <div className={styles.search}>
-        <TextField
-          id="outlined-basic"
-          label="Enter name or location of host"
-          variant="outlined"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button
-          onClick={() => {
-            dispatch(setInputvalue(search));
-            setSearch("");
-          }}
-          className={styles.addOffer}
-        >
-          Search
-        </button>
-      </div>
+      {props.search && (
+        <div className={styles.searchContainer}>
+          <TextField
+            id="outlined-basic"
+            label="Enter name or location of host"
+            variant="outlined"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <img
+            alt="find"
+            onClick={() => {
+              dispatch(setInputvalue(search));
+              setSearch("");
+            }}
+            className={styles.findIcon}
+            src={find}
+          />
+        </div>
+      )}
 
       <button
         onClick={() => {

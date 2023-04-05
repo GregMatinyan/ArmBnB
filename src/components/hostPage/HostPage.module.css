@@ -1,25 +1,15 @@
 .container {
-  padding-bottom: 50px;
+  padding-bottom: 80px;
 }
 
 .container h2 {
   font-weight: 800;
   font-size: 35px;
 }
-.pictures {
-  width: 800px;
-  display: flex;
-  margin-left: 50px;
-}
-
-.pictures img {
-  border-radius: 25px;
-  width: 90%;
-}
 
 .hostName {
   display: flex;
-  margin: 5px 0px 2px 50px;
+  margin: 5px 0px 5px 50px;
 }
 
 .hostName h2 {
@@ -44,12 +34,14 @@
   display: flex;
   flex-direction: row;
   margin: 5px 0px 15px 50px;
+  cursor: pointer;
 }
 .favorites img {
   width: 30px;
   height: 30px;
   align-self: center;
   margin-right: 15px;
+  margin-bottom: 0px;
 }
 
 .favorites span {
@@ -59,6 +51,106 @@
   font-size: 20px;
 }
 
-.favorites img:hover {
-  color: red;
+.hostDescription {
+  display: flex;
+  margin-top: 25px;
+}
+
+.imgGrid {
+  width: 600px;
+  height: 420px;
+  padding-left: 20px;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.backdrop img {
+  display: block;
+  max-width: 80%;
+  max-height: 80%;
+  margin: auto;
+  box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
+  border: 3px solid white;
+}
+.description {
+  width: 50%;
+  margin-left: 250px;
+  text-align: start;
+  font-size: 20px;
+}
+.price {
+  text-align: start;
+  padding-left: 20px;
+  padding-bottom: 50px;
+}
+
+.offers {
+  width: 60%;
+  text-align: start;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+.iconsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 450px;
+  justify-content: space-around;
+}
+
+.icons {
+  width: 45px;
+  height: 45px;
+  padding: 15px 35px 15px 35px;
+}
+
+.icons img {
+  width: 35px;
+  height: 35px;
+}
+
+.absenceIcon {
+  text-decoration: line-through;
+}
+
+.awssld__wrapper {
+  height: 400px;
+}
+
+.awssld__bullets {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.awssld__bullets button {
+  padding: 0;
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 5px 3px;
+  border-radius: 50%;
+  background: #aaa;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.225s cubic-bezier(0.8, 1.35, 0.75, 1.45);
+  background-color: white;
+}
+
+.awssld__bullets--active {
+  transform: scale(1.8);
 }

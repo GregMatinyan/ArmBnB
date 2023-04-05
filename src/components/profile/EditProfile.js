@@ -29,13 +29,14 @@ export default function EditProfile({
           Edit your profile data
         </DialogTitle>
         <DialogContent className={styles.dialogContent}>
-          <label htmlFor="upload-img">
+          <label style={{ cursor: "pointer" }} htmlFor="upload-img">
             <img
               style={{ borderRadius: "10px" }}
               width="120px"
               src={userData.url}
               alt="avatar"
             />
+            <span>Change avatar</span>
           </label>
           <TextField
             className={styles.input}

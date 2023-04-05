@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setIconName } from "../../features/searchByIcon/searchByIconSlice";
-import filterIcons from "../../assets/icons/icons";
+import { hostTypeIcons } from "../../assets/icons/icons";
 import styles from "./Home.module.css";
+import FiltersDialog from "../dialogs/FiltersDialog";
 
 function Categories() {
   const dispatch = useDispatch();
@@ -26,7 +27,11 @@ function Categories() {
     });
   }
   return (
-    <div className={styles.container}>{renderIcons(filterIcons, styles)}</div>
+    <div className={styles.container}>
+      {renderIcons(hostTypeIcons, styles)}
+
+      <FiltersDialog />
+    </div>
   );
 }
 
