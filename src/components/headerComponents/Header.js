@@ -23,7 +23,7 @@ import { setIconName } from "../../features/searchByIcon/searchByIconSlice";
 import { setInputvalue } from "../../features/searchByInput/searchByInputSlice";
 import { setFilters } from "../../features/searchByFilters/serchByFiltersSlice";
 
-function Header() {
+function Header(props) {
   const [search, setSearch] = useState("");
   const navigation = useNavigate();
   const dispatch = useDispatch();
@@ -130,23 +130,25 @@ function Header() {
         </Link>
       </div>
 
-      <div className={styles.searchContainer}>
-        <TextField
-          id="outlined-basic"
-          label="Enter name or location of host"
-          variant="outlined"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <img
-          onClick={() => {
-            dispatch(setInputvalue(search));
-            setSearch("");
-          }}
-          className={styles.findIcon}
-          src={find}
-        />
-      </div>
+      {props.search && (
+        <div className={styles.searchContainer}>
+          <TextField
+            id="outlined-basic"
+            label="Enter name or location of host"
+            variant="outlined"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <img
+            onClick={() => {
+              dispatch(setInputvalue(search));
+              setSearch("");
+            }}
+            className={styles.findIcon}
+            src={find}
+          />
+        </div>
+      )}
 
       <button
         onClick={() => {

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <div className={styles.homeContainer}>
-        <Header />
+        <Header search={true} />
         <Categories />
         <FiltersDialog />
         <HostDescriptions />

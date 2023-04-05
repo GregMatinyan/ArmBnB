@@ -1,21 +1,20 @@
 .profileContainer {
   display: flex;
+  margin-top: 50px;
 }
+
 .avatar {
-  width: 500px;
-  height: 400px;
-  padding: 0px 45px 0px 45px;
+  padding: 0px 35px;
 }
+
 .avatar img {
-  width: 100%;
-  height: 100%;
+  width: 160px;
   border-radius: 10px;
 }
 
 .profileDataContainer {
-  width: 35%;
   text-align: left;
-  font-size: 26px;
+  font-size: 17px;
 }
 
 .favsContainer {
@@ -42,14 +41,71 @@
   border-radius: 15px;
   width: 100%;
 }
+
 .favsImgContainer {
   width: 100px;
   height: 80px;
   padding-right: 15px;
   border-radius: 15px;
 }
+
 .favsImgContainer img {
   width: 100%;
   height: 100%;
   border-radius: 15px;
+}
+
+.sideButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  margin: auto;
+  width: 200px;
+  padding-top: 8px;
+}
+
+.sideButtons button {
+  cursor: pointer;
+  padding: 5px;
+  font-size: 17px;
+  transition: all 0.2s;
+  width: 150px;
+}
+
+.sideButtons button:hover {
+  background-color: #dad3ce;
+}
+
+.favContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addedHostContainer {
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  box-shadow: 0 0 8px #ccc;
+  transition: all 0.5s;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 60%;
+  /* margin-left: 92px;
+  margin-top: -50px; */
+  margin: -50px 15px 25px 95px;
+}
+
+.addedHostInfo p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #645e53;
+}
+
+.addedHostInfo p:first-child {
+  color: rgb(86, 81, 72);
+  font-weight: 700;
+  font-size: 20px;
 }

@@ -11,12 +11,14 @@ import styles from "./ProfilePage.module.css";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import ModeIcon from "@mui/icons-material/Mode";
 import EditProfile from "./EditProfile";
+import FavDialog from "./FavoritesDialog";
 
 function ProfilePage() {
   const [userData, setUserData] = useState(null);
   const [dialog, setDialog] = useState(false);
   const [favs, setFavs] = useState([]);
   const [hosts, setHosts] = useState([]);
+  const [favDialog, setFavDialog] = useState(false);
 
   const params = useParams();
 
@@ -41,6 +43,7 @@ function ProfilePage() {
       setHosts((prev) => [...prev, { ...userHostsData.data(), id }]);
     });
   }, [userData]);
+  console.log(hosts);
 
   async function updateProfileData(name, surname, avatar) {
     const storageRef = ref(storage, `avatars/${userData.email}`);
@@ -60,32 +63,64 @@ function ProfilePage() {
     setDialog(false);
   };
 
+  function addedHosts() {
+    return hosts.map((item) => {
+      return (
+        <div key={item.id} className={styles.favContainer}>
+          <div className={styles.addedHostContainer}>
+            <div className={styles.addedHostInfo}>
+              <div>
+                <Link to={`/item/${item.id}`}>
+                  <img
+                    style={{ width: "100%" }}
+                    src={item.urls[0]}
+                    alt="host img"
+                  />
+                </Link>
+              </div>
+              <div style={{ padding: "5px 10px" }}>
+                <p> {item.hostName}</p>
+                <p> {item.location}</p>
+                <p>
+                  <strong>{item.price} $</strong> per/night
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  }
+
   return (
-    <div>
+    <div style={{ padding: "8px 15px" }}>
       {userData && (
         <>
+          <FavDialog
+            favorites={favs}
+            open={favDialog}
+            handleClose={() => setFavDialog(false)}
+          />
           <Header />
           <div className={styles.profileContainer}>
             <div className={styles.avatar}>
               <img src={userData.url} alt="avatar" />
-              <div>
+              <div className={styles.sideButtons}>
                 <span onClick={openDialog} style={{ cursor: "pointer" }}>
                   Edit profile: <ModeIcon />
                 </span>
+                <button onClick={() => setFavDialog(true)}>Favorites</button>
+                <button>Your hosts</button>
               </div>
             </div>
             <div className={styles.profileDataContainer}>
-              <p>
-                First name: <strong> {userData.name} </strong>
-              </p>
-              <p>
-                Last name: <strong>{userData.surname}</strong>
-              </p>
-              <p>
-                Contacts: <strong>{userData.email}</strong>
-              </p>
+              <h3>
+                {userData.name} {userData.surname}
+              </h3>
+              <h4>Email: {userData.email}</h4>
             </div>
-            <div className={styles.favsContainer}>
+
+            {/* <div className={styles.favsContainer}>
               <h4>Hosts you've liked</h4>
               <ul>
                 {favs.map((item) => {
@@ -138,8 +173,10 @@ function ProfilePage() {
                   );
                 })}
               </ul>
-            </div>
+            </div> */}
+            {/* <span>Here is your added hosts</span> */}
           </div>
+          {addedHosts()}
 
           <EditProfile
             open={dialog}

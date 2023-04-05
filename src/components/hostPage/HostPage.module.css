@@ -76,6 +76,7 @@
   padding: 50% 0;
   position: relative;
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .imgWrap img {

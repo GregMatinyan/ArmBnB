@@ -33,7 +33,7 @@
   cursor: pointer;
 }
 .fillred {
-  fill: red;
+  fill: rgb(210, 45, 45);
 }
 .hostInfo {
   padding: 10px;
