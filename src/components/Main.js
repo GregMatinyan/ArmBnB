@@ -26,7 +26,7 @@ export default function Main() {
         )}
         <Route path={`/item/:id`} element={<HostPage />} />
         <Route path={`/profile/:userId`} element={<ProfilePage />} />
-        <Route path="/*" element={<NotFound value={"Page not found"} />} />
+        <Route path="*" element={<NotFound value={"Page not found"} />} />
       </Routes>
     </>
   );

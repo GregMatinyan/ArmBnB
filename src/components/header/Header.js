@@ -140,6 +140,7 @@ function Header(props) {
             onChange={(e) => setSearch(e.target.value)}
           />
           <img
+            alt="find"
             onClick={() => {
               dispatch(setInputvalue(search));
               setSearch("");

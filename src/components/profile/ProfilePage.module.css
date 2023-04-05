@@ -15,44 +15,7 @@
 .profileDataContainer {
   text-align: left;
   font-size: 17px;
-}
-
-.favsContainer {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-  border: 1px solid #3f3b34;
-  border-radius: 15px;
-  padding-right: 40px;
-  background-color: #e67e22;
-}
-
-.favsContainer li {
-  list-style-type: none;
-  padding: 5px 0px 5px 0px;
-}
-
-.favsInnerContainer {
-  display: flex;
-  flex-direction: row;
-  text-align: left;
-  border: 1px solid #3f3b34;
-  border-radius: 15px;
-  width: 100%;
-}
-
-.favsImgContainer {
-  width: 100px;
-  height: 80px;
-  padding-right: 15px;
-  border-radius: 15px;
-}
-
-.favsImgContainer img {
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
+  width: 30%;
 }
 
 .sideButtons {
@@ -77,14 +40,7 @@
   background-color: #dad3ce;
 }
 
-.favContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .addedHostContainer {
-  width: 900px;
   display: flex;
   flex-direction: column;
   border-radius: 20px;
@@ -93,15 +49,14 @@
   border-radius: 20px;
   overflow: hidden;
   width: 60%;
-  /* margin-left: 92px;
-  margin-top: -50px; */
-  margin: -50px 15px 25px 95px;
+  margin-bottom: 20px;
 }
 
 .addedHostInfo p {
   margin: 10px 0;
   font-size: 15px;
   color: #645e53;
+  text-align: left;
 }
 
 .addedHostInfo p:first-child {

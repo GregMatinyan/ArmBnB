@@ -18,13 +18,17 @@ import "react-awesome-slider-fw/dist/styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserStatus } from "../../features/currentUser/currentUserSlice";
 import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
+import { v4 } from "uuid";
+
 function HostPage() {
   const [data, setData] = useState(null);
   const [selectedImg, setSelectedImg] = useState(null);
   const [favorites, setFavorites] = useState({});
+
   const params = useParams();
   const user = useSelector(getUserStatus);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const render = async () => {
       const dataRef = doc(offersCollection, params.id);
@@ -33,17 +37,20 @@ function HostPage() {
     };
     render();
   }, [params.id]);
+
   useEffect(() => {
     if (user) {
       async function getFavorites() {
         const current = await getDoc(
           doc(usersCollection, auth?.currentUser?.uid)
         );
+
         setFavorites({ ...current.data().favorites });
       }
       getFavorites();
     }
   }, [user, favorites]);
+
   const handleLike = async () => {
     if (!user) {
       dispatch(setLoginDialogStatus(true));
@@ -63,6 +70,7 @@ function HostPage() {
       setFavorites({ ...favorites, [params.id]: true });
     }
   };
+
   return (
     data && (
       <>
@@ -84,6 +92,7 @@ function HostPage() {
               />
             </div>
           </div>
+
           <div className={styles.hostDescription}>
             <div className={styles.imgGrid}>
               <AwesomeSlider cssModule={[styles]}>
@@ -98,6 +107,7 @@ function HostPage() {
                 ))}
               </AwesomeSlider>
             </div>
+
             {selectedImg && (
               <LargeImg
                 selectedImg={selectedImg}
@@ -109,16 +119,21 @@ function HostPage() {
               <p>{data.description}</p>
             </div>
           </div>
+
           <h3 className={styles.price}>Price for nigth {data.price}$</h3>
+
           <div className={styles.offers}>
             <h3>What this place offers</h3>
           </div>
           <div className={styles.iconsContainer}>
-            {Object.entries(hostFeatureIcons).map((icon) => {
+            {Object.entries(hostFeatureIcons).map((icon, index) => {
               return (
-                <div className={styles.icons}>
-                  <img key={icon[0]} src={icon[1]} alt="icon" />
-                  <span className={!data[icon[0]] ? styles.absenceIcon : null}>
+                <div key={v4()} className={styles.icons}>
+                  <img key={v4()} src={icon[1]} alt="icon" />
+                  <span
+                    key={v4()}
+                    className={!data[icon[0]] ? styles.absenceIcon : null}
+                  >
                     {icon[0]}
                   </span>
                 </div>

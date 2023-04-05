@@ -65,17 +65,16 @@ function FiltersDialog(props) {
     features,
   };
 
-  //   console.log(filters);
   return (
-    <div>
+    <>
       <div
         className={styles.filterButton}
         onClick={() => {
           setDialog(true);
         }}
       >
-        <span>Filters</span>
         <img src={filterIcon} alt="filter icon" />
+        <span>Filters</span>
       </div>
       <Dialog
         open={dialog}
@@ -92,7 +91,7 @@ function FiltersDialog(props) {
           id="alert-dialog-title"
         >
           <button className={styles.Xclose} onClick={onClose}>
-            <img src={close} />
+            <img alt="X" src={close} />
           </button>
           <span className={styles.titleName}>Filters</span>
         </DialogTitle>
@@ -287,7 +286,7 @@ function FiltersDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
 

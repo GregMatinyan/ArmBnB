@@ -1,8 +1,7 @@
 import styles from "./Home.module.css";
-import Header from "../headerComponents/Header";
+import Header from "../header/Header";
 import Categories from "./Categories";
 import HostDescriptions from "./HostDescriptions";
-import FiltersDialog from "../dialogs/FiltersDialog";
 
 export default function Home() {
   return (
@@ -10,7 +9,6 @@ export default function Home() {
       <div className={styles.homeContainer}>
         <Header search={true} />
         <Categories />
-        <FiltersDialog />
         <HostDescriptions />
       </div>
     </>

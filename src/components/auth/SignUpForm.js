@@ -78,14 +78,7 @@ export default function SignUpForm() {
           onChange={(e) => setSurname(e.target.value)}
           required
         />
-        <input
-          className={styles.input}
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          required
-        />
+
         <input
           className={styles.input}
           placeholder="Country"
@@ -146,6 +139,14 @@ export default function SignUpForm() {
             optionClasses={"option classes"}
           />
         </div>
+        <input
+          className={styles.input}
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          required
+        />
         <input
           className={styles.input}
           placeholder="Password"

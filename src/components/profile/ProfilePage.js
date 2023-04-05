@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../headerComponents/Header";
+import Header from "../header/Header";
 import { useParams, Link } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import {
@@ -18,6 +18,7 @@ function ProfilePage() {
   const [dialog, setDialog] = useState(false);
   const [favs, setFavs] = useState([]);
   const [hosts, setHosts] = useState([]);
+  const [showHosts, setShowHosts] = useState(false);
   const [favDialog, setFavDialog] = useState(false);
 
   const params = useParams();
@@ -66,25 +67,23 @@ function ProfilePage() {
   function addedHosts() {
     return hosts.map((item) => {
       return (
-        <div key={item.id} className={styles.favContainer}>
-          <div className={styles.addedHostContainer}>
-            <div className={styles.addedHostInfo}>
-              <div>
-                <Link to={`/item/${item.id}`}>
-                  <img
-                    style={{ width: "100%" }}
-                    src={item.urls[0]}
-                    alt="host img"
-                  />
-                </Link>
-              </div>
-              <div style={{ padding: "5px 10px" }}>
-                <p> {item.hostName}</p>
-                <p> {item.location}</p>
-                <p>
-                  <strong>{item.price} $</strong> per/night
-                </p>
-              </div>
+        <div className={styles.addedHostContainer}>
+          <div className={styles.addedHostInfo}>
+            <div>
+              <Link to={`/item/${item.id}`}>
+                <img
+                  style={{ width: "100%" }}
+                  src={item.urls[0]}
+                  alt="host img"
+                />
+              </Link>
+            </div>
+            <div style={{ padding: "5px 10px" }}>
+              <p> {item.hostName}</p>
+              <p> {item.location}</p>
+              <p>
+                <strong>{item.price} $</strong> per/night
+              </p>
             </div>
           </div>
         </div>
@@ -109,8 +108,8 @@ function ProfilePage() {
                 <span onClick={openDialog} style={{ cursor: "pointer" }}>
                   Edit profile: <ModeIcon />
                 </span>
-                <button onClick={() => setFavDialog(true)}>Favorites</button>
-                <button>Your hosts</button>
+                <button onClick={() => setFavDialog(true)}>My favorites</button>
+                <button onClick={() => setShowHosts(true)}>My hosts</button>
               </div>
             </div>
             <div className={styles.profileDataContainer}>
@@ -119,64 +118,22 @@ function ProfilePage() {
               </h3>
               <h4>Email: {userData.email}</h4>
             </div>
-
-            {/* <div className={styles.favsContainer}>
-              <h4>Hosts you've liked</h4>
-              <ul>
-                {favs.map((item) => {
-                  return (
-                    <>
-                      <li key={item.id}>
-                        <Link
-                          to={`/item/${item.id}`}
-                          style={{ textDecoration: "none", color: "black" }}
-                        >
-                          <div className={styles.favsInnerContainer}>
-                            <div className={styles.favsImgContainer}>
-                              <img src={item.urls[0]} alt="host img" />
-                            </div>
-                            <div>
-                              <p>{item.hostName}</p>
-                              <p>{item.location}</p>
-                            </div>
-                          </div>
-                        </Link>
-                      </li>
-                    </>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className={styles.favsContainer}>
-              <h4>Hosts you've added</h4>
-              <ul>
-                {hosts.map((item) => {
-                  return (
-                    <>
-                      <li key={item}>
-                        <Link
-                          to={`/item/${item}`}
-                          style={{ textDecoration: "none", color: "black" }}
-                        >
-                          <div className={styles.favsInnerContainer}>
-                            <div className={styles.favsImgContainer}>
-                              <img src={item.urls[0]} alt="host img" />
-                            </div>
-                            <div>
-                              <p>{item.hostName}</p>
-                              <p>{item.location}</p>
-                            </div>
-                          </div>
-                        </Link>
-                      </li>
-                    </>
-                  );
-                })}
-              </ul>
-            </div> */}
-            {/* <span>Here is your added hosts</span> */}
+            {showHosts &&
+              (hosts.length ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  {addedHosts()}
+                </div>
+              ) : (
+                <div style={{ position: "absolute", right: 250 }}>
+                  <span>You have no added hosts yet</span>
+                </div>
+              ))}
           </div>
-          {addedHosts()}
 
           <EditProfile
             open={dialog}
