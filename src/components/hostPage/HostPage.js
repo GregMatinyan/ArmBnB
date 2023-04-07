@@ -18,7 +18,6 @@ import "react-awesome-slider-fw/dist/styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserStatus } from "../../features/currentUser/currentUserSlice";
 import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
-import { v4 } from "uuid";
 
 function HostPage() {
   const [data, setData] = useState(null);
@@ -49,7 +48,7 @@ function HostPage() {
       }
       getFavorites();
     }
-  }, [user, favorites]);
+  }, [user]);
 
   const handleLike = async () => {
     if (!user) {
@@ -71,6 +70,7 @@ function HostPage() {
     }
   };
 
+  console.log("krknvec");
   return (
     data && (
       <>
@@ -120,7 +120,7 @@ function HostPage() {
             </div>
           </div>
 
-          <h3 className={styles.price}>Price for nigth {data.price}$</h3>
+          <h3 className={styles.price}>Price for night {data.price}$</h3>
 
           <div className={styles.offers}>
             <h3>What this place offers</h3>
@@ -128,12 +128,9 @@ function HostPage() {
           <div className={styles.iconsContainer}>
             {Object.entries(hostFeatureIcons).map((icon, index) => {
               return (
-                <div key={v4()} className={styles.icons}>
-                  <img key={v4()} src={icon[1]} alt="icon" />
-                  <span
-                    key={v4()}
-                    className={!data[icon[0]] ? styles.absenceIcon : null}
-                  >
+                <div key={index} className={styles.icons}>
+                  <img src={icon[1]} alt="icon" />
+                  <span className={!data[icon[0]] ? styles.absenceIcon : null}>
                     {icon[0]}
                   </span>
                 </div>

@@ -1,0 +1,82 @@
+.form {
+  display: flex;
+  width: 500px;
+  margin: auto;
+  flex-direction: column;
+  gap: 10px;
+  padding: 32px 15px 32px 10px;
+  background-color: #f8ebde;
+  border-radius: 5px;
+  box-shadow: 0px 1px 11px #dcd2c6;
+  margin-top: 70px;
+  text-align: start;
+}
+
+.form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form input,
+select,
+button,
+.btn {
+  box-sizing: border-box;
+  padding: 7px 5px;
+  border-radius: 5px;
+  border: 1px solid #9e9797;
+  background-color: rgb(211 205 205 / 26%);
+}
+
+.btn {
+  width: 120px;
+}
+
+.numberInput {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80px;
+  border-radius: 20%;
+  font-size: 20px;
+  background-color: #f8ebde;
+}
+
+.numberInput button {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.description {
+  height: 150px;
+  font-display: initial;
+  row-gap: 5;
+  columns: 60;
+  background-color: rgb(211 205 205 / 26%);
+}
+
+.subBtn {
+  margin: auto;
+  margin-top: 20px;
+  transition: all 0.2s;
+  cursor: pointer;
+  border-radius: 11px;
+  color: #fff;
+  background-color: #e67e22;
+  font-size: 20px;
+  padding: 10px 5px;
+  width: 170px;
+}
+
+.subBtn:hover {
+  border-radius: 9px;
+  color: #fff;
+  background-color: #cf711f;
+  transition: all 0.3s;
+  box-shadow: 0 0 7px #ae9f9f;
+}
