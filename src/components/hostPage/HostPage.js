@@ -18,22 +18,29 @@ import "react-awesome-slider-fw/dist/styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserStatus } from "../../features/currentUser/currentUserSlice";
 import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
-import { v4 } from "uuid";
+// import Rating from "@mui/material/Rating";
 
 function HostPage() {
   const [data, setData] = useState(null);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [userData, setUserData] = useState({});
   const [favorites, setFavorites] = useState({});
-
+  const [comment, setComment] = useState("");
+  // const [rating, setRating] = React.useState({
+  //   averageRate: 0,
+  //   totalRate: 0,
+  //   reviews: 0,
+  // });
   const params = useParams();
   const user = useSelector(getUserStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const render = async () => {
-      const dataRef = doc(offersCollection, params.id);
-      const hostData = await getDoc(dataRef);
-      setData({ ...hostData.data() });
+      const dataRef = await getDoc(doc(offersCollection, params.id));
+      const hostData = { ...dataRef.data() };
+      setData(hostData);
+      // setRating(hostData.rating);
     };
     render();
   }, [params.id]);
@@ -44,12 +51,16 @@ function HostPage() {
         const current = await getDoc(
           doc(usersCollection, auth?.currentUser?.uid)
         );
-
-        setFavorites({ ...current.data().favorites });
+        const data = { ...current.data() };
+        setUserData({
+          fullName: `${data.name} ${data.surname}`,
+          avatar: data.url,
+        });
+        setFavorites(data.favorites);
       }
       getFavorites();
     }
-  }, [user, favorites]);
+  }, [user]);
 
   const handleLike = async () => {
     if (!user) {
@@ -70,6 +81,37 @@ function HostPage() {
       setFavorites({ ...favorites, [params.id]: true });
     }
   };
+
+  const addComment = async () => {
+    if (!user) {
+      dispatch(setLoginDialogStatus(true));
+    } else {
+      await updateDoc(doc(offersCollection, params.id), {
+        comments: [
+          ...data.comments,
+          {
+            text: comment,
+            userName: userData.fullName,
+            avatar: userData.url,
+          },
+        ],
+      });
+    }
+  };
+
+  // const handleRate = async () => {
+  //   if (!user) {
+  //     dispatch(setLoginDialogStatus(true));
+  //   } else {
+  //     await updateDoc(doc(offersCollection, params.id), {
+  //       rating: {
+  //         ...rating,
+  //       },
+  //     });
+  //   }
+  // };
+
+  console.log("updated");
 
   return (
     data && (
@@ -98,7 +140,7 @@ function HostPage() {
               <AwesomeSlider cssModule={[styles]}>
                 {data.urls.map((url) => (
                   <div
-                    key={url.img}
+                    key={url}
                     whilehover={{ opacity: 1 }}
                     onClick={() => setSelectedImg(url)}
                   >
@@ -128,19 +170,46 @@ function HostPage() {
           <div className={styles.iconsContainer}>
             {Object.entries(hostFeatureIcons).map((icon, index) => {
               return (
-                <div key={v4()} className={styles.icons}>
-                  <img key={v4()} src={icon[1]} alt="icon" />
-                  <span
-                    key={v4()}
-                    className={!data[icon[0]] ? styles.absenceIcon : null}
-                  >
-                    {icon[0]}
-                  </span>
+                <div key={index} className={styles.icons}>
+                  <img src={icon[1]} alt="icon" />
+                  <span>{icon[0]}</span>
                 </div>
               );
             })}
           </div>
+          <div>
+            <h3>Guest reviews</h3>
+            {!data.comments ? (
+              <p>No comments yet</p>
+            ) : (
+              data.comments.map((elem) => {
+                return (
+                  <div key={elem.userName}>
+                    <img src={elem.avatar} alt="avatar" />
+                    <span>{elem.fullName}</span>
+                    <span>{elem.text}</span>
+                  </div>
+                );
+              })
+            )}
+            <input onChange={(e) => setComment(e.target.value)} />
+            <button onClick={addComment}>Add comment</button>
+          </div>
         </div>
+        {/* <Rating
+          name="simple-controlled"
+          value={rating.averageRate}
+          onChange={(e, newValue) => {
+            setRating({
+              ...rating,
+              reviews: rating.reviews + 1,
+              totalRate: rating.totalRate + newValue,
+              averageRate: (rating.totalRate + newValue) / (rating.reviews + 1),
+            });
+
+            handleRate();
+          }}
+        /> */}
       </>
     )
   );

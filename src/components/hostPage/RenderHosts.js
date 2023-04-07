@@ -24,12 +24,11 @@ function RenderHost(props) {
         const current = await getDoc(
           doc(usersCollection, auth?.currentUser?.uid)
         );
-
         setFavorites({ ...current.data().favorites });
       }
       getFavorites();
     }
-  }, [user, favorites]);
+  }, [user]);
 
   const handleLike = async () => {
     if (!user) {

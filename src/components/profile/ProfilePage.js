@@ -44,7 +44,6 @@ function ProfilePage() {
       setHosts((prev) => [...prev, { ...userHostsData.data(), id }]);
     });
   }, [userData]);
-  console.log(hosts);
 
   async function updateProfileData(name, surname, avatar) {
     const storageRef = ref(storage, `avatars/${userData.email}`);
@@ -67,7 +66,7 @@ function ProfilePage() {
   function addedHosts() {
     return hosts.map((item) => {
       return (
-        <div className={styles.addedHostContainer}>
+        <div key={item.id} className={styles.addedHostContainer}>
           <div className={styles.addedHostInfo}>
             <div>
               <Link to={`/item/${item.id}`}>
