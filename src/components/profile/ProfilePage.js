@@ -12,7 +12,6 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import ModeIcon from "@mui/icons-material/Mode";
 import EditProfile from "./EditProfile";
 import FavDialog from "./FavoritesDialog";
-import { v4 } from "uuid";
 import edit from "../../assets/icons/editing.png";
 import remove from "../../assets/icons/delete.png";
 import RemoveHostDialog from "./RemoveHostDialog";
@@ -45,7 +44,6 @@ function ProfilePage() {
       const offerData = { ...offerPureData.data(), id };
       setFavs((prev) => [...prev, offerData]);
     });
-    // console.log(userData);
 
     userData.userHosts.map(async (id) => {
       const userHostsData = await getDoc(doc(offersCollection, id));
@@ -82,8 +80,8 @@ function ProfilePage() {
   function addedHosts() {
     return hosts.map((item) => {
       return (
-        <div key={v4()} className={styles.addedHostContainer}>
-          <div key={v4()} className={styles.addedHostInfo}>
+        <div key={item.id} className={styles.addedHostContainer}>
+          <div className={styles.addedHostInfo}>
             <div>
               <Link to={`/item/${item.id}`}>
                 <img

@@ -1,0 +1,62 @@
+.Xclose {
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.Xclose img {
+  width: 14px;
+}
+
+.Xclose:hover {
+  box-shadow: 1px 0px 4px #ddd;
+}
+.container {
+  width: 65vh;
+}
+.addComment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 25px 5px 5px 25px;
+  gap: 15px;
+}
+.addComment textarea {
+  border-radius: 10px;
+  height: 140px;
+}
+
+.addComment button {
+  width: 100px;
+  background-color: transparent;
+  border: transparent;
+  border-radius: 10px;
+  box-shadow: 1px 0px 4px #4b2727;
+  cursor: pointer;
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.userContainer img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.commentContainer {
+  display: flex;
+  margin-left: 55px;
+  height: 50px;
+  font-size: 20px;
+  align-items: center;
+  padding-left: 15px;
+  box-shadow: 1px 0px 4px #d58e8e;
+  border-radius: 20px;
+}

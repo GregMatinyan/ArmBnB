@@ -1,5 +1,6 @@
 .container {
   padding-bottom: 80px;
+  padding-right: 20px;
 }
 
 .container h2 {
@@ -16,11 +17,16 @@
   margin-bottom: auto;
 }
 
+.rateLocationCOntainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0px 15px 50px;
+  width: 40%;
+}
+
 .location {
   display: flex;
   flex-direction: row;
-  margin: 5px 0px 15px 50px;
-  width: 50%;
 }
 .location img {
   width: 30px;
@@ -29,10 +35,22 @@
   margin-right: 15px;
 }
 
+.rateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  gap: 15px;
+}
+.rateContainer img {
+  width: 40px;
+  height: 40px;
+}
+
 .favorites {
   width: 50%;
   display: flex;
-  flex-direction: row;
+  justify-content: flex-end;
   margin: 5px 0px 15px 50px;
   cursor: pointer;
 }
@@ -57,9 +75,9 @@
 }
 
 .imgGrid {
-  width: 600px;
+  width: 50%;
   height: 420px;
-  padding-left: 20px;
+  padding-left: 40px;
 }
 
 .backdrop {
@@ -153,6 +171,34 @@
 
 .awssld__bullets--active {
   transform: scale(1.8);
+}
+
+@media screen and (max-width: 1200px) {
+  .hostDescription {
+    display: flex;
+    flex-direction: column;
+  }
+  .imgGrid {
+    width: 80%;
+    height: 420px;
+    align-self: center;
+  }
+  .description {
+    width: 60%;
+    align-self: center;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 835px) {
+  .imgGrid {
+    width: 80%;
+    align-self: center;
+  }
+  .imgGrid img {
+    width: 600px;
+    align-self: center;
+  }
 }
 
 .reviews {

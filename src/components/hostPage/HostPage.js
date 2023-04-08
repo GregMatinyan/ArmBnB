@@ -19,13 +19,17 @@ import "react-awesome-slider-fw/dist/styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserStatus } from "../../features/currentUser/currentUserSlice";
 import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
+import Rating from "@mui/material/Rating";
 import ReviewsDialog from "./ReviewsDialog";
 
 function HostPage() {
   const [data, setData] = useState(null);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [userData, setUserData] = useState({});
   const [favorites, setFavorites] = useState({});
   const [reviewDialog, setReviewDialog] = useState(false);
+  const [reGet, setReget] = useState(false);
+  const [rating, setRating] = useState(0);
 
   const params = useParams();
   const user = useSelector(getUserStatus);
@@ -33,12 +37,17 @@ function HostPage() {
 
   useEffect(() => {
     const render = async () => {
-      const dataRef = doc(offersCollection, params.id);
-      const hostData = await getDoc(dataRef);
-      setData({ ...hostData.data() });
+      const dataRef = await getDoc(doc(offersCollection, params.id));
+      const hostData = { ...dataRef.data() };
+      setData(hostData);
+      if (hostData.rating.hasOwnProperty(auth?.currentUser?.uid)) {
+        setRating(hostData.rating[auth?.currentUser?.uid]);
+      } else {
+        setRating(2.5);
+      }
     };
     render();
-  }, [params.id]);
+  }, [params.id, reGet]);
 
   useEffect(() => {
     if (user) {
@@ -46,8 +55,12 @@ function HostPage() {
         const current = await getDoc(
           doc(usersCollection, auth?.currentUser?.uid)
         );
-
-        setFavorites({ ...current.data().favorites });
+        const data = { ...current.data() };
+        setUserData({
+          fullName: `${data.name} ${data.surname}`,
+          url: data.url,
+        });
+        setFavorites(data.favorites);
       }
       getFavorites();
     }
@@ -73,24 +86,72 @@ function HostPage() {
     }
   };
 
+  const addComment = async (comment) => {
+    if (!user) {
+      dispatch(setLoginDialogStatus(true));
+    } else if (comment) {
+      await updateDoc(doc(offersCollection, params.id), {
+        comments: {
+          ...data.comments,
+          [auth?.currentUser?.uid]: {
+            text: comment,
+            name: userData.fullName,
+            avatar: userData.url,
+          },
+        },
+      });
+    }
+  };
+
+  const handleRate = async (value) => {
+    if (!user) {
+      dispatch(setLoginDialogStatus(true));
+    } else {
+      await updateDoc(doc(offersCollection, params.id), {
+        rating: {
+          ...data.rating,
+          [auth?.currentUser?.uid]: value,
+        },
+      });
+      setRating(value);
+    }
+  };
+
+  function averageRate() {
+    let sum = 0;
+    let count = 0;
+    for (let rate in data.rating) {
+      sum += data.rating[rate];
+      count++;
+    }
+    return (sum / count).toFixed(1);
+  }
+
   return (
     data && (
       <>
         <Header />
-        {/* <ReviewsDialog
+        <ReviewsDialog
           open={reviewDialog}
-          data={data}
+          comments={data.comments}
           closeReview={() => setReviewDialog(false)}
-          comments={comments}
-        /> */}
+          addComment={addComment}
+          reGet={() => setReget((prev) => !prev)}
+        />
         <div className={styles.container}>
           <div className={styles.hostName}>
             <h2>{data.hostName}</h2>
           </div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <div className={styles.location}>
-              <img src={Location} alt="Location img" />
-              <h4>{data.location}</h4>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className={styles.rateLocationCOntainer}>
+              <div className={styles.location}>
+                <img src={Location} alt="Location img" />
+                <h4>{data.location}</h4>
+              </div>
+              <div className={styles.rateContainer}>
+                <img src={star} alt="star" />
+                <span>{+averageRate() || ". . ."}</span>
+              </div>
             </div>
             <div className={styles.favorites} onClick={handleLike}>
               <span>To favorites</span>
@@ -106,7 +167,7 @@ function HostPage() {
               <AwesomeSlider cssModule={[styles]}>
                 {data.urls.map((url) => (
                   <div
-                    key={url.img}
+                    key={url}
                     whilehover={{ opacity: 1 }}
                     onClick={() => setSelectedImg(url)}
                   >
@@ -126,10 +187,15 @@ function HostPage() {
               <strong>DESCRIPTION</strong>
               <p>{data.description}</p>
               <div className={styles.reviews}>
-                <div>
-                  <img src={star} />
-                  <span>4.8</span>
-                </div>
+                <span style={{ fontSize: 25 }}>Rate this place</span>
+                <Rating
+                  name="half-rating"
+                  value={rating || 2.5}
+                  precision={0.5}
+                  onChange={(e, newValue) => {
+                    handleRate(newValue);
+                  }}
+                />
                 <button onClick={() => setReviewDialog(true)}>
                   Show reviews
                 </button>

@@ -54,6 +54,7 @@ function AddHost() {
     description,
     contacts,
     pool,
+    rating: {},
   };
 
   const [userHosts, setUserHosts] = useState([]); // why we need this?
