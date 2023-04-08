@@ -77,6 +77,8 @@ function EditHostDialog({ editOpen, closeEdit, hosts }) {
     pool,
   };
 
+  console.log(editOpen.host.id);
+
   async function uploadNewData(e) {
     e.preventDefault();
     if (!old) {
@@ -101,13 +103,15 @@ function EditHostDialog({ editOpen, closeEdit, hosts }) {
       const newUrls = await Promise.all(promises);
       await updateDoc(doc(offersCollection, editOpen.host.id), {
         ...newData,
-        newUrls,
+        urls: newUrls,
       });
+      window.location.reload(false);
     } else {
       await updateDoc(doc(offersCollection, editOpen.host.id), {
         ...newData,
         defUrls,
       });
+      window.location.reload(false);
     }
   }
 
@@ -347,7 +351,7 @@ function EditHostDialog({ editOpen, closeEdit, hosts }) {
                   alignItems: "center",
                   cursor: "pointer",
                 }}
-                htmlFor={!old && "files"}
+                htmlFor={!old ? "files" : "none"}
               >
                 <img src={addPhoto} alt="Adding" />
                 <span>New photos or</span>
@@ -378,7 +382,6 @@ function EditHostDialog({ editOpen, closeEdit, hosts }) {
               onClick={(e) => {
                 uploadNewData(e);
                 alert("Changes saved");
-                window.location.reload(false);
               }}
             >
               Save

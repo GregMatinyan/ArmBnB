@@ -154,3 +154,36 @@
 .awssld__bullets--active {
   transform: scale(1.8);
 }
+
+.reviews {
+  display: flex;
+  margin-top: 105px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.reviews img {
+  width: 40px;
+}
+
+.reviews span {
+  font-size: 38px;
+}
+
+.reviews div {
+  display: flex;
+  align-items: center;
+}
+
+.reviews button {
+  border: transparent;
+  background-color: transparent;
+  font-size: 25px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.reviews button:hover {
+  box-shadow: 1px 0px 4px #ddd;
+  border-radius: 15px;
+}

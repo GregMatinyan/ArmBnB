@@ -10,6 +10,7 @@ import Header from "../header/Header";
 import styles from "./HostPage.module.css";
 import Location from "../../assets/icons/location.png";
 import Like from "../../assets/icons/heart.png";
+import star from "../../assets/icons/star.png";
 import fillRed from "../../assets/icons/red-heart.png";
 import { hostFeatureIcons } from "../../assets/icons/icons";
 import LargeImg from "./LargeImg";
@@ -18,11 +19,13 @@ import "react-awesome-slider-fw/dist/styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserStatus } from "../../features/currentUser/currentUserSlice";
 import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
+import ReviewsDialog from "./ReviewsDialog";
 
 function HostPage() {
   const [data, setData] = useState(null);
   const [selectedImg, setSelectedImg] = useState(null);
   const [favorites, setFavorites] = useState({});
+  const [reviewDialog, setReviewDialog] = useState(false);
 
   const params = useParams();
   const user = useSelector(getUserStatus);
@@ -70,11 +73,16 @@ function HostPage() {
     }
   };
 
-  console.log("krknvec");
   return (
     data && (
       <>
         <Header />
+        {/* <ReviewsDialog
+          open={reviewDialog}
+          data={data}
+          closeReview={() => setReviewDialog(false)}
+          comments={comments}
+        /> */}
         <div className={styles.container}>
           <div className={styles.hostName}>
             <h2>{data.hostName}</h2>
@@ -117,6 +125,15 @@ function HostPage() {
             <div className={styles.description}>
               <strong>DESCRIPTION</strong>
               <p>{data.description}</p>
+              <div className={styles.reviews}>
+                <div>
+                  <img src={star} />
+                  <span>4.8</span>
+                </div>
+                <button onClick={() => setReviewDialog(true)}>
+                  Show reviews
+                </button>
+              </div>
             </div>
           </div>
 
