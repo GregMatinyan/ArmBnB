@@ -11,6 +11,7 @@ import {
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { setDoc, doc, updateDoc, getDoc } from "@firebase/firestore";
 import Checkbox from "@mui/material/Checkbox";
+import addPhoto from "../../assets/icons/add-photo.png";
 import { HOME_PATH } from "../../constants/path";
 import { useNavigate } from "react-router-dom";
 
@@ -29,7 +30,7 @@ function AddHost() {
   const [pool, setPool] = useState(false);
   const [rooms, setRooms] = useState(0);
   const [guests, setGuests] = useState(0);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
   const [contacts, setContacts] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
@@ -55,7 +56,7 @@ function AddHost() {
     pool,
   };
 
-  const [userHosts, setUserHosts] = useState([]);
+  const [userHosts, setUserHosts] = useState([]); // why we need this?
 
   useEffect(() => {
     async function getUserHosts() {
@@ -90,7 +91,7 @@ function AddHost() {
     await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
       userHosts: userHosts.concat([offerId]),
     });
-    setUserHosts(userHosts.concat([offerId]));
+    setUserHosts(userHosts.concat([offerId])); // why we need this?
   }
 
   return (
@@ -309,12 +310,27 @@ function AddHost() {
             onChange={(e) => setContacts(e.target.value)}
           ></input>
         </div>
+        <label htmlFor="files">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+          >
+            <img src={addPhoto} alt="Adding" />
+            <span>Add photos</span>
+          </div>
+        </label>
+
         <div>
           <input
             type="file"
             id="files"
             multiple
             onChange={(e) => setUploadedImages(e.target.files)}
+            style={{ display: "none" }}
           />
         </div>
         <button

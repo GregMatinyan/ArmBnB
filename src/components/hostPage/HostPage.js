@@ -54,7 +54,7 @@ function HostPage() {
         const data = { ...current.data() };
         setUserData({
           fullName: `${data.name} ${data.surname}`,
-          avatar: data.url,
+          url: data.url,
         });
         setFavorites(data.favorites);
       }
@@ -87,14 +87,14 @@ function HostPage() {
       dispatch(setLoginDialogStatus(true));
     } else {
       await updateDoc(doc(offersCollection, params.id), {
-        comments: [
+        comments: {
           ...data.comments,
-          {
+          [auth?.currentUser?.uid]: {
             text: comment,
-            userName: userData.fullName,
+            name: userData.fullName,
             avatar: userData.url,
           },
-        ],
+        },
       });
     }
   };
@@ -110,8 +110,6 @@ function HostPage() {
   //     });
   //   }
   // };
-
-  console.log("updated");
 
   return (
     data && (
@@ -162,7 +160,7 @@ function HostPage() {
             </div>
           </div>
 
-          <h3 className={styles.price}>Price for nigth {data.price}$</h3>
+          <h3 className={styles.price}>Price for night {data.price}$</h3>
 
           <div className={styles.offers}>
             <h3>What this place offers</h3>
@@ -172,7 +170,9 @@ function HostPage() {
               return (
                 <div key={index} className={styles.icons}>
                   <img src={icon[1]} alt="icon" />
-                  <span>{icon[0]}</span>
+                  <span className={!data[icon[0]] ? styles.absenceIcon : null}>
+                    {icon[0]}
+                  </span>
                 </div>
               );
             })}
@@ -182,12 +182,12 @@ function HostPage() {
             {!data.comments ? (
               <p>No comments yet</p>
             ) : (
-              data.comments.map((elem) => {
+              Object.entries(data.comments).map((elem) => {
                 return (
-                  <div key={elem.userName}>
-                    <img src={elem.avatar} alt="avatar" />
-                    <span>{elem.fullName}</span>
-                    <span>{elem.text}</span>
+                  <div key={elem[0]}>
+                    <img width="40px" src={elem[1].avatar} alt="avatar" />
+                    <p>{elem[1].name}</p>
+                    <p>{elem[1].text}</p>
                   </div>
                 );
               })

@@ -73,3 +73,39 @@
   width: 50%;
   padding-top: 10px;
 }
+
+@media screen and (max-width: 1400px) {
+  .inputContainer {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .inputContainer {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .inputContainer {
+    width: 65%;
+    padding: 25px 0px 25px 0px;
+    margin-left: 80px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .inputContainer {
+    width: 75%;
+    margin-left: 20px;
+  }
+}
+@media screen and (max-width: 520px) {
+  .input {
+    width: 60%;
+  }
+
+  .dateContainer {
+    width: 72%;
+  }
+}

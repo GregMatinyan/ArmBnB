@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./RenderHost.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { doc, updateDoc, getDoc, deleteField } from "firebase/firestore";
+import { doc, updateDoc, deleteField } from "firebase/firestore";
 import { auth } from "../../configs/firebase";
 import { usersCollection } from "../../configs/firebase";
 import AwesomeSlider from "react-awesome-slider-fw";
@@ -11,24 +11,11 @@ import clsx from "clsx";
 import { getUserStatus } from "../../features/currentUser/currentUserSlice";
 import { setLoginDialogStatus } from "../../features/loginDialog/loginDialogSlice";
 
-function RenderHost(props) {
-  const { id, urls, hostName, price, location } = props.data;
+function RenderHost({ data, favorites, changeFavs }) {
+  const { id, urls, hostName, price, location } = data;
   const dispatch = useDispatch();
-  const [favorites, setFavorites] = useState({});
 
   const user = useSelector(getUserStatus);
-
-  useEffect(() => {
-    if (user) {
-      async function getFavorites() {
-        const current = await getDoc(
-          doc(usersCollection, auth?.currentUser?.uid)
-        );
-        setFavorites({ ...current.data().favorites });
-      }
-      getFavorites();
-    }
-  }, [user]);
 
   const handleLike = async () => {
     if (!user) {
@@ -37,8 +24,7 @@ function RenderHost(props) {
       await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
         ["favorites." + id]: deleteField(),
       });
-      delete favorites[id];
-      setFavorites({ ...favorites });
+      changeFavs(id);
     } else {
       await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
         favorites: {
@@ -46,7 +32,7 @@ function RenderHost(props) {
           [id]: true,
         },
       });
-      setFavorites({ ...favorites, [id]: true });
+      changeFavs(id);
     }
   };
 

@@ -43,7 +43,7 @@ function FiltersDialog(props) {
     setBreakfast(false);
     setLovelyView(false);
     setPool(false);
-    setPrice(false);
+    setPrice({ minimum: "", maximum: "" });
   };
 
   const features = Object.entries({
