@@ -17,7 +17,7 @@ function Footer() {
             width: "47%",
             textAlign: "left",
             paddingLeft: 15,
-            height: about ? 140 : 20,
+            height: about ? "100%" : 20,
             borderRadius: 10,
             backgroundColor: "antiquewhite",
             visibility: about ? "visible" : "hidden",
