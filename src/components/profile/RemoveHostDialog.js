@@ -15,7 +15,6 @@ import {
 import styles from "./RemoveHostDialog.module.css";
 
 function RemoveHostDialog({ removeOpen, closeRemove, hosts }) {
-  // console.log(removeOpen, hosts);
   return (
     <div>
       <Dialog open={removeOpen.open} onClose={closeRemove}>
@@ -24,7 +23,7 @@ function RemoveHostDialog({ removeOpen, closeRemove, hosts }) {
         </DialogTitle>
         <DialogContent className={styles.dialogContent}>
           <p>{removeOpen.host.hostName}</p>
-          <img alt="pic" src={removeOpen.host.urls[0]} />
+          <img width="200px" alt="pic" src={removeOpen.host.urls[0]} />
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center", alignItems: "center" }}>
           <Button
