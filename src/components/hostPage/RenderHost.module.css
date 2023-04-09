@@ -6,25 +6,9 @@
   border-radius: 20px;
   box-shadow: 0 0 8px #ccc;
   transition: all 0.5s;
-}
-.hostContainer:hover {
-  transform: translateY(-10px);
-}
-
-.hosts {
-  width: 280px;
-  margin-bottom: 20px;
-  padding: 0 15 0 15;
-  text-decoration: none;
-  color: black;
-}
-
-.hosts img {
   border-radius: 20px;
-  width: 280px;
-  height: 240px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  overflow: hidden;
+  width: 80%;
 }
 
 .hostInfo p {
@@ -39,11 +23,6 @@
   font-size: 20px;
 }
 
-.imgContainer {
-  width: 100%;
-  max-width: 400px;
-}
-
 .faheart {
   width: 40px;
   position: absolute;
@@ -51,8 +30,45 @@
   right: 15px;
   fill: #4c4848;
   color: #e0d8d8;
+  cursor: pointer;
 }
-
+.fillred {
+  fill: rgb(210, 45, 45);
+}
 .hostInfo {
   padding: 10px;
+}
+
+.awssld__wrapper {
+  height: 210px;
+}
+
+.awssld__bullets {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.awssld__bullets button {
+  padding: 0;
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 5px 3px;
+  border-radius: 50%;
+  background: #aaa;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.225s cubic-bezier(0.8, 1.35, 0.75, 1.45);
+  background-color: white;
+}
+
+.awssld__bullets--active {
+  transform: scale(1.8);
 }

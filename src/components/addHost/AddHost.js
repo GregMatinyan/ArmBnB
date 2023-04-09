@@ -1,14 +1,22 @@
-import React, { useState } from "react";
-import Header from "../headerComponents/Header";
+import React, { useState, useEffect } from "react";
+import Header from "../header/Header";
 import styles from "./AddHost.module.css";
 import { v4 } from "uuid";
-import { offersCollection, storage } from "../../configs/firebase";
+import {
+  usersCollection,
+  offersCollection,
+  storage,
+  auth,
+} from "../../configs/firebase";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { setDoc, doc } from "@firebase/firestore";
+import { setDoc, doc, updateDoc, getDoc } from "@firebase/firestore";
 import Checkbox from "@mui/material/Checkbox";
+import addPhoto from "../../assets/icons/add-photo.png";
+import { HOME_PATH } from "../../constants/path";
+import { useNavigate } from "react-router-dom";
 
 function AddHost() {
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState(null);
   const [hostName, setHotelName] = useState("");
   const [hostType, setHostType] = useState("");
   const [tv, setTv] = useState(false);
@@ -22,9 +30,11 @@ function AddHost() {
   const [pool, setPool] = useState(false);
   const [rooms, setRooms] = useState(0);
   const [guests, setGuests] = useState(0);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
   const [contacts, setContacts] = useState("");
   const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+  const navigation = useNavigate();
 
   const hostInfo = {
     hostName,
@@ -41,18 +51,49 @@ function AddHost() {
     guests,
     price,
     location,
+    description,
     contacts,
+    pool,
+    rating: {},
   };
 
-  const handleUploadData = async (e) => {
+  const [userHosts, setUserHosts] = useState([]); // why we need this?
+
+  useEffect(() => {
+    async function getUserHosts() {
+      const current = await getDoc(
+        doc(usersCollection, auth?.currentUser?.uid)
+      );
+      setUserHosts([...current.data().userHosts]);
+    }
+    getUserHosts();
+  }, []);
+
+  async function uploadData(e) {
     e.preventDefault();
-    if (uploadedImage == null) return;
+    const promises = [];
     const offerId = hostName.replace(" ", "_") + v4();
-    const storageRef = ref(storage, `images/${offerId}/${uploadedImage.name}`);
-    await uploadBytes(storageRef, uploadedImage);
-    const url = await getDownloadURL(storageRef);
-    await setDoc(doc(offersCollection, offerId), { ...hostInfo, url });
-  };
+    const images = Object.values(uploadedImages);
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+      const storageRef = ref(storage, `images/${offerId}/${image.name}`);
+
+      promises.push(
+        uploadBytes(storageRef, image, metadata).then((uploadResult) => {
+          return getDownloadURL(uploadResult.ref);
+        })
+      );
+    }
+    const urls = await Promise.all(promises);
+    await setDoc(doc(offersCollection, offerId), { ...hostInfo, urls });
+    await updateDoc(doc(usersCollection, auth?.currentUser?.uid), {
+      userHosts: userHosts.concat([offerId]),
+    });
+    setUserHosts(userHosts.concat([offerId])); // why we need this?
+  }
 
   return (
     <div className={styles.container}>
@@ -254,6 +295,15 @@ function AddHost() {
           ></input>
         </div>
         <div>
+          <label>Description</label>
+          <textarea
+            className={styles.description}
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+        </div>
+        <div>
           <label>Contacts</label>
           <input
             type="text"
@@ -261,14 +311,37 @@ function AddHost() {
             onChange={(e) => setContacts(e.target.value)}
           ></input>
         </div>
+        <label htmlFor="files">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+          >
+            <img src={addPhoto} alt="Adding" />
+            <span>Add photos</span>
+          </div>
+        </label>
+
         <div>
           <input
             type="file"
             id="files"
-            onChange={(e) => setUploadedImage(e.target.files[0])}
+            multiple
+            onChange={(e) => setUploadedImages(e.target.files)}
+            style={{ display: "none" }}
           />
         </div>
-        <button className={styles.subBtn} onClick={handleUploadData}>
+        <button
+          className={styles.subBtn}
+          onClick={(e) => {
+            uploadData(e);
+            alert("Your host was added");
+            navigation(HOME_PATH);
+          }}
+        >
           Submit
         </button>
       </form>
