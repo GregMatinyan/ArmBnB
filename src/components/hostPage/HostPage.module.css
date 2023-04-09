@@ -78,6 +78,7 @@
   width: 50%;
   height: 420px;
   padding-left: 40px;
+  cursor: pointer;
 }
 
 .backdrop {
@@ -106,14 +107,14 @@
 }
 .price {
   text-align: start;
-  padding-left: 20px;
-  padding-bottom: 50px;
+  padding-left: 40px;
+  padding-bottom: 25px;
 }
 
 .offers {
   width: 60%;
   text-align: start;
-  padding-left: 20px;
+  padding-left: 40px;
   padding-bottom: 10px;
 }
 

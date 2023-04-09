@@ -204,6 +204,7 @@ function HostPage() {
           </div>
 
           <h3 className={styles.price}>Price for night {data.price}$</h3>
+          <h3 className={styles.price}>Contacts: {data.contacts}</h3>
 
           <div className={styles.offers}>
             <h3>What this place offers</h3>
