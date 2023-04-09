@@ -64,3 +64,11 @@
   font-weight: 700;
   font-size: 20px;
 }
+
+.hostEdit img {
+  cursor: pointer;
+}
+
+.hostEdit img:hover {
+  box-shadow: 1px 0px 4px #ddd;
+}

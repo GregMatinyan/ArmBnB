@@ -5,6 +5,7 @@
 }
 
 .header {
+  padding: 0px 20px 0px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,4 +74,38 @@
 .findIcon:hover {
   box-shadow: 0px 0 4px #ded4d4e6;
   border-radius: 8px;
+}
+
+@media screen and (max-width: 900px) {
+  .logo {
+    width: 80px;
+  }
+  .searchContainer div {
+    width: 140px;
+  }
+  .addOffer {
+    width: 100px;
+    font-size: 14px;
+  }
+  .logout {
+    width: 100px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .logo {
+    width: 60px;
+  }
+  .searchContainer div {
+    width: 100px;
+  }
+  .addOffer {
+    width: 80px;
+    font-size: 10px;
+  }
+  .logout {
+    width: 80px;
+    font-size: 10px;
+  }
 }

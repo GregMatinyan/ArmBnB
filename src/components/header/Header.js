@@ -72,7 +72,10 @@ function Header(props) {
             fontFamily: "inherit",
           }}
           variant="outlined"
-          onClick={logOut}
+          onClick={() => {
+            logOut();
+            window.location.reload(false);
+          }}
         >
           Log Out
         </Button>

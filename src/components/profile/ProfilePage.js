@@ -12,6 +12,10 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import ModeIcon from "@mui/icons-material/Mode";
 import EditProfile from "./EditProfile";
 import FavDialog from "./FavoritesDialog";
+import edit from "../../assets/icons/editing.png";
+import remove from "../../assets/icons/delete.png";
+import RemoveHostDialog from "./RemoveHostDialog";
+import EditHostDialog from "./EditHostDialog";
 
 function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -20,7 +24,8 @@ function ProfilePage() {
   const [hosts, setHosts] = useState([]);
   const [showHosts, setShowHosts] = useState(false);
   const [favDialog, setFavDialog] = useState(false);
-
+  const [removeDialog, setRemoveDialog] = useState({ open: false, host: null });
+  const [editDialog, setEditDialog] = useState({ opne: false, host: null });
   const params = useParams();
 
   useEffect(() => {
@@ -39,12 +44,12 @@ function ProfilePage() {
       const offerData = { ...offerPureData.data(), id };
       setFavs((prev) => [...prev, offerData]);
     });
+
     userData.userHosts.map(async (id) => {
       const userHostsData = await getDoc(doc(offersCollection, id));
       setHosts((prev) => [...prev, { ...userHostsData.data(), id }]);
     });
   }, [userData]);
-  console.log(hosts);
 
   async function updateProfileData(name, surname, avatar) {
     const storageRef = ref(storage, `avatars/${userData.email}`);
@@ -64,10 +69,18 @@ function ProfilePage() {
     setDialog(false);
   };
 
+  const closeRemoveDIalog = () => {
+    setRemoveDialog({ open: false, host: null });
+  };
+
+  const closeEditDialog = () => {
+    setEditDialog({ open: false, host: null });
+  };
+
   function addedHosts() {
     return hosts.map((item) => {
       return (
-        <div className={styles.addedHostContainer}>
+        <div key={item.id} className={styles.addedHostContainer}>
           <div className={styles.addedHostInfo}>
             <div>
               <Link to={`/item/${item.id}`}>
@@ -81,9 +94,33 @@ function ProfilePage() {
             <div style={{ padding: "5px 10px" }}>
               <p> {item.hostName}</p>
               <p> {item.location}</p>
-              <p>
-                <strong>{item.price} $</strong> per/night
-              </p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span>
+                  <strong>{item.price} $</strong> per/night
+                </span>
+                <span className={styles.hostEdit}>
+                  <img
+                    onClick={() => {
+                      setEditDialog({ open: true, host: item });
+                    }}
+                    style={{ width: "18%" }}
+                    src={edit}
+                    alt="edit"
+                  />
+                  <img
+                    onClick={() => setRemoveDialog({ open: true, host: item })}
+                    style={{ width: "18%" }}
+                    src={remove}
+                    alt="remove"
+                  />
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -100,6 +137,21 @@ function ProfilePage() {
             open={favDialog}
             handleClose={() => setFavDialog(false)}
           />
+          {removeDialog.host && (
+            <RemoveHostDialog
+              removeOpen={removeDialog}
+              closeRemove={closeRemoveDIalog}
+              hosts={userData.userHosts}
+            />
+          )}
+          {editDialog.host && (
+            <EditHostDialog
+              editOpen={editDialog}
+              closeEdit={closeEditDialog}
+              hosts={userData.hosts}
+            />
+          )}
+
           <Header />
           <div className={styles.profileContainer}>
             <div className={styles.avatar}>
@@ -134,7 +186,6 @@ function ProfilePage() {
                 </div>
               ))}
           </div>
-
           <EditProfile
             open={dialog}
             handleClose={closeDialog}
